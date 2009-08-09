@@ -382,30 +382,32 @@ AC_DEFUN([AC_FPM_PRCTL],
 
 AC_DEFUN([AC_FPM_PHP],
 [
-	AC_ARG_WITH([php], AC_HELP_STRING([--with-php=DIR], [full path to php build dir]))
+	AC_ARG_WITH([php-src], AC_HELP_STRING([--with-php-src=DIR], [full path to php source dir]))
 
-	AC_ARG_WITH([php-src], AC_HELP_STRING([--with-php-src=DIR], [full path to php source dir, only needed if differ from build dir]))
+	AC_ARG_WITH([php-build], AC_HELP_STRING([--with-php-build=DIR], [full path to php build dir, only needed if differ from source dir]))
 
 	AC_MSG_CHECKING([for php configuration])
 
-	if test -z "$with_php" -o "$with_php" = "no" -o "$with_php" = "yes" ; then
-		AC_MSG_ERROR([Please specify full path to php build dir: --with-php=DIR])
-	fi
-
-	PHP_BUILDDIR="`cd $with_php; pwd`"
-
-	if test ! -f $PHP_BUILDDIR/Makefile ; then
-		AC_MSG_ERROR([No Makefile found in php build dir. Did you forget to run php configure ?])
-	fi
-
 	if test -z "$with_php_src" -o "$with_php_src" = "no" -o "$with_php_src" = "yes" ; then
-		PHP_SRCDIR="$PHP_BUILDDIR"
+		AC_MSG_ERROR([Please specify full path to php source dir: --with-php=DIR])
 	else
 		PHP_SRCDIR="`cd $with_php_src; pwd`"
 	fi
 
 	if test ! -f $PHP_SRCDIR/main/php.h ; then
-		AC_MSG_ERROR([No php sources found in php source dir. If you have separate php source dir, please specify it --with-php-src=DIR])
+		AC_MSG_ERROR([No php sources found in php source dir])
+	fi
+
+	if test -z "$with_php_build" -o "$with_php_build" = "no" -o "$with_php_build" = "yes" ; then
+		PHP_BUILDDIR="$PHP_SRCDIR"
+	else
+		PHP_BUILDDIR="`cd $with_php_build; pwd`"
+	fi
+
+	if test ! -f $PHP_BUILDDIR/Makefile ; then
+		AC_MSG_ERROR([No Makefile found in php build dir. Did you run configure ?])
+		AC_MSG_ERROR([Use command: cd $php_src_dir && ./configure && make])
+		AC_MSG_ERROR([If you have separate php build dir, please specify it --with-php-build=DIR])
 	fi
 
 	PHP_GLOBAL_OBJS=`grep "^PHP_GLOBAL_OBJS =" $PHP_BUILDDIR/Makefile | sed -e 's,.*= ,,'`
