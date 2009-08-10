@@ -6026,14 +6026,14 @@ relink_command=\"$relink_command\""
       fi
 
       # Now prepare to actually exec the command.
-      exec_cmd="\"\$cmd\"$args"
+      exec_cmd="\$cmd$args"
     else
       # Display what would be done.
       if test -n "$shlibpath_var"; then
 	eval "\$echo \"\$shlibpath_var=\$$shlibpath_var\""
 	$echo "export $shlibpath_var"
       fi
-      eval \$echo \"\$cmd\"$args
+      $echo "$cmd$args"
       exit $EXIT_SUCCESS
     fi
     ;;

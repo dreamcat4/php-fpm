@@ -1051,9 +1051,9 @@ Optional Packages:
                           $prefix/logs/php-fpm.log
   --with-fpm-pid=PATH     Set the path for php-fpm pid file. Default:
                           $prefix/logs/php-fpm.pid
-  --with-php=DIR          full path to php build dir
-  --with-php-src=DIR      full path to php source dir, only needed if differ
-                          from build dir
+  --with-php-src=DIR      full path to php source dir
+  --with-php-build=DIR    full path to php build dir, only needed if differ
+                          from source dir
   --with-xml-config=PATH  path to xml-config
 
 Some influential environment variables:
@@ -10255,7 +10255,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
-  for var in echo old_CC old_CFLAGS AR AR_FLAGS AS EGREP RANLIB LN_S LTCC NM \
+  for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM \
     SED SHELL STRIP \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
     old_striplib striplib file_magic_cmd finish_cmds finish_eval \
@@ -10452,7 +10452,7 @@ DLLTOOL="$DLLTOOL"
 OBJDUMP="$OBJDUMP"
 
 # Used on cygwin: assembler.
-AS=$lt_AS
+AS="$AS"
 
 # The name of the directory that contains temporary libtool files.
 objdir=$objdir
@@ -13959,7 +13959,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
-  for var in echo old_CC old_CFLAGS AR AR_FLAGS AS EGREP RANLIB LN_S LTCC NM \
+  for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM \
     SED SHELL STRIP \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
     old_striplib striplib file_magic_cmd finish_cmds finish_eval \
@@ -14108,7 +14108,7 @@ DLLTOOL="$DLLTOOL"
 OBJDUMP="$OBJDUMP"
 
 # Used on cygwin: assembler.
-AS=$lt_AS
+AS="$AS"
 
 # The name of the directory that contains temporary libtool files.
 objdir=$objdir
@@ -16347,7 +16347,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
-  for var in echo old_CC old_CFLAGS AR AR_FLAGS AS EGREP RANLIB LN_S LTCC NM \
+  for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM \
     SED SHELL STRIP \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
     old_striplib striplib file_magic_cmd finish_cmds finish_eval \
@@ -16496,7 +16496,7 @@ DLLTOOL="$DLLTOOL"
 OBJDUMP="$OBJDUMP"
 
 # Used on cygwin: assembler.
-AS=$lt_AS
+AS="$AS"
 
 # The name of the directory that contains temporary libtool files.
 objdir=$objdir
@@ -19543,7 +19543,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
-  for var in echo old_CC old_CFLAGS AR AR_FLAGS AS EGREP RANLIB LN_S LTCC NM \
+  for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM \
     SED SHELL STRIP \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
     old_striplib striplib file_magic_cmd finish_cmds finish_eval \
@@ -19692,7 +19692,7 @@ DLLTOOL="$DLLTOOL"
 OBJDUMP="$OBJDUMP"
 
 # Used on cygwin: assembler.
-AS=$lt_AS
+AS="$AS"
 
 # The name of the directory that contains temporary libtool files.
 objdir=$objdir
@@ -19994,7 +19994,7 @@ if test -f "$ltmain"; then
   # Now quote all the things that may contain metacharacters while being
   # careful not to overquote the AC_SUBSTed values.  We take copies of the
   # variables and quote the copies for generation of the libtool script.
-  for var in echo old_CC old_CFLAGS AR AR_FLAGS AS EGREP RANLIB LN_S LTCC NM \
+  for var in echo old_CC old_CFLAGS AR AR_FLAGS EGREP RANLIB LN_S LTCC NM \
     SED SHELL STRIP \
     libname_spec library_names_spec soname_spec extract_expsyms_cmds \
     old_striplib striplib file_magic_cmd finish_cmds finish_eval \
@@ -20143,7 +20143,7 @@ DLLTOOL="$DLLTOOL"
 OBJDUMP="$OBJDUMP"
 
 # Used on cygwin: assembler.
-AS=$lt_AS
+AS="$AS"
 
 # The name of the directory that contains temporary libtool files.
 objdir=$objdir
@@ -20530,45 +20530,51 @@ fi;
 
 
 
-# Check whether --with-php or --without-php was given.
-if test "${with_php+set}" = set; then
-  withval="$with_php"
-
-fi;
-
-
 # Check whether --with-php-src or --without-php-src was given.
 if test "${with_php_src+set}" = set; then
   withval="$with_php_src"
 
 fi;
 
+
+# Check whether --with-php-build or --without-php-build was given.
+if test "${with_php_build+set}" = set; then
+  withval="$with_php_build"
+
+fi;
+
 	echo "$as_me:$LINENO: checking for php configuration" >&5
 echo $ECHO_N "checking for php configuration... $ECHO_C" >&6
 
-	if test -z "$with_php" -o "$with_php" = "no" -o "$with_php" = "yes" ; then
-		{ { echo "$as_me:$LINENO: error: Please specify full path to php build dir: --with-php=DIR" >&5
-echo "$as_me: error: Please specify full path to php build dir: --with-php=DIR" >&2;}
-   { (exit 1); exit 1; }; }
-	fi
-
-	PHP_BUILDDIR="`cd $with_php; pwd`"
-
-	if test ! -f $PHP_BUILDDIR/Makefile ; then
-		{ { echo "$as_me:$LINENO: error: No Makefile found in php build dir. Did you forget to run php configure ?" >&5
-echo "$as_me: error: No Makefile found in php build dir. Did you forget to run php configure ?" >&2;}
-   { (exit 1); exit 1; }; }
-	fi
-
 	if test -z "$with_php_src" -o "$with_php_src" = "no" -o "$with_php_src" = "yes" ; then
-		PHP_SRCDIR="$PHP_BUILDDIR"
+		{ { echo "$as_me:$LINENO: error: Please specify full path to php source dir: --with-php=DIR" >&5
+echo "$as_me: error: Please specify full path to php source dir: --with-php=DIR" >&2;}
+   { (exit 1); exit 1; }; }
 	else
 		PHP_SRCDIR="`cd $with_php_src; pwd`"
 	fi
 
 	if test ! -f $PHP_SRCDIR/main/php.h ; then
-		{ { echo "$as_me:$LINENO: error: No php sources found in php source dir. If you have separate php source dir, please specify it --with-php-src=DIR" >&5
-echo "$as_me: error: No php sources found in php source dir. If you have separate php source dir, please specify it --with-php-src=DIR" >&2;}
+		{ { echo "$as_me:$LINENO: error: No php sources found in php source dir" >&5
+echo "$as_me: error: No php sources found in php source dir" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
+
+	if test -z "$with_php_build" -o "$with_php_build" = "no" -o "$with_php_build" = "yes" ; then
+		PHP_BUILDDIR="$PHP_SRCDIR"
+	else
+		PHP_BUILDDIR="`cd $with_php_build; pwd`"
+	fi
+
+	if test ! -f $PHP_BUILDDIR/Makefile ; then
+		{ { echo "$as_me:$LINENO: error: No Makefile found in php build dir. Did you run configure ?" >&5
+echo "$as_me: error: No Makefile found in php build dir. Did you run configure ?" >&2;}
+   { (exit 1); exit 1; }; }
+		{ { echo "$as_me:$LINENO: error: Use command: cd $php_src_dir && ./configure && make" >&5
+echo "$as_me: error: Use command: cd $php_src_dir && ./configure && make" >&2;}
+   { (exit 1); exit 1; }; }
+		{ { echo "$as_me:$LINENO: error: If you have separate php build dir, please specify it --with-php-build=DIR" >&5
+echo "$as_me: error: If you have separate php build dir, please specify it --with-php-build=DIR" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 
