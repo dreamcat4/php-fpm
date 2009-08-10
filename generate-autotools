@@ -1,0 +1,44 @@
+#! /bin/sh
+#
+# generate-autotools - Determine the correct versions for autoconf, automake, libtool.
+# Download and install them into ./autotools
+# 
+# Usage: ./generate-autotools
+#
+
+BASEDIR="$PWD"
+AUTOTOOLS="$BASEDIR/autotools"
+
+# Create autotools directory
+mkdir -p "$AUTOTOOLS"
+
+## Install autoconf
+AC_VER=`head ./configure | grep -i autoconf | sed -e 's/.*toconf //' -e 's/ .*//' -e 's/\.$//'`
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-$AC_VER.tar.gz
+tar -zxvf autoconf-$AC_VER.tar.gz
+cd autoconf-$AC_VER/
+./configure --prefix="$AUTOTOOLS"
+make && make install
+cd ..
+rm -Rf autoconf-$AC_VER*
+
+## Install automake
+AM_VER=`head ./Makefile.in | grep -i automake | sed -e 's/.*tomake //' -e 's/ .*//' -e 's/\.$//'`
+wget http://ftp.gnu.org/gnu/automake/automake-$AM_VER.tar.gz
+tar -zxvf automake-$AM_VER.tar.gz
+cd automake-$AM_VER/
+./configure --prefix="$AUTOTOOLS"
+make && make install
+cd ..
+rm -Rf automake-$AM_VER*
+
+## Install libtool
+LT_VER=`head -50 ./ltmain.sh | grep "VERSION=" | sed -e 's/^VERSION=//'`
+wget http://ftp.gnu.org/gnu/libtool/libtool-$LT_VER.tar.gz
+tar -zxvf libtool-$LT_VER.tar.gz
+cd libtool-$LT_VER/
+./configure --prefix="$AUTOTOOLS"
+make && make install
+cd ..
+rm -Rf libtool-$LT_VER*
+

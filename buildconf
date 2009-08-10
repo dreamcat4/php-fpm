@@ -1,7 +1,53 @@
 #! /bin/sh
+#
+# buildconf - regenerate configure script from macros.
+# Usage: ./buildconf "/path/to/autoconf" "/path/to/libtool"
+#
+# aclocal
+# libtoolize --force --copy
+# autoheader
+# automake --foreign --copy --add-missing
+# autoconf
+#
 
-aclocal
-libtoolize --force --copy
-autoheader
-automake --foreign --copy --add-missing
-autoconf
+# Determine if Autoconf tools are the correct version, needed to re-generate configure
+AC_VER=`head ./configure | grep -i autoconf | sed -e 's/.*toconf //' -e 's/ .*//' -e 's/\.$//'`
+AM_VER=`head ./Makefile.in | grep -i automake | sed -e 's/.*tomake //' -e 's/ .*//' -e 's/\.$//'`
+LT_VER="1.4.3"
+
+# deps="autoconf-$AC_VER automake-$AM_VER libtoolize-$LT_VER"
+deps="autoconf-$AC_VER automake-$AM_VER"
+
+AC_PATH="$1"
+if [ ! "$AC_PATH" ]; then AC_PATH="$PWD/autotools"; fi
+if [ ! -d "$AC_PATH" ]; then ./generate-autotools; fi
+
+if [ ! "`basename $AC_PATH`" = "bin" ]; then AC_PATH="$AC_PATH/bin"; fi
+
+if [ ! "$AC_PATH" ]; then
+	printf "Buildconf requires autoconf, automake and libtool. See autoconf.markdown for details.\n"
+	printf "Usage: ./buildconf \"/path/to/autotools\".\n"
+	exit 1
+fi
+
+for prg_ver in $deps; do
+	prg=`echo "$prg_ver" | sed -e 's/-.*$//'`
+	if [ ! -x "$AC_PATH/$prg" ]; then
+		printf "Error: $prg not found. Searched for executable '$prg' in $AC_PATH.\n"
+		exit 1
+	fi
+	ver=`echo "$prg_ver" | sed -e 's/^.*-//'`
+	INSTALLED_VER=`$AC_PATH/$prg --version | grep -i $prg | sed -e 's/.* //'`
+	if [ ! "$INSTALLED_VER" = "$ver" ]; then
+		printf "Error: Autoconf version mismatch. Buildconf requires $prg version $ver.\n"
+		printf "You have $prg version $INSTALLED_VER. See autoconf.markdown for details.\n"
+		exit 1
+	fi
+done
+
+# Checks passed, regenerate ./configure and associcated files
+$AC_PATH/aclocal
+$AC_PATH/libtoolize --force --copy
+$AC_PATH/autoheader
+$AC_PATH/automake --foreign --copy --add-missing
+$AC_PATH/autoconf

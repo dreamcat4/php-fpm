@@ -39,6 +39,10 @@ Optional configure flags
 	# Specify when build-dir is different to src-dir
 	--with-php-build=[DIR]
 
+## Autoconf
+
+This project relies upon the autoconf toolset to generate its `./configure` script. If you need to use autoconf, then run `./build-autotools` to install it locally. If `./build-autotools` fails please consult autoconf.markdown for further instructions.
+
 ## Build process
 
 The make process can be described as:
