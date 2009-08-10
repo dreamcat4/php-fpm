@@ -15,9 +15,8 @@ Download and unpack vanilla PHP, compile it. Currently 5.2.10 is tested, nothing
 	cd php-5.2.10
 	./configure
 	make
-	cd ..
 
-Check out from launchpad
+Check out php-fpm from launchpad
 
 	bzr co lp:php-fpm php-fpm
 
@@ -28,7 +27,7 @@ Configure and compile the new php-fpm
 	  --with-fpm-pid=/var/run/php-fpm.pid \
 	  --with-fpm-log=/var/log/php-fpm.log \
 	  --with-fpm-conf=/etc/php-fpm.conf \
-	  --with-php-src=../php-5.2.10
+	  --with-php-src=../
 
 	make
 
