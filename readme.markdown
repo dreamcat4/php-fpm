@@ -1,8 +1,6 @@
-# PHP FastCGI Process Manager - http://php-fpm.org/Main_Page
+# PHP FastCGI Process Manager
 
-Standalone process manager and extra enhancements for PHP running via FastCGI.
-https://launchpad.net/php-fpm
-
+[Php fpm](http://php-fpm.org/Main_Page) is a standalone process manager and extra enhancements for PHP running via FastCGI. Source code at [Launchpad](https://launchpad.net/php-fpm)
 
 ## Quick steps to get started:
 
