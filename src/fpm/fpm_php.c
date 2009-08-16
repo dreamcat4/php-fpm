@@ -13,7 +13,7 @@
 #include "php_ini.h"
 #include "ext/standard/dl.h"
 
-#include "fastcgi.h"
+#include "sapi/fastcgi.h"
 
 #include "fpm.h"
 #include "fpm_php.h"

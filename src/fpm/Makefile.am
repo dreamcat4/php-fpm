@@ -2,7 +2,7 @@
 CFLAGS = $(AM_CFLAGS)
 
 INCLUDES = \
-	-I../sapi \
+	-I$(top_srcdir)/src \
 	-I$(PHP_SRCDIR) \
 	-I$(PHP_SRCDIR)/TSRM \
 	-I$(PHP_SRCDIR)/Zend \
