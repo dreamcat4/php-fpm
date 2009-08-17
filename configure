@@ -21491,9 +21491,10 @@ echo "${ECHO_T}" >&6
 	echo "$as_me:$LINENO: result: " >&5
 echo "${ECHO_T}" >&6
 
+	libevent_build=`cd libevent; pwd`
 	libevent_src=`cd $srcdir/libevent; pwd`
 
-	LIBEVENT_CFLAGS="-I$libevent_src"
+	LIBEVENT_CFLAGS="-I$libevent_src -I$libevent_build"
 
 
 

@@ -452,9 +452,10 @@ AC_DEFUN([AC_FPM_LIBEVENT_EMBEDDED],
 
 	AC_MSG_RESULT()
 
+	libevent_build=`cd libevent; pwd`
 	libevent_src=`cd $srcdir/libevent; pwd`
 
-	LIBEVENT_CFLAGS="-I$libevent_src"
+	LIBEVENT_CFLAGS="-I$libevent_src -I$libevent_build"
 dnl	LIBEVENT_LIBS=".a `echo "@LIBS@" | ./libevent/config.status --file=-:-`"
 
 ])
