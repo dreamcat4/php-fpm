@@ -1,7 +1,7 @@
 #! /bin/sh
 #
 # buildconf - regenerate configure script from macros.
-# Usage: ./buildconf "/path/to/autoconf" "/path/to/libtool"
+# Usage: ./buildconf "/path/to/autotools"
 #
 # aclocal
 # libtoolize --force --copy
@@ -17,13 +17,13 @@ LT_VER=`head -50 ./ltmain.sh | grep "VERSION=" | sed -e 's/^VERSION=//'`
 
 deps="autoconf-$AC_VER automake-$AM_VER libtoolize-$LT_VER"
 
-AC_PATH="$1"
-if [ ! "$AC_PATH" ]; then AC_PATH="$PWD/autotools"; fi
-if [ ! -d "$AC_PATH" ]; then ./generate-autotools; fi
+AT_PATH="$1"
+if [ ! "$AT_PATH" ]; then AT_PATH="$PWD/autotools"; fi
+if [ ! -d "$AT_PATH" ]; then ./generate-autotools; fi
 
-if [ ! "`basename $AC_PATH`" = "bin" ]; then AC_PATH="$AC_PATH/bin"; fi
+if [ ! "`basename $AT_PATH`" = "bin" ]; then AT_PATH="$AT_PATH/bin"; fi
 
-if [ ! "$AC_PATH" ]; then
+if [ ! "$AT_PATH" ]; then
 	printf "Buildconf requires autoconf, automake and libtool. See autoconf.markdown for details.\n"
 	printf "Usage: ./buildconf \"/path/to/autotools\".\n"
 	exit 1
@@ -31,12 +31,12 @@ fi
 
 for prg_ver in $deps; do
 	prg=`echo "$prg_ver" | sed -e 's/-.*$//'`
-	if [ ! -x "$AC_PATH/$prg" ]; then
-		printf "Error: $prg not found. Searched for executable '$prg' in $AC_PATH.\n"
+	if [ ! -x "$AT_PATH/$prg" ]; then
+		printf "Error: $prg not found. Searched for executable '$prg' in $AT_PATH.\n"
 		exit 1
 	fi
 	ver=`echo "$prg_ver" | sed -e 's/^.*-//'`
-	INSTALLED_VER=`$AC_PATH/$prg --version | grep -i $prg | sed -e 's/.* //'`
+	INSTALLED_VER=`$AT_PATH/$prg --version | grep -i $prg | sed -e 's/.* //'`
 	if [ ! "$INSTALLED_VER" = "$ver" ]; then
 		printf "Error: Autoconf version mismatch. Buildconf requires $prg version $ver.\n"
 		printf "You have $prg version $INSTALLED_VER. See autoconf.markdown for details.\n"
@@ -44,9 +44,12 @@ for prg_ver in $deps; do
 	fi
 done
 
+# Use the same versions of autotools, installed in autotools path
+PATH=$AT_PATH:$PATH
+
 # Checks passed, regenerate ./configure and associcated files
-$AC_PATH/aclocal
-$AC_PATH/libtoolize --force --copy
-$AC_PATH/autoheader
-$AC_PATH/automake --foreign --copy --add-missing
-$AC_PATH/autoconf
+aclocal
+libtoolize --force --copy
+autoheader
+automake --foreign --copy --add-missing
+autoconf
