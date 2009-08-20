@@ -38,6 +38,9 @@ AC_SUBST(php_fpm_ADD_LIBS)
 
 AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$PACKAGE_VERSION", [fpm version])
 
+AC_SUBST(php_fpm_bin_path)
+AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
+
 AC_SUBST(php_fpm_conf_path)
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
 
@@ -47,8 +50,14 @@ AC_DEFINE_UNQUOTED(PHP_FPM_LOG_PATH, "$php_fpm_log_path", [fpm log file path])
 AC_SUBST(php_fpm_pid_path)
 AC_DEFINE_UNQUOTED(PHP_FPM_PID_PATH, "$php_fpm_pid_path", [fpm pid file path])
 
+AC_SUBST(php_fpm_user)
+AC_DEFINE_UNQUOTED(PHP_FPM_USER, "$php_fpm_user", [fpm user name])
+
+AC_SUBST(php_fpm_group)
+AC_DEFINE_UNQUOTED(PHP_FPM_GROUP, "$php_fpm_group", [fpm group name])
+
 
 AC_CONFIG_FILES([Makefile src/Makefile src/sapi/Makefile src/fpm/Makefile])
 
-AC_OUTPUT(src/php-fpm.conf:conf/php-fpm.conf.in src/init.d.php-fpm:init.d/php-fpm.in)
+AC_OUTPUT(src/$php_fpm_conf:conf/php-fpm.conf.in src/init.d.$PHP_FPM_BIN:init.d/php-fpm.in)
 

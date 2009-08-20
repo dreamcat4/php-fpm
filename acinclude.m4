@@ -435,7 +435,8 @@ AC_DEFUN([AC_FPM_PHP],
 
 AC_DEFUN([AC_FPM_LIBEVENT_EMBEDDED],
 [
-	libevent_configure="cd ./libevent ; CC=\"$CC\" CFLAGS=\"$AM_CFLAGS\" ../$srcdir/libevent/configure --disable-shared"
+	echo "$srcdir" | grep -qv '^/'; if test $? = 0 ; then le_rel_pfx=../; fi
+	libevent_configure="cd ./libevent ; CC=\"$CC\" CFLAGS=\"$AM_CFLAGS\" $le_rel_pfx$srcdir/libevent/configure --disable-shared"
 
 	$mkdir_p ./libevent
 
@@ -462,6 +463,9 @@ dnl	LIBEVENT_LIBS=".a `echo "@LIBS@" | ./libevent/config.status --file=-:-`"
 
 AC_DEFUN([AC_FPM_PATHS],
 [
+	AC_ARG_WITH([fpm-bin],
+		AC_HELP_STRING([--with-fpm-bin=PATH], [Set the path for php-fpm binary. Default: $prefix/bin/php-fpm]))
+
 	AC_ARG_WITH([fpm-conf],
 		AC_HELP_STRING([--with-fpm-conf=PATH], [Set the path for php-fpm configuration file. Default: $prefix/etc/php-fpm.conf]))
 
@@ -471,17 +475,31 @@ AC_DEFUN([AC_FPM_PATHS],
 	AC_ARG_WITH([fpm-pid],
 		AC_HELP_STRING([--with-fpm-pid=PATH], [Set the path for php-fpm pid file. Default: $prefix/logs/php-fpm.pid]))
 
+	AC_ARG_WITH([fpm-user],
+		AC_HELP_STRING([--with-fpm-user=PATH], [Set the user for php-fpm to run as. Default: nobody]))
+
+	AC_ARG_WITH([fpm-group],
+		AC_HELP_STRING([--with-fpm-group=PATH], [Set the group for php-fpm to run as. Default: nobody]))
+
 	if test "$prefix" = "NONE" ; then
 		fpm_prefix=/usr/local
 	else
 		fpm_prefix="$prefix"
 	fi
 
+	if test -z "$with_fpm_bin" -o "$with_fpm_bin" = "yes" -o "$with_fpm_bin" = "no"; then
+		php_fpm_bin_path="$fpm_prefix/bin/php-fpm"
+	else
+		php_fpm_bin_path="$with_fpm_bin"
+	fi
+	PHP_FPM_BIN=`basename $php_fpm_bin_path`
+
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="$fpm_prefix/etc/php-fpm.conf"
 	else
 		php_fpm_conf_path="$with_fpm_conf"
 	fi
+	php_fpm_conf=`basename $php_fpm_conf_path`
 
 	if test -z "$with_fpm_log" -o "$with_fpm_log" = "yes" -o "$with_fpm_log" = "no"; then
 		php_fpm_log_path="$fpm_prefix/logs/php-fpm.log"
@@ -494,6 +512,20 @@ AC_DEFUN([AC_FPM_PATHS],
 	else
 		php_fpm_pid_path="$with_fpm_pid"
 	fi
+
+	if test -z "$with_fpm_user" -o "$with_fpm_user" = "yes" -o "$with_fpm_user" = "no"; then
+		php_fpm_user="nobody"
+	else
+		php_fpm_user="$with_fpm_user"
+	fi
+
+	if test -z "$with_fpm_group" -o "$with_fpm_group" = "yes" -o "$with_fpm_group" = "no"; then
+		php_fpm_group="nobody"
+	else
+		php_fpm_group="$with_fpm_group"
+	fi
+
+	AC_SUBST(PHP_FPM_BIN)
 ])
 
 AC_DEFUN([AC_FPM_CC],

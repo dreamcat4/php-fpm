@@ -1,6 +1,6 @@
 #! /bin/sh
 
-php_fpm_BIN=@prefix@/bin/php-cgi
+php_fpm_BIN=@php_fpm_bin_path@
 php_fpm_CONF=@php_fpm_conf_path@
 php_fpm_PID=@php_fpm_pid_path@
 

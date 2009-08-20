@@ -48,8 +48,8 @@
 				Set permissions for unix socket, if one used.
 				In Linux read/write permissions must be set in order to allow connections from web server.
 				Many BSD-derrived systems allow connections regardless of permissions.
-				<value name="owner"></value>
-				<value name="group"></value>
+				<value name="owner">@php_fpm_user@</value>
+				<value name="group">@php_fpm_group@</value>
 				<value name="mode">0666</value>
 			</value>
 
@@ -60,10 +60,10 @@
 			</value>
 
 			Unix user of processes
-		<!--	<value name="user">nobody</value>				-->
+			<value name="user">@php_fpm_user@</value>
 
 			Unix group of processes
-		<!--	<value name="group">@php_fpm_group@</value>		-->
+			<value name="group">@php_fpm_group@</value>
 
 			Process manager settings
 			<value name="pm">
@@ -107,7 +107,7 @@
 			<value name="request_slowlog_timeout">0s</value>
 
 			The log file for slow requests
-			<value name="slowlog">logs/slow.log</value>
+			<value name="slowlog">@php_fpm_log_path@.slow</value>
 
 			Set open file desc rlimit
 			<value name="rlimit_files">1024</value>
