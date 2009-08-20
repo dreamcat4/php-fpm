@@ -4,7 +4,7 @@
 
 ## Quick steps to get started:
 
-There are (1) Dependencies. If you haven't build php before, you'll need to install libxml dev package. The command for debian / ubuntu is:
+There are (1) Dependencies. If you haven't built php before, you'll need to install libxml dev package. The command for debian / ubuntu is:
 
 	sudo aptitude install -y libxml2-dev
 
@@ -24,6 +24,7 @@ Configure and compile the new php-fpm
 
 	cd php-fpm
 	./configure \
+	  --with-fpm-bin=/usr/bin/php-fpm \
 	  --with-fpm-pid=/var/run/php-fpm.pid \
 	  --with-fpm-log=/var/log/php-fpm.log \
 	  --with-fpm-conf=/etc/php-fpm.conf \
@@ -35,6 +36,10 @@ Optional configure flags
 
 	# Specify when build-dir is different to src-dir
 	--with-php-build=[DIR]
+	
+	# Should be set to 'www-data' for debian based systems
+	--with-fpm-user=[nobody]
+	--with-fpm-group=[nobody]
 
 ## Autoconf
 
@@ -51,7 +56,7 @@ The make process can be described as:
 
 Fpm is mixed in with php at the link-level. This de-couples the fpm sources, making them somewhat less sensitive to small changes in the php source code. We no longer are patching directly onto php source files, but there are 'corresponding' or counterpart source files in those part that fpm touches.
 
-## Installation (untested)
+## Installation - untested
 
-	make install-fpm
+There is an install script in Makefile.frag. However its currently broken, and needs to be updated.
 
