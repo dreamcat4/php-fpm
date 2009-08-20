@@ -99,14 +99,23 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* fpm bin file path */
+#undef PHP_FPM_BIN_PATH
+
 /* fpm conf file path */
 #undef PHP_FPM_CONF_PATH
+
+/* fpm group name */
+#undef PHP_FPM_GROUP
 
 /* fpm log file path */
 #undef PHP_FPM_LOG_PATH
 
 /* fpm pid file path */
 #undef PHP_FPM_PID_PATH
+
+/* fpm user name */
+#undef PHP_FPM_USER
 
 /* fpm version */
 #undef PHP_FPM_VERSION

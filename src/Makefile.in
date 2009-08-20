@@ -38,7 +38,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = php-fpm$(EXEEXT)
+bin_PROGRAMS = $(am__EXEEXT_1)
+EXTRA_PROGRAMS = php_fpm$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/fpm_autoconfig.h.in \
@@ -51,7 +52,8 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = fpm_autoconfig.h
-CONFIG_CLEAN_FILES = php-fpm.conf init.d.php-fpm
+CONFIG_CLEAN_FILES = $php_fpm_conf init.d.$PHP_FPM_BIN
+am__EXEEXT_1 = @PHP_FPM_BIN@
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -117,7 +119,6 @@ FPM_TRACE_USE_PREAD_FALSE = @FPM_TRACE_USE_PREAD_FALSE@
 FPM_TRACE_USE_PREAD_TRUE = @FPM_TRACE_USE_PREAD_TRUE@
 FPM_TRACE_USE_PTRACE_FALSE = @FPM_TRACE_USE_PTRACE_FALSE@
 FPM_TRACE_USE_PTRACE_TRUE = @FPM_TRACE_USE_PTRACE_TRUE@
-GREP = @GREP@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -135,10 +136,10 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
-PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PHP_BUILDDIR = @PHP_BUILDDIR@
+PHP_FPM_BIN = @PHP_FPM_BIN@
 PHP_OBJS = @PHP_OBJS@
 PHP_SRCDIR = @PHP_SRCDIR@
 RANLIB = @RANLIB@
@@ -147,9 +148,12 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
 XMLCONFIG = @XMLCONFIG@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_F77 = @ac_ct_F77@
+ac_ct_RANLIB = @ac_ct_RANLIB@
+ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -166,35 +170,31 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 datadir = @datadir@
-datarootdir = @datarootdir@
-docdir = @docdir@
-dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
 host_os = @host_os@
 host_vendor = @host_vendor@
-htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
-localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
-pdfdir = @pdfdir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
+php_fpm_bin_path = @php_fpm_bin_path@
 php_fpm_conf_path = @php_fpm_conf_path@
+php_fpm_group = @php_fpm_group@
 php_fpm_log_path = @php_fpm_log_path@
 php_fpm_pid_path = @php_fpm_pid_path@
+php_fpm_user = @php_fpm_user@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
-psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -259,9 +259,9 @@ $(srcdir)/fpm_autoconfig.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f fpm_autoconfig.h stamp-h1
-php-fpm.conf: $(top_builddir)/config.status $(top_srcdir)/conf/php-fpm.conf.in
+$php_fpm_conf: $(top_builddir)/config.status $(top_srcdir)/conf/php-fpm.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-init.d.php-fpm: $(top_builddir)/config.status $(top_srcdir)/init.d/php-fpm.in
+init.d.$PHP_FPM_BIN: $(top_builddir)/config.status $(top_srcdir)/init.d/php-fpm.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -291,8 +291,8 @@ clean-binPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-php-fpm$(EXEEXT): $(php_fpm_OBJECTS) $(php_fpm_DEPENDENCIES) 
-	@rm -f php-fpm$(EXEEXT)
+php_fpm$(EXEEXT): $(php_fpm_OBJECTS) $(php_fpm_DEPENDENCIES) 
+	@rm -f php_fpm$(EXEEXT)
 	$(LINK) $(php_fpm_LDFLAGS) $(php_fpm_OBJECTS) $(php_fpm_LDADD) $(LIBS)
 
 mostlyclean-compile:
@@ -586,6 +586,9 @@ uninstall-info: uninstall-info-recursive
 	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-info-am
 
+
+$(PHP_FPM_BIN): php_fpm
+	ln -s php_fpm $(PHP_FPM_BIN)
 
 ../libevent/libevent.la:	../libevent/Makefile
 	cd ../libevent && $(MAKE) libevent.la
