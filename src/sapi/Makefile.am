@@ -1,6 +1,4 @@
 
-CFLAGS = $(AM_CFLAGS)
-
 INCLUDES = \
 	-I$(top_srcdir)/src \
 	-I$(PHP_SRCDIR) \
