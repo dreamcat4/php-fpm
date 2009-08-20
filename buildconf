@@ -53,3 +53,7 @@ libtoolize --force --copy
 autoheader
 automake --foreign --copy --add-missing
 autoconf
+
+# # Alternative method (and without --foreign)
+# touch NEWS README AUTHORS ChangeLog
+# PATH=$(pwd)/autotools/bin:$PATH autoreconf -ivf
