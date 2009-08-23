@@ -5,7 +5,7 @@ bin_PROGRAMS = $(PHP_FPM_BIN)
 AM_CFLAGS +=-export-dynamic
 
 $(PHP_FPM_BIN): php_fpm
-	ln -s php_fpm $(PHP_FPM_BIN)
+	ln -sf php_fpm $(PHP_FPM_BIN)
 
 EXTRA_PROGRAMS = php_fpm
 php_fpm_SOURCES =

@@ -588,7 +588,7 @@ uninstall-info: uninstall-info-recursive
 
 
 $(PHP_FPM_BIN): php_fpm
-	ln -s php_fpm $(PHP_FPM_BIN)
+	ln -sf php_fpm $(PHP_FPM_BIN)
 
 ../libevent/libevent.la:	../libevent/Makefile
 	cd ../libevent && $(MAKE) libevent.la
