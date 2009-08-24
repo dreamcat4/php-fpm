@@ -723,6 +723,7 @@ static void php_cgi_usage(char *argv0)
 	}
 
 	php_printf("Usage: %s [options]\n"
+			   "\n"
 			   "  -C               Do not chdir to the script's directory\n"
 			   "  -c <path>|<file> Look for php.ini file in this directory\n"
 			   "  -n               No php.ini file will be used\n"
@@ -1403,10 +1404,19 @@ int main(int argc, char *argv[])
 				}
 				SG(headers_sent) = 1;
 				SG(request_info).no_headers = 1;
+
+#if SUHOSIN_PATCH
+#if ZEND_DEBUG
+						php_printf("PHP %s with Suhosin-Patch %s (%s) (built: %s %s) (DEBUG)\nCopyright (c) 1997-2009 The PHP Group\n%s", PHP_VERSION, SUHOSIN_PATCH_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
+#else
+						php_printf("PHP %s with Suhosin-Patch %s (%s) (built: %s %s)\nCopyright (c) 1997-2009 The PHP Group\n%s", PHP_VERSION, SUHOSIN_PATCH_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
+#endif
+#else
 #if ZEND_DEBUG
 				php_printf("PHP %s (%s) (built: %s %s) (DEBUG)\nCopyright (c) 1997-2009 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
 #else
 				php_printf("PHP %s (%s) (built: %s %s)\nCopyright (c) 1997-2009 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
+#endif
 #endif
 				php_request_shutdown((void *) 0);
 				exit_status = 0;
