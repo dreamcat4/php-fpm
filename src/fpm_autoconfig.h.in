@@ -99,6 +99,9 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* fpm binary executable */
+#undef PHP_FPM_BIN
+
 /* fpm bin file path */
 #undef PHP_FPM_BIN_PATH
 
@@ -119,6 +122,9 @@
 
 /* fpm version */
 #undef PHP_FPM_VERSION
+
+/* php version */
+#undef PHP_VERSION
 
 /* /proc/pid/mem interface */
 #undef PROC_MEM_FILE

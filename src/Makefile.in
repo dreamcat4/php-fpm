@@ -44,7 +44,7 @@ subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/fpm_autoconfig.h.in \
 	$(top_srcdir)/conf/php-fpm.conf.in \
-	$(top_srcdir)/init.d/php-fpm.in
+	$(top_srcdir)/init.d/php-fpm.in $(top_srcdir)/man/php-fpm.1.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.ac
@@ -52,8 +52,8 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = fpm_autoconfig.h
-CONFIG_CLEAN_FILES = $php_fpm_conf init.d.$PHP_FPM_BIN
-am__EXEEXT_1 = @PHP_FPM_BIN@
+CONFIG_CLEAN_FILES = $php_fpm_conf init.d.$php_fpm_bin $php_fpm_bin.1
+am__EXEEXT_1 = @php_fpm_bin@
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -87,7 +87,7 @@ ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
-AM_CFLAGS = @AM_CFLAGS@ -export-dynamic
+AM_CFLAGS = @AM_CFLAGS@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -139,9 +139,9 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PHP_BUILDDIR = @PHP_BUILDDIR@
-PHP_FPM_BIN = @PHP_FPM_BIN@
 PHP_OBJS = @PHP_OBJS@
 PHP_SRCDIR = @PHP_SRCDIR@
+PHP_VERSION = @PHP_VERSION@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -187,6 +187,7 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
+php_fpm_bin = @php_fpm_bin@
 php_fpm_bin_path = @php_fpm_bin_path@
 php_fpm_conf_path = @php_fpm_conf_path@
 php_fpm_group = @php_fpm_group@
@@ -201,6 +202,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 SUBDIRS = sapi fpm
 php_fpm_SOURCES = 
+php_fpm_LDFLAGS = -export-dynamic
 php_fpm_LDADD = \
 	$(PHP_OBJS:%=$(PHP_BUILDDIR)/%) \
 	sapi/libsapi.la \
@@ -261,7 +263,9 @@ distclean-hdr:
 	-rm -f fpm_autoconfig.h stamp-h1
 $php_fpm_conf: $(top_builddir)/config.status $(top_srcdir)/conf/php-fpm.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-init.d.$PHP_FPM_BIN: $(top_builddir)/config.status $(top_srcdir)/init.d/php-fpm.in
+init.d.$php_fpm_bin: $(top_builddir)/config.status $(top_srcdir)/init.d/php-fpm.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+$php_fpm_bin.1: $(top_builddir)/config.status $(top_srcdir)/man/php-fpm.1.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -444,7 +448,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../conf $(distdir)/../init.d
+	$(mkdir_p) $(distdir)/../conf $(distdir)/../init.d $(distdir)/../man
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -587,8 +591,8 @@ uninstall-info: uninstall-info-recursive
 	uninstall-binPROGRAMS uninstall-info-am
 
 
-$(PHP_FPM_BIN): php_fpm
-	ln -sf php_fpm $(PHP_FPM_BIN)
+$(php_fpm_bin): php_fpm
+	ln -sf php_fpm $(php_fpm_bin)
 
 ../libevent/libevent.la:	../libevent/Makefile
 	cd ../libevent && $(MAKE) libevent.la

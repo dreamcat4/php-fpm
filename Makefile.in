@@ -127,9 +127,9 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PHP_BUILDDIR = @PHP_BUILDDIR@
-PHP_FPM_BIN = @PHP_FPM_BIN@
 PHP_OBJS = @PHP_OBJS@
 PHP_SRCDIR = @PHP_SRCDIR@
+PHP_VERSION = @PHP_VERSION@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -175,6 +175,7 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
+php_fpm_bin = @php_fpm_bin@
 php_fpm_bin_path = @php_fpm_bin_path@
 php_fpm_conf_path = @php_fpm_conf_path@
 php_fpm_group = @php_fpm_group@
@@ -370,7 +371,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/conf $(distdir)/init.d
+	$(mkdir_p) $(distdir)/conf $(distdir)/init.d $(distdir)/man
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
