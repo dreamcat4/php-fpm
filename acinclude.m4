@@ -431,6 +431,7 @@ AC_DEFUN([AC_FPM_PHP],
 	AC_SUBST(PHP_OBJS)
 	AC_SUBST(PHP_SRCDIR)
 	AC_SUBST(PHP_BUILDDIR)
+	AC_SUBST(PHP_VERSION)
 ])
 
 AC_DEFUN([AC_FPM_LIBEVENT_EMBEDDED],
@@ -492,7 +493,7 @@ AC_DEFUN([AC_FPM_PATHS],
 	else
 		php_fpm_bin_path="$with_fpm_bin"
 	fi
-	PHP_FPM_BIN=`basename $php_fpm_bin_path`
+	php_fpm_bin=`basename $php_fpm_bin_path`
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="$fpm_prefix/etc/php-fpm.conf"
@@ -525,7 +526,6 @@ AC_DEFUN([AC_FPM_PATHS],
 		php_fpm_group="$with_fpm_group"
 	fi
 
-	AC_SUBST(PHP_FPM_BIN)
 ])
 
 AC_DEFUN([AC_FPM_CC],

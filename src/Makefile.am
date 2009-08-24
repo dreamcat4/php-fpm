@@ -1,14 +1,14 @@
 
 SUBDIRS = sapi fpm
 
-bin_PROGRAMS = $(PHP_FPM_BIN)
-AM_CFLAGS +=-export-dynamic
+bin_PROGRAMS = $(php_fpm_bin)
 
-$(PHP_FPM_BIN): php_fpm
-	ln -sf php_fpm $(PHP_FPM_BIN)
+$(php_fpm_bin): php_fpm
+	ln -sf php_fpm $(php_fpm_bin)
 
 EXTRA_PROGRAMS = php_fpm
 php_fpm_SOURCES =
+php_fpm_LDFLAGS =-export-dynamic
 
 php_fpm_LDADD = \
 	$(PHP_OBJS:%=$(PHP_BUILDDIR)/%) \
