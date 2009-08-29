@@ -181,8 +181,7 @@ int fpm_php_init_main()
 int fpm_php_init_child(struct fpm_worker_pool_s *wp)
 {
 	if (0 > fpm_php_apply_defines(wp) ||
-		0 > fpm_php_set_allowed_clients(wp) ||
-		0 > fpm_php_set_fcgi_mgmt_vars(wp)) {
+		0 > fpm_php_set_allowed_clients(wp) {
 		return -1;
 	}
 
