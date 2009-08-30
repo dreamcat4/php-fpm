@@ -1,4 +1,4 @@
-AC_INIT(php-fpm, 0.6.0, andrei.nigmatulin@gmail.com)
+AC_INIT(php-fpm, 0.6.3, andrei.nigmatulin@gmail.com)
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADER([src/fpm_autoconfig.h])

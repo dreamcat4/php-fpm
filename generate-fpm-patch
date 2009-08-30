@@ -2,17 +2,18 @@
 # generate-fpm-patch - Generate a patch file from fpm sources
 # 
 
-if [ ! -f "php-fpm/generate-fpm-patch" ]; then
+CONFIGURE_AC="php-fpm/configure.ac"
+if [ ! -f "$CONFIGURE_AC" ]; then
 	echo This command must be executed one directory ABOVE the
 	echo php-fpm source tree, with `php-fpm/generate-fpm-patch`
 fi
-
+PKG_DESCR=`cat "$CONFIGURE_AC" | grep AC_INIT | sed -e "s/AC_INIT.//" -e "s/. *$//"`
 FPM_PATCH_HEADER=`cat <<- \
-	"FPM_PATCH_HEADER"
+	FPM_PATCH_HEADER
 	#
 	# Ubuntu: https://bugs.launchpad.net/bugs/397721
-	# Patch: http://php-fpm.org/downloads/php-5.2.10-fpm-0.5.13.diff.gz
-	# Description: PHP FastCGI Process Manager php-fpm 0.5.13
+	# Patch: https://code.launchpad.net/php-fpm
+	# Description: $PKG_DESCR
 	#
 	FPM_PATCH_HEADER
 	`
@@ -22,10 +23,10 @@ mkdir -p php-5.2.10-vanilla
 mkdir -p php-5.2.10
 cd php-5.2.10
 cp -Rf ../php-fpm ./fpm
-rm -Rf fpm/.bzr* fpm/.git* fpm/*.cache fpm/autotools
+rm -Rf fpm/.bzr* fpm/.git* fpm/*.cache fpm/autotools fpm/man1
 rm -Rf fpm/libevent/autotools fpm/libevent/*.cache
 cd ..
 
 diff -Naur php-5.2.10-vanilla php-5.2.10 >> fpm.patch
-patch --no-backup-if-mismatch -p1 < php-fpm/ac_cr.patch
+patch --quiet --no-backup-if-mismatch -p1 < php-fpm/ac_cr.patch
 rm -Rf php-5.2.10-vanilla php-5.2.10
