@@ -68,7 +68,9 @@ AC_CONFIG_FILES([Makefile src/Makefile src/sapi/Makefile src/fpm/Makefile])
 
 AC_OUTPUT(src/$php_fpm_conf:conf/php-fpm.conf.in)
 
-AC_OUTPUT(src/init.d.$php_fpm_bin:init.d/php-fpm.in)
+AC_OUTPUT(src/init.d.$php_fpm_bin:conf/init.d.php-fpm.in)
+
+AC_OUTPUT(src/nginx-site-conf.sample:conf/nginx-site-conf.sample.in)
 
 AC_OUTPUT(src/$php_fpm_bin.1:man/php-fpm.1.in)
 

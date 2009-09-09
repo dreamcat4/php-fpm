@@ -43,8 +43,10 @@ EXTRA_PROGRAMS = php_fpm$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/fpm_autoconfig.h.in \
+	$(top_srcdir)/conf/init.d.php-fpm.in \
+	$(top_srcdir)/conf/nginx-site-conf.sample.in \
 	$(top_srcdir)/conf/php-fpm.conf.in \
-	$(top_srcdir)/init.d/php-fpm.in $(top_srcdir)/man/php-fpm.1.in
+	$(top_srcdir)/man/php-fpm.1.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.ac
@@ -52,7 +54,8 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = fpm_autoconfig.h
-CONFIG_CLEAN_FILES = $php_fpm_conf init.d.$php_fpm_bin $php_fpm_bin.1
+CONFIG_CLEAN_FILES = $php_fpm_conf init.d.$php_fpm_bin \
+	nginx-site-conf.sample $php_fpm_bin.1
 am__EXEEXT_1 = @php_fpm_bin@
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
@@ -263,7 +266,9 @@ distclean-hdr:
 	-rm -f fpm_autoconfig.h stamp-h1
 $php_fpm_conf: $(top_builddir)/config.status $(top_srcdir)/conf/php-fpm.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-init.d.$php_fpm_bin: $(top_builddir)/config.status $(top_srcdir)/init.d/php-fpm.in
+init.d.$php_fpm_bin: $(top_builddir)/config.status $(top_srcdir)/conf/init.d.php-fpm.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+nginx-site-conf.sample: $(top_builddir)/config.status $(top_srcdir)/conf/nginx-site-conf.sample.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 $php_fpm_bin.1: $(top_builddir)/config.status $(top_srcdir)/man/php-fpm.1.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -448,7 +453,7 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../conf $(distdir)/../init.d $(distdir)/../man
+	$(mkdir_p) $(distdir)/../conf $(distdir)/../man
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
