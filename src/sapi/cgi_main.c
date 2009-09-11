@@ -1254,7 +1254,7 @@ int main(int argc, char *argv[])
 	int free_query_string = 0;
 	int exit_status = SUCCESS;
 	int c;
-	zend_file_handle file_handle;
+	zend_file_handle file_handle = {};
 	int retval;
 /* temporary locals */
 	int orig_optind = php_optind;
@@ -1353,7 +1353,8 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'e': /* enable extended info output */
-				CG(extended_info) = 1;
+				CG(extended_info) = 1; /* 5_2 */
+				/* CG(compiler_options) |= ZEND_COMPILE_EXTENDED_INFO; */ /* 5_3 */
 				break;
 
 			case 'm': /* list compiled in modules */
@@ -1487,10 +1488,11 @@ int main(int argc, char *argv[])
 			rely on the web server giving us the info
 			we need in the environment. 
 		*/
-		file_handle.type = ZEND_HANDLE_FILENAME;
-		file_handle.filename = SG(request_info).path_translated;
-		file_handle.handle.fp = NULL;
-
+		if (SG(request_info).path_translated) {
+			file_handle.type = ZEND_HANDLE_FILENAME;
+			file_handle.filename = SG(request_info).path_translated;
+			file_handle.handle.fp = NULL;
+		}
 		file_handle.opened_path = NULL;
 		file_handle.free_filename = 0;
 
