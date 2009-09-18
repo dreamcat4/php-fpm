@@ -27,7 +27,11 @@
 #include <stdarg.h>
 #include <errno.h>
 
+#ifdef FPM_AUTOCONFIG_H
 #include <fpm_autoconfig.h>
+#else
+#include <php_config.h>
+#endif
 #include <fpm/fpm.h>
 #include <fpm/fpm_request.h>
 

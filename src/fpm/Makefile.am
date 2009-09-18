@@ -11,7 +11,7 @@ INCLUDES = \
 
 noinst_LTLIBRARIES = libfpm.la
 
-libfpm_la_CFLAGS = $(php_fpm_ADD_CFLAGS)
+libfpm_la_CFLAGS = -DFPM_AUTOCONFIG_H $(php_fpm_ADD_CFLAGS)
 
 libfpm_la_SOURCES = \
 	fpm.c \

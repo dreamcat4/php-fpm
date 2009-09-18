@@ -11,6 +11,8 @@ INCLUDES = \
 
 noinst_LTLIBRARIES = libsapi.la
 
+libsapi_la_CFLAGS = -DFPM_AUTOCONFIG_H
+
 libsapi_la_SOURCES = \
 	cgi_main.c \
 	fastcgi.c \

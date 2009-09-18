@@ -3,8 +3,9 @@
 	/* (c) 2007,2008 Andrei Nigmatulin */
 
 #include <php_config.h>
+#ifdef FPM_AUTOCONFIG_H
 #include <fpm_autoconfig.h>
-
+#endif
 
 /* Solaris does not have it */
 #ifndef INADDR_NONE
