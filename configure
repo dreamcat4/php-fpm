@@ -1045,16 +1045,22 @@ Optional Packages:
                           both]
   --with-tags[=TAGS]
                           include additional configurations [automatic]
-  --with-fpm-bin=PATH     Set the path for php-fpm binary. Default:
-                          $prefix/bin/php-fpm
-  --with-fpm-conf=PATH    Set the path for php-fpm configuration file.
-                          Default: $prefix/etc/php-fpm.conf
-  --with-fpm-log=PATH     Set the path for php-fpm log file. Default:
-                          $prefix/logs/php-fpm.log
-  --with-fpm-pid=PATH     Set the path for php-fpm pid file. Default:
-                          $prefix/logs/php-fpm.pid
-  --with-fpm-user=PATH    Set the user for php-fpm to run as. Default: nobody
-  --with-fpm-group=PATH   Set the group for php-fpm to run as. Default: nobody
+  --with-fpm-bin=[PATH]
+                          Set the path for php-fpm binary
+                          [/usr/local/bin/php-fpm]
+  --with-fpm-conf=[PATH]
+                          Set the path for php-fpm configuration file
+                          [/etc/php-fpm.conf]
+  --with-fpm-log=[PATH]
+                          Set the path for php-fpm log file
+                          [/var/log/php-fpm.log]
+  --with-fpm-pid=[PATH]
+                          Set the path for php-fpm pid file
+                          [/var/run/php-fpm.pid]
+  --with-fpm-user=[USER]
+                          Set the user for php-fpm to run as [nobody]
+  --with-fpm-group=[GRP]
+                          Set the group for php-fpm to run as [nobody]
   --with-php-src=DIR      full path to php source dir
   --with-php-build=DIR    full path to php build dir, only needed if differ
                           from source dir
@@ -1522,6 +1528,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
+fpm_version="$PACKAGE_VERSION"
 
 am__api_version="1.9"
 ac_aux_dir=
@@ -22120,14 +22128,7 @@ php_fpm_ADD_LIBS="$LIBEVENT_LIBS $LIBXML_LIBS $PHP_EXTRA_LIBS"
 
 
 cat >>confdefs.h <<_ACEOF
-#define PHP_FPM_VERSION "$PACKAGE_VERSION"
-_ACEOF
-
-
-
-
-cat >>confdefs.h <<_ACEOF
-#define PHP_VERSION "$PHP_VERSION"
+#define PHP_FPM_VERSION "$fpm_version"
 _ACEOF
 
 
@@ -22941,6 +22942,7 @@ s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
@@ -24423,6 +24425,7 @@ s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t

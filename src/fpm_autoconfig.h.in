@@ -123,9 +123,6 @@
 /* fpm version */
 #undef PHP_FPM_VERSION
 
-/* php version */
-#undef PHP_VERSION
-
 /* /proc/pid/mem interface */
 #undef PROC_MEM_FILE
 

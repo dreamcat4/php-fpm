@@ -1,4 +1,6 @@
 AC_INIT(php-fpm, 0.6.3, andrei.nigmatulin@gmail.com)
+fpm_version="$PACKAGE_VERSION"
+
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADER([src/fpm_autoconfig.h])
@@ -29,17 +31,14 @@ AC_CHECK_HEADERS([arpa/inet.h netinet/in.h])
 php_fpm_ADD_CFLAGS="$LIBEVENT_CFLAGS $LIBXML_CFLAGS"
 php_fpm_ADD_LIBS="$LIBEVENT_LIBS $LIBXML_LIBS $PHP_EXTRA_LIBS"
 
-
 AC_SUBST(AM_CFLAGS)
 AC_SUBST(LIBS)
 
 AC_SUBST(php_fpm_ADD_CFLAGS)
 AC_SUBST(php_fpm_ADD_LIBS)
 
-AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$PACKAGE_VERSION", [fpm version])
-
-AC_SUBST(PHP_VERSION)
-AC_DEFINE_UNQUOTED(PHP_VERSION, "$PHP_VERSION", [php version])
+AC_SUBST(fpm_version)
+AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$fpm_version", [fpm version])
 
 AC_SUBST(php_fpm_bin)
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
