@@ -464,28 +464,28 @@ dnl	LIBEVENT_LIBS=".a `echo "@LIBS@" | ./libevent/config.status --file=-:-`"
 
 AC_DEFUN([AC_FPM_PATHS],
 [
+
 	AC_ARG_WITH([fpm-bin],
-		AC_HELP_STRING([--with-fpm-bin=PATH], [Set the path for php-fpm binary. Default: $prefix/bin/php-fpm]))
+		AC_HELP_STRING([--with-fpm-bin=@<:@PATH@:>@], [Set the path for php-fpm binary @<:@/usr/local/bin/php-fpm@:>@]))
 
 	AC_ARG_WITH([fpm-conf],
-		AC_HELP_STRING([--with-fpm-conf=PATH], [Set the path for php-fpm configuration file. Default: $prefix/etc/php-fpm.conf]))
+		AC_HELP_STRING([--with-fpm-conf=@<:@PATH@:>@], [Set the path for php-fpm configuration file @<:@/etc/php-fpm.conf@:>@]))
 
 	AC_ARG_WITH([fpm-log],
-		AC_HELP_STRING([--with-fpm-log=PATH], [Set the path for php-fpm log file. Default: $prefix/logs/php-fpm.log]))
+		AC_HELP_STRING([--with-fpm-log=@<:@PATH@:>@], [Set the path for php-fpm log file @<:@/var/log/php-fpm.log@:>@]))
 
 	AC_ARG_WITH([fpm-pid],
-		AC_HELP_STRING([--with-fpm-pid=PATH], [Set the path for php-fpm pid file. Default: $prefix/logs/php-fpm.pid]))
+		AC_HELP_STRING([--with-fpm-pid=@<:@PATH@:>@], [Set the path for php-fpm pid file @<:@/var/run/php-fpm.pid@:>@]))
 
 	AC_ARG_WITH([fpm-user],
-		AC_HELP_STRING([--with-fpm-user=PATH], [Set the user for php-fpm to run as. Default: nobody]))
+		AC_HELP_STRING([--with-fpm-user=@<:@USER@:>@], [Set the user for php-fpm to run as @<:@nobody@:>@]))
 
 	AC_ARG_WITH([fpm-group],
-		AC_HELP_STRING([--with-fpm-group=PATH], [Set the group for php-fpm to run as. Default: nobody]))
+		AC_HELP_STRING([--with-fpm-group=@<:@GRP@:>@], [Set the group for php-fpm to run as @<:@nobody@:>@]))
 
-	if test "$prefix" = "NONE" ; then
-		fpm_prefix=/usr/local
-	else
-		fpm_prefix="$prefix"
+	fpm_prefix=$ac_default_prefix
+	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then 
+		fpm_prefix=$prefix
 	fi
 
 	if test -z "$with_fpm_bin" -o "$with_fpm_bin" = "yes" -o "$with_fpm_bin" = "no"; then
@@ -496,20 +496,20 @@ AC_DEFUN([AC_FPM_PATHS],
 	php_fpm_bin=`basename $php_fpm_bin_path`
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
-		php_fpm_conf_path="$fpm_prefix/etc/php-fpm.conf"
+		php_fpm_conf_path="/etc/php-fpm.conf"
 	else
 		php_fpm_conf_path="$with_fpm_conf"
 	fi
 	php_fpm_conf=`basename $php_fpm_conf_path`
 
 	if test -z "$with_fpm_log" -o "$with_fpm_log" = "yes" -o "$with_fpm_log" = "no"; then
-		php_fpm_log_path="$fpm_prefix/logs/php-fpm.log"
+		php_fpm_log_path="/var/log/php-fpm.log"
 	else
 		php_fpm_log_path="$with_fpm_log"
 	fi
 
 	if test -z "$with_fpm_pid" -o "$with_fpm_pid" = "yes" -o "$with_fpm_pid" = "no"; then
-		php_fpm_pid_path="$fpm_prefix/logs/php-fpm.pid"
+		php_fpm_pid_path="/var/run/php-fpm.pid"
 	else
 		php_fpm_pid_path="$with_fpm_pid"
 	fi
