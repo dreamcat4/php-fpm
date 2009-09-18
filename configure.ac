@@ -1,9 +1,9 @@
-AC_INIT(php-fpm, 0.6.4, andrei.nigmatulin@gmail.com)
+AC_INIT(php-fpm, 0.6.5, andrei.nigmatulin@gmail.com)
 fpm_version="$PACKAGE_VERSION"
 
 AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([src])
-AC_CONFIG_HEADER([src/fpm_autoconfig.h])
+AC_CONFIG_SRCDIR([fpm/fpm.c])
+AC_CONFIG_HEADER([fpm_autoconfig.h])
 
 AC_SEARCH_LIBS(socket, socket)
 AC_SEARCH_LIBS(inet_addr, nsl)
@@ -62,14 +62,14 @@ AC_SUBST(php_fpm_group)
 AC_DEFINE_UNQUOTED(PHP_FPM_GROUP, "$php_fpm_group", [fpm group name])
 
 
-AC_CONFIG_FILES([Makefile src/Makefile src/sapi/Makefile src/fpm/Makefile])
+AC_CONFIG_FILES([Makefile cgi/Makefile fpm/Makefile])
 
 
-AC_OUTPUT(src/$php_fpm_conf:conf/php-fpm.conf.in)
+AC_OUTPUT($php_fpm_conf:conf/php-fpm.conf.in)
 
-AC_OUTPUT(src/init.d.$php_fpm_bin:conf/init.d.php-fpm.in)
+AC_OUTPUT(init.d.$php_fpm_bin:conf/init.d.php-fpm.in)
 
-AC_OUTPUT(src/nginx-site-conf.sample:conf/nginx-site-conf.sample.in)
+AC_OUTPUT(nginx-site-conf.sample:conf/nginx-site-conf.sample.in)
 
-AC_OUTPUT(src/$php_fpm_bin.1:man/php-fpm.1.in)
+AC_OUTPUT($php_fpm_bin.1:man/php-fpm.1.in)
 

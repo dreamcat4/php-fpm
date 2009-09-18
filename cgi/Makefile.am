@@ -1,6 +1,6 @@
 
 INCLUDES = \
-	-I$(top_srcdir)/src \
+	-I$(top_srcdir) \
 	-I$(PHP_SRCDIR) \
 	-I$(PHP_SRCDIR)/TSRM \
 	-I$(PHP_SRCDIR)/Zend \

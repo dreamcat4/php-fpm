@@ -1,24 +1,24 @@
 
 AC_DEFUN([AC_FPM_BUILD_SAPI],
 [
-	PHP_ADD_MAKEFILE_FRAGMENT($abs_srcdir/sapi/fpm/Makefile.frag)
+	PHP_ADD_MAKEFILE_FRAGMENT($abs_srcdir/sapi/fpm/ac/Makefile.frag)
 
     SAPI_FPM_PATH=sapi/fpm/$php_fpm_bin
 	PHP_SUBST(SAPI_FPM_PATH)
 	
-	mkdir -p sapi/fpm/src/sapi
-	PHP_FPM_SAPI_FILES=`cd $abs_srcdir/sapi/fpm && find src/sapi \( -name *.c \) -exec printf "{} " \;`
-	# PHP_FPM_SAPI_FILES="src/sapi/cgi_main.c src/sapi/fastcgi.c src/sapi/getopt.c"
+	mkdir -p sapi/fpm/cgi
+	PHP_FPM_SAPI_FILES=`cd $abs_srcdir/sapi/fpm && find cgi/ \( -name *.c \) -exec printf "{} " \;`
+	# PHP_FPM_SAPI_FILES="cgi/cgi_main.c cgi/fastcgi.c cgi/getopt.c"
 
-	mkdir -p sapi/fpm/src/fpm
-	PHP_FPM_CORE_FILES=`cd $abs_srcdir/sapi/fpm && find src/fpm \( -name *.c -not -name fpm_trace*.c \) -exec printf "{} " \;`
-	# PHP_FPM_CORE_FILES="src/fpm/fpm_process_ctl.c src/fpm/fpm_signals.c src/fpm/fpm_shm.c src/fpm/fpm.c src/fpm/fpm_worker_pool.c src/fpm/fpm_clock.c src/fpm/fpm_env.c src/fpm/fpm_shm_slots.c src/fpm/fpm_children.c src/fpm/fpm_events.c src/fpm/fpm_php.c src/fpm/fpm_unix.c src/fpm/fpm_request.c src/fpm/fpm_sockets.c src/fpm/fpm_php_trace.c src/fpm/zlog.c src/fpm/fpm_cleanup.c src/fpm/fpm_conf.c src/fpm/xml_config.c src/fpm/fpm_stdio.c"
+	mkdir -p sapi/fpm/fpm
+	PHP_FPM_CORE_FILES=`cd $abs_srcdir/sapi/fpm && find fpm/ \( -name *.c -not -name fpm_trace*.c \) -exec printf "{} " \;`
+	# PHP_FPM_CORE_FILES="fpm/fpm_process_ctl.c fpm/fpm_signals.c fpm/fpm_shm.c fpm/fpm.c fpm/fpm_worker_pool.c fpm/fpm_clock.c fpm/fpm_env.c fpm/fpm_shm_slots.c fpm/fpm_children.c fpm/fpm_events.c fpm/fpm_php.c fpm/fpm_unix.c fpm/fpm_request.c fpm/fpm_sockets.c fpm/fpm_php_trace.c fpm/zlog.c fpm/fpm_cleanup.c fpm/fpm_conf.c fpm/xml_config.c fpm/fpm_stdio.c"
 
 	if test "$fpm_trace_type" ; then
-		PHP_FPM_TRACE_FILES=`cd $abs_srcdir/sapi/fpm && find src/fpm \( -name fpm_trace.c -or -name fpm_trace_$fpm_trace_type.c \) -exec printf "{} " \;`
+		PHP_FPM_TRACE_FILES=`cd $abs_srcdir/sapi/fpm && find fpm/ \( -name fpm_trace.c -or -name fpm_trace_$fpm_trace_type.c \) -exec printf "{} " \;`
 	fi
 	
-	PHP_FPM_CFLAGS="$LIBEVENT_CFLAGS -I$abs_srcdir/sapi/fpm/src"
+	PHP_FPM_CFLAGS="$LIBEVENT_CFLAGS -I$abs_srcdir/sapi/fpm"
 	# PHP_FPM_CFLAGS="$LIBEVENT_CFLAGS"
 
 	SAPI_EXTRA_LIBS="$LIBEVENT_LIBS"

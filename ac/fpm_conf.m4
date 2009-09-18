@@ -86,10 +86,10 @@ AC_DEFUN([AC_FPM_VARS],
 
 AC_DEFUN([AC_FPM_OUTPUT],
 [
-	PHP_OUTPUT(sapi/fpm/src/$php_fpm_conf:sapi/fpm/conf/php-fpm.conf.in)
-	PHP_OUTPUT(sapi/fpm/src/init.d.$php_fpm_bin:sapi/fpm/conf/init.d.php-fpm.in)
-	PHP_OUTPUT(sapi/fpm/src/nginx-site-conf.sample:sapi/fpm/conf/nginx-site-conf.sample.in)
-	PHP_OUTPUT(sapi/fpm/src/$php_fpm_bin.1:sapi/fpm/man/php-fpm.1.in)
+	PHP_OUTPUT(sapi/fpm/$php_fpm_conf:sapi/fpm/conf/php-fpm.conf.in)
+	PHP_OUTPUT(sapi/fpm/init.d.$php_fpm_bin:sapi/fpm/conf/init.d.php-fpm.in)
+	PHP_OUTPUT(sapi/fpm/nginx-site-conf.sample:sapi/fpm/conf/nginx-site-conf.sample.in)
+	PHP_OUTPUT(sapi/fpm/$php_fpm_bin.1:sapi/fpm/man/php-fpm.1.in)
 ])
 
 

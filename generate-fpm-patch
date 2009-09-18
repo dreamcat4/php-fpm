@@ -19,20 +19,27 @@ FPM_PATCH_HEADER=`cat <<- \
 	FPM_PATCH_HEADER
 	`
 echo "$FPM_PATCH_HEADER" > fpm.patch
-
-mkdir -p php-5.2.10-vanilla/sapi
-mkdir -p php-5.2.10/sapi
-cd php-5.2.10
-cp -Rf ../php-fpm sapi/fpm
+PHP_SRC=43fa2d06781b784bb2025b57a2230267 # echo "php-src" | md5
+mkdir -p $PHP_SRC/php-src-vanilla/sapi
+mkdir -p $PHP_SRC/php-src/sapi
+cd $PHP_SRC/php-src
+cp -Rf ../../php-fpm sapi/fpm
 cd sapi/fpm
 
 # Remove non-project files
-rm -Rf .bzr* .git* *.cache autotools man1
+rm -Rf .bzr* .git* *.cache autotools
+
+# Remove standalone project files
+STANDALONE_FILES="INSTALL Makefile.am Makefile.in acinclude.m4 aclocal.m4 autoconf.markdown \
+buildconf compile config.guess config.sub configure configure.ac depcomp \
+generate-autotools generate-fpm-patch fpm_autoconfig.h.in install-sh ltmain.sh m4 missing \
+readme.markdown fpm/Makefile.am fpm/Makefile.in cgi/Makefile.am cgi/Makefile.in"
+rm -rf $STANDALONE_FILES
 
 # Remove those standalone files here that php-src won't use
 # rm -rf file1 file2 file3...
 
-cd "$START_DIR"
-diff -Naur php-5.2.10-vanilla php-5.2.10 | filterdiff --remove-timestamps >> fpm.patch
-patch --quiet --no-backup-if-mismatch -p1 < php-fpm/ac_cr.patch
-rm -Rf php-5.2.10-vanilla php-5.2.10
+cd "$START_DIR/$PHP_SRC"
+diff -Naur php-src-vanilla php-src | filterdiff --remove-timestamps >> fpm.patch
+cp fpm.patch ../ && cd ../
+rm -Rf $PHP_SRC
