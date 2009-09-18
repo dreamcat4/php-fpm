@@ -1,6 +1,8 @@
 dnl @synopsis AC_LIB_EVENT([MINIMUM-VERSION])
 dnl
 dnl Test for the libevent library of a particular version (or newer).
+dnl Source: http://svn.apache.org/repos/asf/incubator/thrift/trunk/aclocal/ax_lib_event.m4
+dnl Modified: This file was modified for autoconf-2.13 and the PHP_ARG_WITH macro.
 dnl
 dnl If no path to the installed libevent is given, the macro will first try
 dnl using no -I or -L flags, then searches under /usr, /usr/local, /opt,
@@ -10,12 +12,10 @@ dnl
 dnl This macro requires that #include <sys/types.h> works and defines u_char.
 dnl
 dnl This macro calls:
-dnl   AC_SUBST(LIBEVENT_CPPFLAGS)
-dnl   AC_SUBST(LIBEVENT_LDFLAGS)
+dnl   AC_SUBST(LIBEVENT_CFLAGS)
 dnl   AC_SUBST(LIBEVENT_LIBS)
 dnl
-dnl And (if libevent is found):
-dnl   AC_DEFINE(HAVE_LIBEVENT)
+dnl And (if libevent is found): AC_DEFINE(HAVE_LIBEVENT)
 dnl
 dnl It also leaves the shell variables "success" and "ac_have_libevent"
 dnl set to "yes" or "no".
@@ -33,8 +33,6 @@ dnl Copying and distribution of this file, with or without modification,
 dnl are permitted in any medium without royalty provided the copyright
 dnl notice and this notice are preserved.
 
-dnl Input: ac_libevent_path, WANT_LIBEVENT_VERSION
-dnl Output: success=yes/no
 AC_DEFUN([AC_LIB_EVENT_DO_CHECK],
          [
           # Save our flags.
@@ -54,7 +52,7 @@ AC_DEFUN([AC_LIB_EVENT_DO_CHECK],
           fi
 
           # Required flag for libevent.
-          LIBEVENT_LIBS="-levent"
+		  LIBEVENT_LIBS="-levent"
 
           # Prepare the environment for compilation.
           CPPFLAGS="$CPPFLAGS $LIBEVENT_CPPFLAGS"
@@ -91,6 +89,7 @@ AC_DEFUN([AC_LIB_EVENT_DO_CHECK],
             if (*lib_version == '\0' || *lib_version == '-') {
               return 1;
             }
+
             /* In the 1.4 version numbering style, if there are more digits */
             /* in one version than the other, that one is higher. */
             int lib_digits;
@@ -135,60 +134,62 @@ AC_DEFUN([AC_LIB_EVENT_DO_CHECK],
           LD_LIBRARY_PATH="$LD_LIBRARY_PATH_SAVED"
          ])
 
-
 AC_DEFUN([AC_LIB_EVENT],
          [
 
           dnl Allow search path to be overridden on the command line.
-          AC_ARG_WITH([libevent],
-                      AS_HELP_STRING([--with-libevent@<:@=DIR@:>@], [use libevent (default is yes) - it is possible to specify an alternate root directory for libevent]),
-                      [
-                       if test "x$withval" = "xno"; then
-                         want_libevent="no"
-                       elif test "x$withval" = "xyes"; then
-                         want_libevent="yes"
-                         ac_libevent_path=""
-                       else
-                         want_libevent="yes"
-                         ac_libevent_path="$withval"
-                       fi
-                       ],
-                       [ want_libevent="yes" ; ac_libevent_path="" ])
+          PHP_ARG_WITH(libevent,,
+          [  --with-libevent@<:@=PATH@:>@  Path to the libevent, for fpm SAPI @<:@/usr/local@:>@], /usr/local, yes)
 
-
-          if test "$want_libevent" = "yes"; then
+          if test "$PHP_LIBEVENT" != "no"; then
             WANT_LIBEVENT_VERSION=ifelse([$1], ,1.2,$1)
 
             AC_MSG_CHECKING(for libevent >= $WANT_LIBEVENT_VERSION)
 
+			libevent_prefix=$ac_default_prefix
+			if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
+				libevent_prefix=$prefix
+			fi
+
+		    if test "$PHP_LIBEVENT" = "yes"; then
+				PHP_LIBEVENT=$libevent_prefix
+		    fi
+
             # Run tests.
-            if test -n "$ac_libevent_path"; then
+            for ac_libevent_path in "" $PHP_LIBEVENT /usr /usr/local /opt /opt/local /opt/libevent ; do
               AC_LIB_EVENT_DO_CHECK
-            else
-              for ac_libevent_path in "" /usr /usr/local /opt /opt/local /opt/libevent "$LIBEVENT_ROOT" ; do
-                AC_LIB_EVENT_DO_CHECK
-                if test "$success" = "yes"; then
-                  break;
-                fi
-              done
-            fi
+              if test "$success" = "yes"; then
+                break;
+              fi
+            done
+
+			if test "$ext_shared" = "yes"; then
+				LIBEVENT_LIBS="-levent"
+			else
+				LIBEVENT_LIBS="-l:libevent.a"
+			fi
 
             if test "$success" != "yes" ; then
               AC_MSG_RESULT(no)
-              LIBEVENT_CPPFLAGS=""
-              LIBEVENT_LDFLAGS=""
               LIBEVENT_LIBS=""
+			  ac_have_libevent=no
+              AC_MSG_ERROR([Libevent $WANT_LIBEVENT_VERSION could not be found])
             else
               AC_MSG_RESULT(yes)
-              AC_DEFINE(HAVE_LIBEVENT,,[define if libevent is available])
-              ac_have_libevent_[]m4_translit([$1], [.], [_])="yes"
+			  ac_have_libevent=yes
+              AC_DEFINE(HAVE_LIBEVENT, 1, [define if libevent is available])
             fi
 
-            ac_have_libevent="$success"
+			if test -n "$ac_libevent_path"; then
+				LIBEVENT_CFLAGS="-I$ac_libevent_path/include"
+				LIBEVENT_LIBS="-L$ac_libevent_path/$PHP_LIBDIR $LIBEVENT_LIBS"
+			fi
 
-            AC_SUBST(LIBEVENT_CPPFLAGS)
-            AC_SUBST(LIBEVENT_LDFLAGS)
-            AC_SUBST(LIBEVENT_LIBS)
+		    AC_SUBST(LIBEVENT_CFLAGS)
+		    AC_SUBST(LIBEVENT_LIBS)
+
+          else
+			AC_MSG_ERROR([FPM Requires Libevent. You can build this target --with-libevent=yes])
           fi
 
           ])
