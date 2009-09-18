@@ -64,7 +64,7 @@ am_php_fpm_OBJECTS =
 php_fpm_OBJECTS = $(am_php_fpm_OBJECTS)
 am__DEPENDENCIES_1 =
 php_fpm_DEPENDENCIES = $(PHP_OBJS:%=$(PHP_BUILDDIR)/%) sapi/libsapi.la \
-	fpm/libfpm.la ../libevent/libevent.la $(am__DEPENDENCIES_1)
+	fpm/libfpm.la $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -211,11 +211,9 @@ php_fpm_LDADD = \
 	$(PHP_OBJS:%=$(PHP_BUILDDIR)/%) \
 	sapi/libsapi.la \
 	fpm/libfpm.la \
-	../libevent/libevent.la \
 	$(php_fpm_ADD_LIBS)
 
-BUILT_SOURCES = ../libevent/event-config.h
-all: $(BUILT_SOURCES) fpm_autoconfig.h
+all: fpm_autoconfig.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -497,16 +495,14 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) check-recursive
+check: check-recursive
 all-am: Makefile $(PROGRAMS) fpm_autoconfig.h
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-recursive
+install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -530,7 +526,6 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
@@ -599,12 +594,6 @@ uninstall-info: uninstall-info-recursive
 
 $(php_fpm_bin): php_fpm
 	ln -sf php_fpm $(php_fpm_bin)
-
-../libevent/libevent.la:	../libevent/Makefile
-	cd ../libevent && $(MAKE) libevent.la
-
-../libevent/event-config.h:	../libevent/Makefile
-	cd ../libevent && $(MAKE) event-config.h
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

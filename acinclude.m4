@@ -12,41 +12,6 @@ AC_DEFUN([AC_FPM_CHECK_FUNC],
 	LIBS="$SAVED_LIBS"
 ])
 
-AC_DEFUN([AC_FPM_LIBEVENT],
-[
-	AC_ARG_WITH([libevent], AC_HELP_STRING([--with-libevent=DIR], [libevent install directory]))
-
-	LIBEVENT_CFLAGS=""
-	LIBEVENT_LIBS="-levent"
-	LIBEVENT_INCLUDE_PATH=""
-
-	if test "$with_libevent" != "no" -a -n "$with_libevent"; then
-		LIBEVENT_CFLAGS="-I$with_libevent/include"
-		LIBEVENT_LIBS="-L$with_libevent/lib $LIBEVENT_LIBS"
-		LIBEVENT_INCLUDE_PATH="$with_libevent/include"
-	fi
-
-	AC_MSG_CHECKING([for event.h])
-
-	found=no
-
-	for dir in "$LIBEVENT_INCLUDE_PATH" /usr/include ; do
-		if test -r "$dir/event.h" ; then
-			found=yes
-			break
-		fi
-	done
-
-	AC_MSG_RESULT([$found])
-
-	AC_FPM_CHECK_FUNC([event_set], [$LIBEVENT_CFLAGS], [$LIBEVENT_LIBS], ,
-		[AC_MSG_ERROR([Failed to link with libevent. Perhaps --with-libevent=DIR option could help.])])
-
-	AC_FPM_CHECK_FUNC([event_base_free], [$LIBEVENT_CFLAGS], [$LIBEVENT_LIBS], ,
-		[AC_MSG_ERROR([You have too old version. libevent version >= 1.2 is required.])])
-
-])
-
 AC_DEFUN([AC_FPM_LIBXML],
 [
 	AC_MSG_RESULT([checking for XML configuration])
@@ -76,38 +41,6 @@ AC_DEFUN([AC_FPM_LIBXML],
 
 		AC_DEFINE(HAVE_LIBXML, 1, [do we have libxml?])
 	fi
-])
-
-AC_DEFUN([AC_FPM_JUDY],
-[
-	AC_ARG_WITH([Judy], AC_HELP_STRING([--with-Judy=DIR], [Judy install directory]))
-
-	JUDY_CFLAGS=""
-	JUDY_LIBS="-lJudy"
-	JUDY_INCLUDE_PATH=""
-
-	if test "$with_Judy" != "no" -a -n "$with_Judy"; then
-		JUDY_INCLUDE_PATH="$with_Judy/include"
-		JUDY_CFLAGS="-I$with_Judy/include $JUDY_CFLAGS"
-		JUDY_LIBS="-L$with_Judy/lib $JUDY_LIBS"
-	fi
-
-	AC_MSG_CHECKING([for Judy.h])
-
-	found=no
-
-	for dir in "$JUDY_INCLUDE_PATH" /usr/include ; do
-		if test -r "$dir/Judy.h" ; then
-			found=yes
-			break
-		fi
-	done
-
-	AC_MSG_RESULT([$found])
-
-	AC_FPM_CHECK_FUNC([JudyLCount], [$JUDY_CFLAGS], [$JUDY_LIBS], ,
-		[AC_MSG_ERROR([Failed to link with Judy])])
-
 ])
 
 AC_DEFUN([AC_FPM_CLOCK],
@@ -434,33 +367,6 @@ AC_DEFUN([AC_FPM_PHP],
 	AC_SUBST(PHP_VERSION)
 ])
 
-AC_DEFUN([AC_FPM_LIBEVENT_EMBEDDED],
-[
-	echo "$srcdir" | grep -qv '^/'; if test $? = 0 ; then le_rel_pfx=../; fi
-	libevent_configure="cd ./libevent ; CC=\"$CC\" CFLAGS=\"$AM_CFLAGS\" $le_rel_pfx$srcdir/libevent/configure --disable-shared"
-
-	$mkdir_p ./libevent
-
-	AC_MSG_RESULT()
-	AC_MSG_RESULT([Configuring libevent])
-	AC_MSG_RESULT()
-
-	(eval $libevent_configure)
-
-	if test ! -f "./libevent/Makefile" ; then
-		echo "Failed to configure libevent" >&2
-		exit 1
-	fi
-
-	AC_MSG_RESULT()
-
-	libevent_build=`cd libevent; pwd`
-	libevent_src=`cd $srcdir/libevent; pwd`
-
-	LIBEVENT_CFLAGS="-I$libevent_src -I$libevent_build"
-dnl	LIBEVENT_LIBS=".a `echo "@LIBS@" | ./libevent/config.status --file=-:-`"
-
-])
 
 AC_DEFUN([AC_FPM_PATHS],
 [

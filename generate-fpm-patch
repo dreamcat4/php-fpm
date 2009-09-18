@@ -28,7 +28,6 @@ cd sapi/fpm
 
 # Remove non-project files
 rm -Rf .bzr* .git* *.cache autotools man1
-rm -Rf libevent/autotools libevent/*.cache
 
 # Remove those standalone files here that php-src won't use
 # rm -rf file1 file2 file3...
