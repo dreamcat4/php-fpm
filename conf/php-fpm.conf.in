@@ -54,9 +54,12 @@
 			</value>
 
 			Additional php.ini defines, specific to this pool of workers.
+			These settings overwrite the values previously defined in the php.ini.
 			<value name="php_defines">
-		<!--		<value name="sendmail_path">/usr/sbin/sendmail -t -i</value>		-->
-		<!--		<value name="display_errors">0</value>								-->
+				<!-- <value name="sendmail_path">/usr/sbin/sendmail -t -i</value> -->
+				<!-- <value name="display_errors">0</value> -->
+				<!-- <value name="error_log">/var/log/php-error.log</value> -->
+        		<!-- <value name="log_errors">true</value> -->
 			</value>
 
 			Unix user of processes
