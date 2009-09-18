@@ -55,8 +55,3 @@ The make process can be described as:
 	 4) Output: Static php5 binary, which is php base and using the fpm's version of fcgi-SAPI as frontend
 
 Fpm is mixed into php at the link-level. This de-couples the fpm sources, making the process manager part somewhat less sensitive to changes in the php project. PHP-FPM is derived from the fcgi-sapi. We no longer patch directly onto php-maintained files. Instead there are 3 similar counterpart files from sapi/cgi and fpm's sapi are periodically synced to them.
-
-## Installation - untested
-
-There is an install script in Makefile.frag, currently broken. It should be updated and pushed back into bzr / launchpad.
-
