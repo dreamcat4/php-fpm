@@ -367,6 +367,8 @@ AC_DEFUN([AC_FPM_PHP],
 	AC_SUBST(PHP_VERSION)
 ])
 
+m4_include([m4/ac_php_frag.m4])
+m4_include([m4/ac_lib_event.m4])
 
 AC_DEFUN([AC_FPM_PATHS],
 [

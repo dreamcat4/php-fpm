@@ -24,6 +24,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* define if libevent is available */
+#undef HAVE_LIBEVENT
+
 /* do we have libxml? */
 #undef HAVE_LIBXML
 

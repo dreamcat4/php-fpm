@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP F77 FFLAGS ac_ct_F77 LIBTOOL PHP_OBJS PHP_SRCDIR PHP_BUILDDIR PHP_VERSION XMLCONFIG FPM_TRACE_USE_PTRACE_TRUE FPM_TRACE_USE_PTRACE_FALSE FPM_TRACE_USE_PREAD_TRUE FPM_TRACE_USE_PREAD_FALSE FPM_TRACE_USE_MACH_TRUE FPM_TRACE_USE_MACH_FALSE AM_CFLAGS php_fpm_ADD_CFLAGS php_fpm_ADD_LIBS php_fpm_bin php_fpm_bin_path php_fpm_conf_path php_fpm_log_path php_fpm_pid_path php_fpm_user php_fpm_group LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP F77 FFLAGS ac_ct_F77 LIBTOOL PHP_OBJS PHP_SRCDIR PHP_BUILDDIR PHP_VERSION XMLCONFIG FPM_TRACE_USE_PTRACE_TRUE FPM_TRACE_USE_PTRACE_FALSE FPM_TRACE_USE_PREAD_TRUE FPM_TRACE_USE_PREAD_FALSE FPM_TRACE_USE_MACH_TRUE FPM_TRACE_USE_MACH_FALSE LIBEVENT_CFLAGS LIBEVENT_LIBS AM_CFLAGS php_fpm_ADD_CFLAGS php_fpm_ADD_LIBS fpm_version php_fpm_bin php_fpm_bin_path php_fpm_conf_path php_fpm_log_path php_fpm_pid_path php_fpm_user php_fpm_group LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1065,6 +1065,7 @@ Optional Packages:
   --with-php-build=DIR    full path to php build dir, only needed if differ
                           from source dir
   --with-xml-config=PATH  path to xml-config
+  --with-libevent[=PATH]  Path to the libevent, for fpm SAPI [/usr/local]
 
 Some influential environment variables:
   CC          C compiler command
@@ -21524,32 +21525,256 @@ fi
 
 
 
-	echo "$srcdir" | grep -qv '^/'; if test $? = 0 ; then le_rel_pfx=../; fi
-	libevent_configure="cd ./libevent ; CC=\"$CC\" CFLAGS=\"$AM_CFLAGS\" $le_rel_pfx$srcdir/libevent/configure --disable-shared"
 
-	$mkdir_p ./libevent
 
-	echo "$as_me:$LINENO: result: " >&5
-echo "${ECHO_T}" >&6
-	echo "$as_me:$LINENO: result: Configuring libevent" >&5
-echo "${ECHO_T}Configuring libevent" >&6
-	echo "$as_me:$LINENO: result: " >&5
-echo "${ECHO_T}" >&6
 
-	(eval $libevent_configure)
 
-	if test ! -f "./libevent/Makefile" ; then
-		echo "Failed to configure libevent" >&2
-		exit 1
-	fi
 
-	echo "$as_me:$LINENO: result: " >&5
-echo "${ECHO_T}" >&6
+# Check whether --with-libevent or --without-libevent was given.
+if test "${with_libevent+set}" = set; then
+  withval="$with_libevent"
+  PHP_LIBEVENT=$withval
+else
 
-	libevent_build=`cd libevent; pwd`
-	libevent_src=`cd $srcdir/libevent; pwd`
+  PHP_LIBEVENT=/usr/local
 
-	LIBEVENT_CFLAGS="-I$libevent_src -I$libevent_build"
+
+fi;
+
+
+ext_output="yes, shared"
+ext_shared=yes
+case $PHP_LIBEVENT in
+shared,*)
+  PHP_LIBEVENT=`echo "$PHP_LIBEVENT"|sed 's/^shared,//'`
+  ;;
+shared)
+  PHP_LIBEVENT=yes
+  ;;
+no)
+  ext_output=no
+  ext_shared=no
+  ;;
+*)
+  ext_output=yes
+  ext_shared=no
+  ;;
+esac
+
+
+
+
+
+
+
+          if test "$PHP_LIBEVENT" != "no"; then
+            WANT_LIBEVENT_VERSION=1.4.11
+
+            echo "$as_me:$LINENO: checking for libevent >= $WANT_LIBEVENT_VERSION" >&5
+echo $ECHO_N "checking for libevent >= $WANT_LIBEVENT_VERSION... $ECHO_C" >&6
+
+			libevent_prefix=$ac_default_prefix
+			if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
+				libevent_prefix=$prefix
+			fi
+
+		    if test "$PHP_LIBEVENT" = "yes"; then
+				PHP_LIBEVENT=$libevent_prefix
+		    fi
+
+            # Run tests.
+            for ac_libevent_path in "" $PHP_LIBEVENT /usr /usr/local /opt /opt/local /opt/libevent ; do
+
+          # Save our flags.
+          CPPFLAGS_SAVED="$CPPFLAGS"
+          LDFLAGS_SAVED="$LDFLAGS"
+          LIBS_SAVED="$LIBS"
+          LD_LIBRARY_PATH_SAVED="$LD_LIBRARY_PATH"
+
+          # Set our flags if we are checking a specific directory.
+          if test -n "$ac_libevent_path" ; then
+            LIBEVENT_CPPFLAGS="-I$ac_libevent_path/include"
+            LIBEVENT_LDFLAGS="-L$ac_libevent_path/lib"
+            LD_LIBRARY_PATH="$ac_libevent_path/lib:$LD_LIBRARY_PATH"
+          else
+            LIBEVENT_CPPFLAGS=""
+            LIBEVENT_LDFLAGS=""
+          fi
+
+          # Required flag for libevent.
+		  LIBEVENT_LIBS="-levent"
+
+          # Prepare the environment for compilation.
+          CPPFLAGS="$CPPFLAGS $LIBEVENT_CPPFLAGS"
+          LDFLAGS="$LDFLAGS $LIBEVENT_LDFLAGS"
+          LIBS="$LIBS $LIBEVENT_LIBS"
+          export CPPFLAGS
+          export LDFLAGS
+          export LIBS
+          export LD_LIBRARY_PATH
+
+          success=no
+
+          # Compile, link, and run the program.  This checks:
+          # - event.h is available for including.
+          # - event_get_version() is available for linking.
+          # - The event version string is lexicographically greater
+          #   than the required version.
+          ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+                              if test "$cross_compiling" = yes; then
+  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+See \`config.log' for more details." >&5
+echo "$as_me: error: cannot run test program while cross compiling
+See \`config.log' for more details." >&2;}
+   { (exit 1); exit 1; }; }
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+          #include <sys/types.h>
+          #include <event.h>
+
+int
+main ()
+{
+
+          const char* lib_version = event_get_version();
+          const char* wnt_version = "$WANT_LIBEVENT_VERSION";
+          for (;;) {
+            /* If we reached the end of the want version.  We have it. */
+            if (*wnt_version == '\0' || *wnt_version == '-') {
+              return 0;
+            }
+            /* If the want version continues but the lib version does not, */
+            /* we are missing a letter.  We don't have it. */
+            if (*lib_version == '\0' || *lib_version == '-') {
+              return 1;
+            }
+
+            /* In the 1.4 version numbering style, if there are more digits */
+            /* in one version than the other, that one is higher. */
+            int lib_digits;
+            for (lib_digits = 0;
+                lib_version[lib_digits] >= '0' &&
+                lib_version[lib_digits] <= '9';
+                lib_digits++)
+              ;
+            int wnt_digits;
+            for (wnt_digits = 0;
+                wnt_version[wnt_digits] >= '0' &&
+                wnt_version[wnt_digits] <= '9';
+                wnt_digits++)
+              ;
+            if (lib_digits > wnt_digits) {
+              return 0;
+            }
+            if (lib_digits < wnt_digits) {
+              return 1;
+            }
+            /* If we have greater than what we want.  We have it. */
+            if (*lib_version > *wnt_version) {
+              return 0;
+            }
+            /* If we have less, we don't. */
+            if (*lib_version < *wnt_version) {
+              return 1;
+            }
+            lib_version++;
+            wnt_version++;
+          }
+          return 0;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+
+          success=yes
+
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+          ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+          # Restore flags.
+          CPPFLAGS="$CPPFLAGS_SAVED"
+          LDFLAGS="$LDFLAGS_SAVED"
+          LIBS="$LIBS_SAVED"
+          LD_LIBRARY_PATH="$LD_LIBRARY_PATH_SAVED"
+
+              if test "$success" = "yes"; then
+                break;
+              fi
+            done
+
+			if test "$ext_shared" = "yes"; then
+				LIBEVENT_LIBS="-levent"
+			else
+				LIBEVENT_LIBS="-l:libevent.a"
+			fi
+
+            if test "$success" != "yes" ; then
+              echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+              LIBEVENT_LIBS=""
+			  ac_have_libevent=no
+              { { echo "$as_me:$LINENO: error: Libevent $WANT_LIBEVENT_VERSION could not be found" >&5
+echo "$as_me: error: Libevent $WANT_LIBEVENT_VERSION could not be found" >&2;}
+   { (exit 1); exit 1; }; }
+            else
+              echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+			  ac_have_libevent=yes
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_LIBEVENT 1
+_ACEOF
+
+            fi
+
+			if test -n "$ac_libevent_path"; then
+				LIBEVENT_CFLAGS="-I$ac_libevent_path/include"
+				LIBEVENT_LIBS="-L$ac_libevent_path/$PHP_LIBDIR $LIBEVENT_LIBS"
+			fi
+
+
+
+
+          else
+			{ { echo "$as_me:$LINENO: error: FPM Requires Libevent. You can build this target --with-libevent=yes" >&5
+echo "$as_me: error: FPM Requires Libevent. You can build this target --with-libevent=yes" >&2;}
+   { (exit 1); exit 1; }; }
+          fi
 
 
 
@@ -22939,6 +23164,8 @@ s,@FPM_TRACE_USE_PREAD_TRUE@,$FPM_TRACE_USE_PREAD_TRUE,;t t
 s,@FPM_TRACE_USE_PREAD_FALSE@,$FPM_TRACE_USE_PREAD_FALSE,;t t
 s,@FPM_TRACE_USE_MACH_TRUE@,$FPM_TRACE_USE_MACH_TRUE,;t t
 s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
+s,@LIBEVENT_CFLAGS@,$LIBEVENT_CFLAGS,;t t
+s,@LIBEVENT_LIBS@,$LIBEVENT_LIBS,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
@@ -24422,6 +24649,8 @@ s,@FPM_TRACE_USE_PREAD_TRUE@,$FPM_TRACE_USE_PREAD_TRUE,;t t
 s,@FPM_TRACE_USE_PREAD_FALSE@,$FPM_TRACE_USE_PREAD_FALSE,;t t
 s,@FPM_TRACE_USE_MACH_TRUE@,$FPM_TRACE_USE_MACH_TRUE,;t t
 s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
+s,@LIBEVENT_CFLAGS@,$LIBEVENT_CFLAGS,;t t
+s,@LIBEVENT_LIBS@,$LIBEVENT_LIBS,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
@@ -25906,9 +26135,12 @@ s,@FPM_TRACE_USE_PREAD_TRUE@,$FPM_TRACE_USE_PREAD_TRUE,;t t
 s,@FPM_TRACE_USE_PREAD_FALSE@,$FPM_TRACE_USE_PREAD_FALSE,;t t
 s,@FPM_TRACE_USE_MACH_TRUE@,$FPM_TRACE_USE_MACH_TRUE,;t t
 s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
+s,@LIBEVENT_CFLAGS@,$LIBEVENT_CFLAGS,;t t
+s,@LIBEVENT_LIBS@,$LIBEVENT_LIBS,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
@@ -27390,9 +27622,12 @@ s,@FPM_TRACE_USE_PREAD_TRUE@,$FPM_TRACE_USE_PREAD_TRUE,;t t
 s,@FPM_TRACE_USE_PREAD_FALSE@,$FPM_TRACE_USE_PREAD_FALSE,;t t
 s,@FPM_TRACE_USE_MACH_TRUE@,$FPM_TRACE_USE_MACH_TRUE,;t t
 s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
+s,@LIBEVENT_CFLAGS@,$LIBEVENT_CFLAGS,;t t
+s,@LIBEVENT_LIBS@,$LIBEVENT_LIBS,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
