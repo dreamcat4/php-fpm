@@ -50,7 +50,8 @@ CONFIG_HEADER = $(top_builddir)/src/fpm_autoconfig.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libsapi_la_LIBADD =
-am_libsapi_la_OBJECTS = cgi_main.lo fastcgi.lo getopt.lo
+am_libsapi_la_OBJECTS = libsapi_la-cgi_main.lo libsapi_la-fastcgi.lo \
+	libsapi_la-getopt.lo
 libsapi_la_OBJECTS = $(am_libsapi_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -174,6 +175,7 @@ oldincludedir = @oldincludedir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
 php_fpm_bin = @php_fpm_bin@
+php_fpm_bin_dir = @php_fpm_bin_dir@
 php_fpm_bin_path = @php_fpm_bin_path@
 php_fpm_conf_path = @php_fpm_conf_path@
 php_fpm_group = @php_fpm_group@
@@ -254,9 +256,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cgi_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fastcgi.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getopt.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsapi_la-cgi_main.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsapi_la-fastcgi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libsapi_la-getopt.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -278,6 +280,27 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+libsapi_la-cgi_main.lo: cgi_main.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -MT libsapi_la-cgi_main.lo -MD -MP -MF "$(DEPDIR)/libsapi_la-cgi_main.Tpo" -c -o libsapi_la-cgi_main.lo `test -f 'cgi_main.c' || echo '$(srcdir)/'`cgi_main.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libsapi_la-cgi_main.Tpo" "$(DEPDIR)/libsapi_la-cgi_main.Plo"; else rm -f "$(DEPDIR)/libsapi_la-cgi_main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cgi_main.c' object='libsapi_la-cgi_main.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -c -o libsapi_la-cgi_main.lo `test -f 'cgi_main.c' || echo '$(srcdir)/'`cgi_main.c
+
+libsapi_la-fastcgi.lo: fastcgi.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -MT libsapi_la-fastcgi.lo -MD -MP -MF "$(DEPDIR)/libsapi_la-fastcgi.Tpo" -c -o libsapi_la-fastcgi.lo `test -f 'fastcgi.c' || echo '$(srcdir)/'`fastcgi.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libsapi_la-fastcgi.Tpo" "$(DEPDIR)/libsapi_la-fastcgi.Plo"; else rm -f "$(DEPDIR)/libsapi_la-fastcgi.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='fastcgi.c' object='libsapi_la-fastcgi.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -c -o libsapi_la-fastcgi.lo `test -f 'fastcgi.c' || echo '$(srcdir)/'`fastcgi.c
+
+libsapi_la-getopt.lo: getopt.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -MT libsapi_la-getopt.lo -MD -MP -MF "$(DEPDIR)/libsapi_la-getopt.Tpo" -c -o libsapi_la-getopt.lo `test -f 'getopt.c' || echo '$(srcdir)/'`getopt.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libsapi_la-getopt.Tpo" "$(DEPDIR)/libsapi_la-getopt.Plo"; else rm -f "$(DEPDIR)/libsapi_la-getopt.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='getopt.c' object='libsapi_la-getopt.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsapi_la_CFLAGS) $(CFLAGS) -c -o libsapi_la-getopt.lo `test -f 'getopt.c' || echo '$(srcdir)/'`getopt.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

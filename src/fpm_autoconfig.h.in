@@ -102,6 +102,9 @@
 /* fpm binary executable */
 #undef PHP_FPM_BIN
 
+/* fpm binary dir path */
+#undef PHP_FPM_BIN_DIR
+
 /* fpm bin file path */
 #undef PHP_FPM_BIN_PATH
 

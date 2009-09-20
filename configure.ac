@@ -43,6 +43,9 @@ AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$fpm_version", [fpm version])
 AC_SUBST(php_fpm_bin)
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
 
+AC_SUBST(php_fpm_bin_dir)
+AC_DEFINE_UNQUOTED(PHP_FPM_BIN_DIR, "$php_fpm_bin_dir", [fpm binary dir path])
+
 AC_SUBST(php_fpm_bin_path)
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
 

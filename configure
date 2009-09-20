@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP F77 FFLAGS ac_ct_F77 LIBTOOL PHP_OBJS PHP_SRCDIR PHP_BUILDDIR PHP_VERSION XMLCONFIG FPM_TRACE_USE_PTRACE_TRUE FPM_TRACE_USE_PTRACE_FALSE FPM_TRACE_USE_PREAD_TRUE FPM_TRACE_USE_PREAD_FALSE FPM_TRACE_USE_MACH_TRUE FPM_TRACE_USE_MACH_FALSE AM_CFLAGS php_fpm_ADD_CFLAGS php_fpm_ADD_LIBS php_fpm_bin php_fpm_bin_path php_fpm_conf_path php_fpm_log_path php_fpm_pid_path php_fpm_user php_fpm_group LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CXXCPP F77 FFLAGS ac_ct_F77 LIBTOOL PHP_OBJS PHP_SRCDIR PHP_BUILDDIR PHP_VERSION XMLCONFIG FPM_TRACE_USE_PTRACE_TRUE FPM_TRACE_USE_PTRACE_FALSE FPM_TRACE_USE_PREAD_TRUE FPM_TRACE_USE_PREAD_FALSE FPM_TRACE_USE_MACH_TRUE FPM_TRACE_USE_MACH_FALSE AM_CFLAGS php_fpm_ADD_CFLAGS php_fpm_ADD_LIBS fpm_version php_fpm_bin php_fpm_bin_dir php_fpm_bin_path php_fpm_conf_path php_fpm_log_path php_fpm_pid_path php_fpm_user php_fpm_group LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -5086,7 +5086,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5081 "configure"' > conftest.$ac_ext
+  echo '#line 5089 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -6431,7 +6431,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:6426:" \
+echo "$as_me:6434:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -7500,11 +7500,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7495: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7503: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7499: \$? = $ac_status" >&5
+   echo "$as_me:7507: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -7755,11 +7755,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7750: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7758: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7754: \$? = $ac_status" >&5
+   echo "$as_me:7762: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -7815,11 +7815,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7810: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7818: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7814: \$? = $ac_status" >&5
+   echo "$as_me:7822: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10015,7 +10015,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10010 "configure"
+#line 10018 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10113,7 +10113,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10108 "configure"
+#line 10116 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12333,11 +12333,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12328: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12336: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12332: \$? = $ac_status" >&5
+   echo "$as_me:12340: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12393,11 +12393,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12388: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12396: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12392: \$? = $ac_status" >&5
+   echo "$as_me:12400: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13756,7 +13756,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13751 "configure"
+#line 13759 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13854,7 +13854,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13849 "configure"
+#line 13857 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14709,11 +14709,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14704: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14712: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14708: \$? = $ac_status" >&5
+   echo "$as_me:14716: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -14769,11 +14769,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14764: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14772: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14768: \$? = $ac_status" >&5
+   echo "$as_me:14776: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16825,11 +16825,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16820: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16828: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16824: \$? = $ac_status" >&5
+   echo "$as_me:16832: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17080,11 +17080,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17075: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17083: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17079: \$? = $ac_status" >&5
+   echo "$as_me:17087: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17140,11 +17140,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17135: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17143: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17139: \$? = $ac_status" >&5
+   echo "$as_me:17147: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19340,7 +19340,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19335 "configure"
+#line 19343 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19438,7 +19438,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19433 "configure"
+#line 19441 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -20496,6 +20496,7 @@ rm -f conftest*
 
 
 
+
 # Check whether --with-fpm-bin or --without-fpm-bin was given.
 if test "${with_fpm_bin+set}" = set; then
   withval="$with_fpm_bin"
@@ -20548,6 +20549,7 @@ fi;
 		php_fpm_bin_path="$with_fpm_bin"
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
+	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"
@@ -22142,6 +22144,13 @@ _ACEOF
 
 
 cat >>confdefs.h <<_ACEOF
+#define PHP_FPM_BIN_DIR "$php_fpm_bin_dir"
+_ACEOF
+
+
+
+
+cat >>confdefs.h <<_ACEOF
 #define PHP_FPM_BIN_PATH "$php_fpm_bin_path"
 _ACEOF
 
@@ -22944,6 +22953,7 @@ s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
 s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
+s,@php_fpm_bin_dir@,$php_fpm_bin_dir,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
 s,@php_fpm_log_path@,$php_fpm_log_path,;t t
@@ -24427,6 +24437,7 @@ s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
 s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
+s,@php_fpm_bin_dir@,$php_fpm_bin_dir,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
 s,@php_fpm_log_path@,$php_fpm_log_path,;t t
@@ -25909,7 +25920,9 @@ s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
+s,@php_fpm_bin_dir@,$php_fpm_bin_dir,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
 s,@php_fpm_log_path@,$php_fpm_log_path,;t t
@@ -27393,7 +27406,9 @@ s,@FPM_TRACE_USE_MACH_FALSE@,$FPM_TRACE_USE_MACH_FALSE,;t t
 s,@AM_CFLAGS@,$AM_CFLAGS,;t t
 s,@php_fpm_ADD_CFLAGS@,$php_fpm_ADD_CFLAGS,;t t
 s,@php_fpm_ADD_LIBS@,$php_fpm_ADD_LIBS,;t t
+s,@fpm_version@,$fpm_version,;t t
 s,@php_fpm_bin@,$php_fpm_bin,;t t
+s,@php_fpm_bin_dir@,$php_fpm_bin_dir,;t t
 s,@php_fpm_bin_path@,$php_fpm_bin_path,;t t
 s,@php_fpm_conf_path@,$php_fpm_conf_path,;t t
 s,@php_fpm_log_path@,$php_fpm_log_path,;t t

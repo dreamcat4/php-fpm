@@ -1,6 +1,7 @@
 
 SUBDIRS = sapi fpm
 
+bindir = $(php_fpm_bin_dir)
 bin_PROGRAMS = $(php_fpm_bin)
 
 $(php_fpm_bin): php_fpm

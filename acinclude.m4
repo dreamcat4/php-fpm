@@ -494,6 +494,7 @@ AC_DEFUN([AC_FPM_PATHS],
 		php_fpm_bin_path="$with_fpm_bin"
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
+	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"

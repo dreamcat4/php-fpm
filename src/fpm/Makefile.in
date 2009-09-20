@@ -199,6 +199,7 @@ oldincludedir = @oldincludedir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
 php_fpm_bin = @php_fpm_bin@
+php_fpm_bin_dir = @php_fpm_bin_dir@
 php_fpm_bin_path = @php_fpm_bin_path@
 php_fpm_conf_path = @php_fpm_conf_path@
 php_fpm_group = @php_fpm_group@
