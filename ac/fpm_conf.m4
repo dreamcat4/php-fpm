@@ -23,39 +23,44 @@ AC_DEFUN([AC_FPM_ARGS],
 
 AC_DEFUN([AC_FPM_VARS],
 [
-	if test -z "$PHP_FPM_BIN" -o "$with_fpm_bin" = "yes" -o "$with_fpm_bin" = "no"; then
+	fpm_prefix=$ac_default_prefix
+	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
+		fpm_prefix=$prefix
+	fi
+
+	if test -z "$PHP_FPM_BIN" -o "$PHP_FPM_BIN" = "yes" -o "$PHP_FPM_BIN" = "no"; then
 		php_fpm_bin_path="$fpm_prefix/bin/php-fpm"
 	else
 		php_fpm_bin_path="$PHP_FPM_BIN"
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
 
-	if test -z "$PHP_FPM_CONF" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
+	if test -z "$PHP_FPM_CONF" -o "$PHP_FPM_CONF" = "yes" -o "$PHP_FPM_CONF" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"
 	else
 		php_fpm_conf_path="$PHP_FPM_CONF"
 	fi
 	php_fpm_conf=`basename $php_fpm_conf_path`
 
-	if test -z "$PHP_FPM_LOG" -o "$with_fpm_log" = "yes" -o "$with_fpm_log" = "no"; then
+	if test -z "$PHP_FPM_LOG" -o "$PHP_FPM_LOG" = "yes" -o "$PHP_FPM_LOG" = "no"; then
 		php_fpm_log_path="/var/log/php-fpm.log"
 	else
 		php_fpm_log_path="$PHP_FPM_LOG"
 	fi
 
-	if test -z "$PHP_FPM_PID" -o "$with_fpm_pid" = "yes" -o "$with_fpm_pid" = "no"; then
+	if test -z "$PHP_FPM_PID" -o "$PHP_FPM_PID" = "yes" -o "$PHP_FPM_PID" = "no"; then
 		php_fpm_pid_path="/var/run/php-fpm.pid"
 	else
 		php_fpm_pid_path="$PHP_FPM_PID"
 	fi
 
-	if test -z "$PHP_FPM_USER" -o "$with_fpm_user" = "yes" -o "$with_fpm_user" = "no"; then
+	if test -z "$PHP_FPM_USER" -o "$PHP_FPM_USER" = "yes" -o "$PHP_FPM_USER" = "no"; then
 		php_fpm_user="nobody"
 	else
 		php_fpm_user="$PHP_FPM_USER"
 	fi
 
-	if test -z "$PHP_FPM_GROUP" -o "$with_fpm_group" = "yes" -o "$with_fpm_group" = "no"; then
+	if test -z "$PHP_FPM_GROUP" -o "$PHP_FPM_GROUP" = "yes" -o "$PHP_FPM_GROUP" = "no"; then
 		php_fpm_group="nobody"
 	else
 		php_fpm_group="$PHP_FPM_GROUP"
