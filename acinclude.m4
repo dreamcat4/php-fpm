@@ -249,7 +249,12 @@ AC_DEFUN([AC_FPM_TRACE],
 		AC_TRY_RUN([
 			#define _GNU_SOURCE
 			#define _FILE_OFFSET_BITS 64
+			#if HAVE_INTTYPES_H
+			#include <inttypes.h>
+			#else
 			#include <stdint.h>
+			#endif
+
 			#include <unistd.h>
 			#include <sys/types.h>
 			#include <sys/stat.h>
