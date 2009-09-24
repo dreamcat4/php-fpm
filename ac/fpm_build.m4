@@ -1,7 +1,7 @@
 
 AC_DEFUN([AC_FPM_BUILD_SAPI],
 [
-	PHP_ADD_MAKEFILE_FRAGMENT($abs_srcdir/sapi/fpm/ac/Makefile.frag)
+	PHP_ADD_MAKEFILE_FRAGMENT($abs_srcdir/sapi/fpm/ac/Makefile.frag,$abs_srcdir/sapi/fpm,sapi/fpm)
 
     SAPI_FPM_PATH=sapi/fpm/$php_fpm_bin
 	PHP_SUBST(SAPI_FPM_PATH)
@@ -24,7 +24,8 @@ AC_DEFUN([AC_FPM_BUILD_SAPI],
 	PHP_SUBST(SAPI_EXTRA_LIBS)
 	
     dnl Set install target and select SAPI
-    INSTALL_IT="@echo \"Installing PHP FPM binary: \$(INSTALL_ROOT)\$(bindir)/\"; \$(INSTALL) -m 0755 \$(SAPI_FPM_PATH) \$(INSTALL_ROOT)\$(bindir)/\$(program_prefix)php-fpm\$(program_suffix)\$(EXEEXT)"
+	INSTALL_IT=""
+
     PHP_SELECT_SAPI(fpm, program, $PHP_FPM_SAPI_FILES $PHP_FPM_CORE_FILES $PHP_FPM_TRACE_FILES, $PHP_FPM_CFLAGS, '$(SAPI_FPM_PATH)')
 
     case $host_alias in
@@ -42,5 +43,3 @@ AC_DEFUN([AC_FPM_BUILD_SAPI],
     PHP_SUBST(BUILD_FPM)
 
 ])
-
-

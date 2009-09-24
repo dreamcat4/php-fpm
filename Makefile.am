@@ -16,3 +16,5 @@ php_fpm_LDADD = \
 	cgi/libsapi.la \
 	fpm/libfpm.la \
 	$(php_fpm_ADD_LIBS)
+
+include m4/Makefile.frag
