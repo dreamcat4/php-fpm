@@ -38,27 +38,31 @@ AC_SUBST(php_fpm_ADD_CFLAGS)
 AC_SUBST(php_fpm_ADD_LIBS)
 
 AC_SUBST(fpm_version)
-AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$fpm_version", [fpm version])
-
 AC_SUBST(php_fpm_bin)
-AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
-
+AC_SUBST(php_fpm_bin_dir)
 AC_SUBST(php_fpm_bin_path)
-AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
-
+AC_SUBST(php_fpm_conf)
+AC_SUBST(php_fpm_conf_dir)
 AC_SUBST(php_fpm_conf_path)
-AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
-
+AC_SUBST(php_fpm_log_dir)
 AC_SUBST(php_fpm_log_path)
-AC_DEFINE_UNQUOTED(PHP_FPM_LOG_PATH, "$php_fpm_log_path", [fpm log file path])
-
+AC_SUBST(php_fpm_pid_dir)
 AC_SUBST(php_fpm_pid_path)
-AC_DEFINE_UNQUOTED(PHP_FPM_PID_PATH, "$php_fpm_pid_path", [fpm pid file path])
-
 AC_SUBST(php_fpm_user)
-AC_DEFINE_UNQUOTED(PHP_FPM_USER, "$php_fpm_user", [fpm user name])
-
 AC_SUBST(php_fpm_group)
+
+AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$fpm_version", [fpm version])
+AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
+AC_DEFINE_UNQUOTED(PHP_FPM_BIN_DIR, "$php_fpm_bin_dir", [fpm binary dir])
+AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_CONF, "$php_fpm_conf", [fpm conf file])
+AC_DEFINE_UNQUOTED(PHP_FPM_CONF_DIR, "$php_fpm_conf_dir", [fpm conf dir])
+AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_LOG_DIR, "$php_fpm_log_dir", [fpm log dir])
+AC_DEFINE_UNQUOTED(PHP_FPM_LOG_PATH, "$php_fpm_log_path", [fpm log file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_PID_DIR, "$php_fpm_pid_dir", [fpm pid dir])
+AC_DEFINE_UNQUOTED(PHP_FPM_PID_PATH, "$php_fpm_pid_path", [fpm pid file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_USER, "$php_fpm_user", [fpm user name])
 AC_DEFINE_UNQUOTED(PHP_FPM_GROUP, "$php_fpm_group", [fpm group name])
 
 

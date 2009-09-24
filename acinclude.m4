@@ -318,6 +318,9 @@ AC_DEFUN([AC_FPM_PRCTL],
 	])
 ])
 
+m4_include([m4/ac_php_frag.m4])
+m4_include([m4/ac_lib_event.m4])
+
 AC_DEFUN([AC_FPM_PHP],
 [
 	AC_ARG_WITH([php-src], AC_HELP_STRING([--with-php-src=DIR], [full path to php source dir]))
@@ -357,23 +360,20 @@ AC_DEFUN([AC_FPM_PHP],
 		AC_MSG_ERROR([Cannot find expected makefile variables])
 	fi
 
+	AC_MSG_RESULT([$PHP_VERSION])
+
 	# sanity check
 	if test "$PHP_SAPI" != "cgi" ; then
-		AC_MSG_ERROR([Please re-configure php with no sapi-related switches])
+		AC_MSG_WARN([PHP was built as sapi \"$PHP_SAPI\". Its recommended to buid php without any sapi-related switches.])
 	fi
 
 	PHP_OBJS="$PHP_GLOBAL_OBJS main/internal_functions.lo"
-
-	AC_MSG_RESULT([$PHP_VERSION])
 
 	AC_SUBST(PHP_OBJS)
 	AC_SUBST(PHP_SRCDIR)
 	AC_SUBST(PHP_BUILDDIR)
 	AC_SUBST(PHP_VERSION)
 ])
-
-m4_include([m4/ac_php_frag.m4])
-m4_include([m4/ac_lib_event.m4])
 
 AC_DEFUN([AC_FPM_PATHS],
 [
@@ -401,12 +401,18 @@ AC_DEFUN([AC_FPM_PATHS],
 		fpm_prefix=$prefix
 	fi
 
+	fpm_bin_prefix=$fpm_prefix/bin
+	if test $bindir != "NONE" -a $bindir != "" -a $bindir != "no" ; then
+		fpm_bin_prefix=$bindir
+	fi
+
 	if test -z "$with_fpm_bin" -o "$with_fpm_bin" = "yes" -o "$with_fpm_bin" = "no"; then
-		php_fpm_bin_path="$fpm_prefix/bin/php-fpm"
+		php_fpm_bin_path="$fpm_bin_prefix/php-fpm"
 	else
 		php_fpm_bin_path="$with_fpm_bin"
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
+	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"
@@ -414,18 +420,21 @@ AC_DEFUN([AC_FPM_PATHS],
 		php_fpm_conf_path="$with_fpm_conf"
 	fi
 	php_fpm_conf=`basename $php_fpm_conf_path`
+	php_fpm_conf_dir=`dirname $php_fpm_conf_path`
 
 	if test -z "$with_fpm_log" -o "$with_fpm_log" = "yes" -o "$with_fpm_log" = "no"; then
 		php_fpm_log_path="/var/log/php-fpm.log"
 	else
 		php_fpm_log_path="$with_fpm_log"
 	fi
+	php_fpm_log_dir=`dirname $php_fpm_log_path`
 
 	if test -z "$with_fpm_pid" -o "$with_fpm_pid" = "yes" -o "$with_fpm_pid" = "no"; then
 		php_fpm_pid_path="/var/run/php-fpm.pid"
 	else
 		php_fpm_pid_path="$with_fpm_pid"
 	fi
+	php_fpm_pid_dir=`dirname $php_fpm_pid_path`
 
 	if test -z "$with_fpm_user" -o "$with_fpm_user" = "yes" -o "$with_fpm_user" = "no"; then
 		php_fpm_user="nobody"
