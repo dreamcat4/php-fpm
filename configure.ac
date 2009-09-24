@@ -1,4 +1,4 @@
-AC_INIT(php-fpm, 0.6.5, andrei.nigmatulin@gmail.com)
+AC_INIT(php-fpm, 0.6, andrei.nigmatulin@gmail.com)
 fpm_version="$PACKAGE_VERSION"
 
 AM_INIT_AUTOMAKE
