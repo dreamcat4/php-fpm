@@ -128,6 +128,7 @@ AC_DEFUN([AC_LIB_EVENT_DO_CHECK],
           AC_LANG_POP([C])
 
           # Restore flags.
+		  LIBEVENT_LIBS=""
           CPPFLAGS="$CPPFLAGS_SAVED"
           LDFLAGS="$LDFLAGS_SAVED"
           LIBS="$LIBS_SAVED"
@@ -139,10 +140,13 @@ AC_DEFUN([AC_LIB_EVENT],
 
           dnl Allow search path to be overridden on the command line.
           PHP_ARG_WITH(libevent,,
-          [  --with-libevent@<:@=PATH@:>@  Path to the libevent, for fpm SAPI @<:@/usr/local@:>@], /usr/local, yes)
+          [  --with-libevent@<:@=PATH@:>@  Path to the libevent, for fpm SAPI @<:@/usr/local@:>@], yes, yes)
 
           if test "$PHP_LIBEVENT" != "no"; then
             WANT_LIBEVENT_VERSION=ifelse([$1], ,1.2,$1)
+
+			# Default library search paths ($sys_lib_search_path_spec)
+			AC_LIBTOOL_SYS_DYNAMIC_LINKER
 
             AC_MSG_CHECKING(for libevent >= $WANT_LIBEVENT_VERSION)
 
@@ -155,7 +159,6 @@ AC_DEFUN([AC_LIB_EVENT],
 				PHP_LIBEVENT=$libevent_prefix
 		    fi
 
-            # Run tests.
             for ac_libevent_path in "" $PHP_LIBEVENT /usr /usr/local /opt /opt/local /opt/libevent ; do
               AC_LIB_EVENT_DO_CHECK
               if test "$success" = "yes"; then
@@ -164,9 +167,28 @@ AC_DEFUN([AC_LIB_EVENT],
             done
 
 			if test "$ext_shared" = "yes"; then
-				LIBEVENT_LIBS="-levent"
+				if test -n "$ac_libevent_path"; then
+					LIBEVENT_LIBS="-L$ac_libevent_path/lib -levent"
+				else
+					LIBEVENT_LIBS="-levent"
+				fi
 			else
-				LIBEVENT_LIBS="-l:libevent.a"
+				libevent_a="libevent.a"
+				if test -n "$ac_libevent_path"; then
+					if test -f "$ac_libevent_path/lib/$libevent_a" ; then
+						LIBEVENT_LIBS="$ac_libevent_path/lib/$libevent_a"
+					fi
+				else
+					for search_path in $sys_lib_search_path_spec ; do
+						if test -f "$search_path$libevent_a" ; then
+							LIBEVENT_LIBS="$search_path$libevent_a"
+							break;
+						fi
+					done
+				fi
+				if test -z "$LIBEVENT_LIBS"; then
+					AC_MSG_ERROR([libevent.a could not be found. Use --with-libevent=shared])
+				fi
 			fi
 
             if test "$success" != "yes" ; then
@@ -182,7 +204,6 @@ AC_DEFUN([AC_LIB_EVENT],
 
 			if test -n "$ac_libevent_path"; then
 				LIBEVENT_CFLAGS="-I$ac_libevent_path/include"
-				LIBEVENT_LIBS="-L$ac_libevent_path/$PHP_LIBDIR $LIBEVENT_LIBS"
 			fi
 
 		    AC_SUBST(LIBEVENT_CFLAGS)

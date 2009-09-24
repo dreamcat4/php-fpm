@@ -128,6 +128,7 @@ success=yes
 ])
 
 # Restore flags.
+LIBEVENT_LIBS=""
 CPPFLAGS="$CPPFLAGS_SAVED"
 LDFLAGS="$LDFLAGS_SAVED"
 LIBS="$LIBS_SAVED"
@@ -138,10 +139,13 @@ AC_DEFUN([AC_LIB_EVENT],
 [
 
 PHP_ARG_WITH(libevent,,
-[  --with-libevent[=PATH]  Path to the libevent, for fpm SAPI [/usr/local]], /usr/local, yes)
+[  --with-libevent[=PATH]  Path to the libevent, needed for fpm SAPI [/usr/local]], yes, yes)
 
 if test "$PHP_LIBEVENT" != "no"; then
 	WANT_LIBEVENT_VERSION=ifelse([$1], ,1.2,$1)
+
+	# Default library search paths ($sys_lib_search_path_spec)
+	AC_LIBTOOL_SYS_DYNAMIC_LINKER
 
 	AC_MSG_CHECKING(for libevent >= $WANT_LIBEVENT_VERSION)
 
@@ -161,6 +165,31 @@ if test "$PHP_LIBEVENT" != "no"; then
       fi
     done
 
+	if test "$ext_shared" = "yes"; then
+		if test -n "$ac_libevent_path"; then
+			LIBEVENT_LIBS="-L$ac_libevent_path/lib -levent"
+		else
+			LIBEVENT_LIBS="-levent"
+		fi
+	else
+		libevent_a="libevent.a"
+		if test -n "$ac_libevent_path"; then
+			if test -f "$ac_libevent_path/lib/$libevent_a" ; then
+				LIBEVENT_LIBS="$ac_libevent_path/lib/$libevent_a"
+			fi
+		else
+			for search_path in $sys_lib_search_path_spec ; do
+				if test -f "$search_path$libevent_a" ; then
+					LIBEVENT_LIBS="$search_path$libevent_a"
+					break;
+				fi
+			done
+		fi
+		if test -z "$LIBEVENT_LIBS"; then
+			AC_MSG_ERROR([libevent.a could not be found. Use --with-libevent=shared])
+		fi
+	fi
+
 	if test "$success" != "yes" ; then
 		AC_MSG_RESULT(no)
 		ac_have_libevent=no
@@ -170,16 +199,9 @@ if test "$PHP_LIBEVENT" != "no"; then
 		ac_have_libevent=yes
 		AC_DEFINE(HAVE_LIBEVENT, 1, [define if libevent is available])
 	fi
-	
-	if test "$ext_shared" = "yes"; then
-		LIBEVENT_LIBS="-levent"
-	else
-		LIBEVENT_LIBS="-l:libevent.a"
-	fi
 
 	if test -n "$ac_libevent_path"; then
 		LIBEVENT_CFLAGS="-I$ac_libevent_path/include"
-		LIBEVENT_LIBS="-L$ac_libevent_path/$PHP_LIBDIR $LIBEVENT_LIBS"
 	fi
 
     AC_SUBST(LIBEVENT_CFLAGS)
