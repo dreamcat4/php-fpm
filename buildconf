@@ -53,6 +53,7 @@ libtoolize --force --copy
 autoheader
 automake --foreign --copy --add-missing
 autoconf
+rm -f fpm_autoconfig.h.in~
 
 # # Alternative method (and without --foreign)
 # touch NEWS README AUTHORS ChangeLog
