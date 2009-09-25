@@ -42,6 +42,7 @@ bin_PROGRAMS = $(am__EXEEXT_1)
 EXTRA_PROGRAMS = php_fpm$(EXEEXT)
 DIST_COMMON = $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/fpm_autoconfig.h.in \
+	$(srcdir)/m4/Makefile.frag \
 	$(top_srcdir)/conf/init.d.php-fpm.in \
 	$(top_srcdir)/conf/nginx-site-conf.sample.in \
 	$(top_srcdir)/conf/php-fpm.conf.in $(top_srcdir)/configure \
@@ -182,7 +183,7 @@ am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
-bindir = @bindir@
+bindir = $(php_fpm_bin_dir)
 build = @build@
 build_alias = @build_alias@
 build_cpu = @build_cpu@
@@ -208,11 +209,17 @@ oldincludedir = @oldincludedir@
 php_fpm_ADD_CFLAGS = @php_fpm_ADD_CFLAGS@
 php_fpm_ADD_LIBS = @php_fpm_ADD_LIBS@
 php_fpm_bin = @php_fpm_bin@
+php_fpm_bin_dir = @php_fpm_bin_dir@
 php_fpm_bin_path = @php_fpm_bin_path@
+php_fpm_conf = @php_fpm_conf@
+php_fpm_conf_dir = @php_fpm_conf_dir@
 php_fpm_conf_path = @php_fpm_conf_path@
 php_fpm_group = @php_fpm_group@
+php_fpm_log_dir = @php_fpm_log_dir@
 php_fpm_log_path = @php_fpm_log_path@
+php_fpm_pid_dir = @php_fpm_pid_dir@
 php_fpm_pid_path = @php_fpm_pid_path@
+php_fpm_port = @php_fpm_port@
 php_fpm_user = @php_fpm_user@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
@@ -235,7 +242,7 @@ all: fpm_autoconfig.h
 .SUFFIXES:
 am--refresh:
 	@:
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/m4/Makefile.frag $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -621,7 +628,6 @@ installdirs-am:
 	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -718,6 +724,32 @@ uninstall-info: uninstall-info-recursive
 
 $(php_fpm_bin): php_fpm
 	ln -sf php_fpm $(php_fpm_bin)
+
+install: install-fpm
+
+install-fpm: $(php_fpm_bin)
+	@echo "Installing PHP FPM binary:        $(INSTALL_ROOT)$(php_fpm_bin_path)"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_bin_dir)
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_pid_dir)
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_log_dir)
+	@$(INSTALL) -m 0755 $(php_fpm_bin) $(INSTALL_ROOT)$(php_fpm_bin_path)$(program_suffix)$(EXEEXT)
+	@echo "Installing PHP FPM config:        $(INSTALL_ROOT)$(php_fpm_conf_path)"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_conf_dir)
+	@$(INSTALL_DATA) $(php_fpm_conf) $(INSTALL_ROOT)$(php_fpm_conf_path)
+	@echo "Installing PHP FPM man page:      $(INSTALL_ROOT)$(mandir)/man1/$(php_fpm_bin)$(program_suffix).1"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) $(php_fpm_bin).1 $(INSTALL_ROOT)$(mandir)/man1/$(php_fpm_bin)$(program_suffix).1
+	@echo "Installing PHP FPM init.d script: $(INSTALL_ROOT)/etc/init.d/$(php_fpm_bin)"
+	@$(mkinstalldirs) $(INSTALL_ROOT)/etc/init.d
+	@$(INSTALL) -m 0755 init.d.$(php_fpm_bin) $(INSTALL_ROOT)/etc/init.d/$(php_fpm_bin)
+	@echo ""
+	@echo "*** Installation complete. ***"
+	@echo ""
+	@echo "run:"
+	@echo "\`update-rc.d $(php_fpm_bin) defaults; invoke-rc.d $(php_fpm_bin) start\`"
+	@echo ""
+	@echo "or system equivalent to start the $(php_fpm_bin) service."
+	@echo ""
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

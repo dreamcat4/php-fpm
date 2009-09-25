@@ -105,8 +105,17 @@
 /* fpm binary executable */
 #undef PHP_FPM_BIN
 
+/* fpm binary dir */
+#undef PHP_FPM_BIN_DIR
+
 /* fpm bin file path */
 #undef PHP_FPM_BIN_PATH
+
+/* fpm conf file */
+#undef PHP_FPM_CONF
+
+/* fpm conf dir */
+#undef PHP_FPM_CONF_DIR
 
 /* fpm conf file path */
 #undef PHP_FPM_CONF_PATH
@@ -114,11 +123,20 @@
 /* fpm group name */
 #undef PHP_FPM_GROUP
 
+/* fpm log dir */
+#undef PHP_FPM_LOG_DIR
+
 /* fpm log file path */
 #undef PHP_FPM_LOG_PATH
 
+/* fpm pid dir */
+#undef PHP_FPM_PID_DIR
+
 /* fpm pid file path */
 #undef PHP_FPM_PID_PATH
+
+/* tcp port */
+#undef PHP_FPM_PORT
 
 /* fpm user name */
 #undef PHP_FPM_USER
