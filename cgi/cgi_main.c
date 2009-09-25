@@ -1554,26 +1554,6 @@ int main(int argc, char *argv[])
 			return FAILURE;
 		}
 
-		if (CGIG(check_shebang_line) && file_handle.handle.fp && (file_handle.handle.fp != stdin)) {
-			/* #!php support */
-			c = fgetc(file_handle.handle.fp);
-			if (c == '#') {
-				while (c != '\n' && c != '\r' && c != EOF) {
-					c = fgetc(file_handle.handle.fp);	/* skip to end of line */
-				}
-				/* handle situations where line is terminated by \r\n */
-				if (c == '\r') {
-					if (fgetc(file_handle.handle.fp) != '\n') {
-						long pos = ftell(file_handle.handle.fp);
-						fseek(file_handle.handle.fp, pos - 1, SEEK_SET);
-					}
-				}
-				CG(start_lineno) = 2;
-			} else {
-				rewind(file_handle.handle.fp);
-			}
-		}
-
 		fpm_request_executing();
 
 		php_execute_script(&file_handle TSRMLS_CC);
