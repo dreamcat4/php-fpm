@@ -38,7 +38,7 @@
 
 			Address to accept fastcgi requests on.
 			Valid syntax is 'ip.ad.re.ss:port' or just 'port' or '/path/to/unix/socket'
-			<value name="listen_address">127.0.0.1:9000</value>
+			<value name="listen_address">127.0.0.1:@php_fpm_port@</value>
 
 			<value name="listen_options">
 

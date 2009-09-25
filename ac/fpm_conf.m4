@@ -4,6 +4,9 @@ AC_DEFUN([AC_FPM_ARGS],
 	PHP_ARG_WITH(fpm-bin,,
 	[  --with-fpm-bin[=PATH]   Set the path for the php-fpm binary [/usr/local/bin/php-fpm]], yes, no)
 
+	PHP_ARG_WITH(fpm-port,,
+	[  --with-fpm-port[=PORT]  Set the tcp port number to listen for cgi requests [9000]], yes, no)
+
 	PHP_ARG_WITH(fpm-conf,,
 	[  --with-fpm-conf[=PATH]  Set the path for php-fpm configuration file [/etc/php-fpm.conf]], yes, no)
 
@@ -40,6 +43,12 @@ AC_DEFUN([AC_FPM_VARS],
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
 	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
+
+	if test -z "$PHP_FPM_PORT" -o "$PHP_FPM_PORT" = "yes" -o "$PHP_FPM_PORT" = "no"; then
+		php_fpm_port="9000"
+	else
+		php_fpm_port="$PHP_FPM_PORT"
+	fi
 
 	if test -z "$PHP_FPM_CONF" -o "$PHP_FPM_CONF" = "yes" -o "$PHP_FPM_CONF" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"
@@ -80,6 +89,7 @@ AC_DEFUN([AC_FPM_VARS],
 	PHP_SUBST_OLD(php_fpm_bin)
 	PHP_SUBST_OLD(php_fpm_bin_dir)
 	PHP_SUBST_OLD(php_fpm_bin_path)
+	PHP_SUBST_OLD(php_fpm_port)
 	PHP_SUBST_OLD(php_fpm_conf)
 	PHP_SUBST_OLD(php_fpm_conf_dir)
 	PHP_SUBST_OLD(php_fpm_conf_path)
@@ -95,6 +105,7 @@ AC_DEFUN([AC_FPM_VARS],
 	AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
 	AC_DEFINE_UNQUOTED(PHP_FPM_BIN_DIR, "$php_fpm_bin_dir", [fpm binary dir])
 	AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
+	AC_DEFINE_UNQUOTED(PHP_FPM_PORT, "$php_fpm_port", [tcp port])
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF, "$php_fpm_conf", [fpm conf file])
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF_DIR, "$php_fpm_conf_dir", [fpm conf dir])
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])

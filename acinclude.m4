@@ -381,6 +381,9 @@ AC_DEFUN([AC_FPM_PATHS],
 	AC_ARG_WITH([fpm-bin],
 		AC_HELP_STRING([--with-fpm-bin=@<:@PATH@:>@], [Set the path for php-fpm binary @<:@/usr/local/bin/php-fpm@:>@]))
 
+	AC_ARG_WITH([fpm-port],
+		AC_HELP_STRING([--with-fpm-port=@<:@PORT@:>@], [Set the tcp port number to listen for cgi requests @<:@9000@:>@]))
+
 	AC_ARG_WITH([fpm-conf],
 		AC_HELP_STRING([--with-fpm-conf=@<:@PATH@:>@], [Set the path for php-fpm configuration file @<:@/etc/php-fpm.conf@:>@]))
 
@@ -413,6 +416,12 @@ AC_DEFUN([AC_FPM_PATHS],
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
 	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
+
+	if test -z "$with_fpm_port" -o "$with_fpm_port" = "yes" -o "$with_fpm_port" = "no"; then
+		php_fpm_port="9000"
+	else
+		php_fpm_port="$with_fpm_port"
+	fi
 
 	if test -z "$with_fpm_conf" -o "$with_fpm_conf" = "yes" -o "$with_fpm_conf" = "no"; then
 		php_fpm_conf_path="/etc/php-fpm.conf"

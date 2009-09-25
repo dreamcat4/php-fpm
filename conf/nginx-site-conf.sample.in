@@ -30,12 +30,12 @@ server {
 		root   /var/www/nginx-default;
 	}
 
-	# pass the *.php scripts to @php_fpm_bin@ listening on port 9000
+	# pass the *.php scripts to @php_fpm_bin@ listening on tcp port @php_fpm_port@
 	#
 	location ~ \.php$ {
 
 		root $site_root;
-		fastcgi_pass   127.0.0.1:9000;
+		fastcgi_pass   127.0.0.1:@php_fpm_port@;
 		fastcgi_index  index.php;
 
 		include fastcgi_params;

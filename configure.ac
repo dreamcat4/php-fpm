@@ -41,6 +41,7 @@ AC_SUBST(fpm_version)
 AC_SUBST(php_fpm_bin)
 AC_SUBST(php_fpm_bin_dir)
 AC_SUBST(php_fpm_bin_path)
+AC_SUBST(php_fpm_port)
 AC_SUBST(php_fpm_conf)
 AC_SUBST(php_fpm_conf_dir)
 AC_SUBST(php_fpm_conf_path)
@@ -55,6 +56,7 @@ AC_DEFINE_UNQUOTED(PHP_FPM_VERSION, "$fpm_version", [fpm version])
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN, "$php_fpm_bin", [fpm binary executable])
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN_DIR, "$php_fpm_bin_dir", [fpm binary dir])
 AC_DEFINE_UNQUOTED(PHP_FPM_BIN_PATH, "$php_fpm_bin_path", [fpm bin file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_PORT, "$php_fpm_port", [tcp port])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF, "$php_fpm_conf", [fpm conf file])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF_DIR, "$php_fpm_conf_dir", [fpm conf dir])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
@@ -69,11 +71,10 @@ AC_DEFINE_UNQUOTED(PHP_FPM_GROUP, "$php_fpm_group", [fpm group name])
 AC_CONFIG_FILES([Makefile cgi/Makefile fpm/Makefile])
 
 
-AC_OUTPUT($php_fpm_conf:conf/php-fpm.conf.in)
-
-AC_OUTPUT(init.d.$php_fpm_bin:conf/init.d.php-fpm.in)
-
-AC_OUTPUT(nginx-site-conf.sample:conf/nginx-site-conf.sample.in)
-
-AC_OUTPUT($php_fpm_bin.1:man/php-fpm.1.in)
+AC_OUTPUT( \
+	$php_fpm_conf:conf/php-fpm.conf.in \
+	init.d.$php_fpm_bin:conf/init.d.php-fpm.in \
+	nginx-site-conf.sample:conf/nginx-site-conf.sample.in \
+	$php_fpm_bin.1:man/php-fpm.1.in \
+)
 

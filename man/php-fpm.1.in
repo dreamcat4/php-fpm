@@ -10,7 +10,7 @@
 \fBPHP\fP is a widely\-used general\-purpose scripting language that is especially suited for 
 Web development and can be embedded into HTML. This is a variant of PHP that will run in the background as a daemon, listening for CGI requests. Output is logged to @php_fpm_log_path@.
 .LP
-Most options are set in the configuration file. The configuration file is @php_fpm_conf_path@. By default, @php_fpm_bin@ will respond to CGI requests listening on localhost http port 9000. Therefore @php_fpm_bin@ expects your webserver to forward all requests for '.php' files to port 9000 and you should edit your webserver configuration file appropriately.
+Most options are set in the xml configuration file @php_fpm_conf_path@. Unless configured otherwise, @php_fpm_bin@ will respond to CGI requests listening on http localhost port 9000 by default. Therefore @php_fpm_bin@ expects your webserver to forward all requests for '.php' files to port 9000 and you should edit your webserver configuration file appropriately.
 .SH OPTIONS
 .TP 15
 .B \-C
