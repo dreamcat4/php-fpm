@@ -10,7 +10,7 @@ Choose one of 2 ways to compile fpm. Either `integrated` or `seperate`. Unless y
 
 Download fpm and generate the patch file
 
-	export PHP_VER=5.2.10 
+	export PHP_VER=5.3.0
 	wget http://launchpad.net/php-fpm/trunk/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz
 	php-fpm-0.6-$PHP_VER/generate-fpm-patch
 
@@ -34,7 +34,7 @@ There are (2) Dependencies. If you haven't built php before, you'll need to inst
 
 The PHP source code. Download it, unpack it, compile it.
 
-	export PHP_VER=5.2.10
+	export PHP_VER=5.3.0
 	wget http://us.php.net/get/php-$PHP_VER.tar.gz/from/us.php.net/mirror
 	tar xvfz php-$PHP_VER.tar.gz
 	cd php-$PHP_VER
