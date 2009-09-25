@@ -1357,8 +1357,8 @@ int main(int argc, char *argv[])
 				break;
 
 			case 'e': /* enable extended info output */
-				CG(extended_info) = 1; /* 5_2 */
-				/* CG(compiler_options) |= ZEND_COMPILE_EXTENDED_INFO; */ /* 5_3 */
+				/* CG(extended_info) = 1; */ /* 5_2 */
+				CG(compiler_options) |= ZEND_COMPILE_EXTENDED_INFO; /* 5_3 */
 				break;
 
 			case 'm': /* list compiled in modules */
