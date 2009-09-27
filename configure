@@ -21598,7 +21598,7 @@ esac
 
 
           if test "$PHP_LIBEVENT" != "no"; then
-            LIBEVENT_MIN_VERSION=1.4
+            LIBEVENT_MIN_VERSION=1.4.3
             LIBEVENT_REQ_VERSION=1.4.11
 
 			# Default library search paths ($sys_lib_search_path_spec)
