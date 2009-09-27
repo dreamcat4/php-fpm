@@ -1,4 +1,4 @@
-dnl @synopsis AC_LIB_EVENT([MINIMUM-VERSION])
+dnl @synopsis AC_LIB_EVENT([MINIMUM-VERSION],[REQUIRED-VERSION])
 dnl
 dnl Test for the libevent library of a particular version (or newer).
 dnl Source: http://svn.apache.org/repos/asf/incubator/thrift/trunk/aclocal/ax_lib_event.m4
@@ -143,12 +143,11 @@ AC_DEFUN([AC_LIB_EVENT],
           [  --with-libevent@<:@=PATH@:>@  Path to the libevent, for fpm SAPI @<:@/usr/local@:>@], yes, yes)
 
           if test "$PHP_LIBEVENT" != "no"; then
-            WANT_LIBEVENT_VERSION=ifelse([$1], ,1.2,$1)
+            LIBEVENT_MIN_VERSION=ifelse([$1], ,1.4.3,$1)
+            LIBEVENT_REQ_VERSION=ifelse([$2], ,1.4.11,$2)
 
 			# Default library search paths ($sys_lib_search_path_spec)
 			AC_LIBTOOL_SYS_DYNAMIC_LINKER
-
-            AC_MSG_CHECKING(for libevent >= $WANT_LIBEVENT_VERSION)
 
 			libevent_prefix=$ac_default_prefix
 			if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
@@ -159,12 +158,36 @@ AC_DEFUN([AC_LIB_EVENT],
 				PHP_LIBEVENT=$libevent_prefix
 		    fi
 
+            AC_MSG_CHECKING(for libevent >= $LIBEVENT_REQ_VERSION)
             for ac_libevent_path in "" $PHP_LIBEVENT /usr /usr/local /opt /opt/local /opt/libevent ; do
-              AC_LIB_EVENT_DO_CHECK
+			  WANT_LIBEVENT_VERSION="$LIBEVENT_REQ_VERSION"
+		      AC_LIB_EVENT_DO_CHECK
               if test "$success" = "yes"; then
                 break;
               fi
             done
+            if test "$success" = "no"; then
+
+				AC_MSG_RESULT(no)
+				AC_MSG_WARN([Could not find libevent $LIBEVENT_REQ_VERSION.])
+				AC_MSG_WARN([The use of earlier versions of libevent is not recommended])
+				AC_MSG_WARN([and can result in unspecified or unsupported behaviour.])
+
+	            AC_MSG_CHECKING(for minimum libevent version >= $LIBEVENT_MIN_VERSION)
+	            for ac_libevent_path in "" $PHP_LIBEVENT /usr /usr/local /opt /opt/local /opt/libevent ; do
+				  WANT_LIBEVENT_VERSION="$LIBEVENT_MIN_VERSION"
+			      AC_LIB_EVENT_DO_CHECK
+	              if test "$success" = "yes"; then
+	                break;
+	              fi
+	            done
+	            if test "$success" = "no"; then
+				  AC_MSG_RESULT(no)
+	              LIBEVENT_LIBS=""
+				  ac_have_libevent=no
+	              AC_MSG_ERROR([Libevent minimum version >= $LIBEVENT_MIN_VERSION could not be found.])
+	            fi
+        	fi
 
 			if test "$ext_shared" = "yes"; then
 				if test -n "$ac_libevent_path"; then
@@ -191,12 +214,7 @@ AC_DEFUN([AC_LIB_EVENT],
 				fi
 			fi
 
-            if test "$success" != "yes" ; then
-              AC_MSG_RESULT(no)
-              LIBEVENT_LIBS=""
-			  ac_have_libevent=no
-              AC_MSG_ERROR([Libevent $WANT_LIBEVENT_VERSION could not be found])
-            else
+            if test "$success" = "yes" ; then
               AC_MSG_RESULT(yes)
 			  ac_have_libevent=yes
               AC_DEFINE(HAVE_LIBEVENT, 1, [define if libevent is available])

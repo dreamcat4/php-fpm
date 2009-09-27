@@ -10,7 +10,7 @@ if test "$PHP_FPM" != "no"; then
 	PHP_CONFIGURE_PART(Configuring fpm)
 	
 	sinclude(sapi/fpm/ac/fpm_libevent.m4)
-		AC_LIB_EVENT([1.4.11])
+		AC_LIB_EVENT([1.4.3],[1.4.11])
 
 	sinclude(sapi/fpm/ac/fpm_checks.m4)
 		AC_FPM_CHECKS
