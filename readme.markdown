@@ -26,7 +26,7 @@ Libevent 1.4.12-stable or higher is recommended, and at least libevent 1.4.3-sta
 
 Download fpm and generate the patch file
 
-	export PHP_VER=5.3.0
+	export PHP_VER=5.3.0 
 	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
 	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
 	"php-fpm-0.6-$PHP_VER/generate-fpm-patch"
