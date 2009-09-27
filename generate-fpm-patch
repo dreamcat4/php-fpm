@@ -3,13 +3,14 @@
 # 
 
 START_DIR=`pwd`
-if [ "$1" ] ; then FPM_DIR="$1"; else FPM_DIR="php-fpm"
+if [ "$1" ] ; then FPM_DIR="$1"; else FPM_DIR=`dirname "$0"`; fi
 
 CONFIGURE_AC="$FPM_DIR/configure.ac"
-if [ ! -f "$CONFIGURE_AC" ]; then
+if [ "$FPM_DIR" = '.' ] || [ ! -f "$CONFIGURE_AC" ]; then
 	echo This command must be executed one directory ABOVE the
 	echo php-fpm source tree, with `php-fpm/generate-fpm-patch`
 fi
+
 PKG_DESCR=`cat "$CONFIGURE_AC" | grep AC_INIT | sed -e "s/AC_INIT.//" -e "s/. *$//"`
 FPM_PATCH_HEADER=`cat <<- \
 	FPM_PATCH_HEADER
@@ -21,11 +22,11 @@ FPM_PATCH_HEADER=`cat <<- \
 	FPM_PATCH_HEADER
 	`
 echo "$FPM_PATCH_HEADER" > fpm.patch
-PHP_SRC=43fa2d06781b784bb2025b57a2230267 # echo "php-src" | md5
-mkdir -p $PHP_SRC/php-src-vanilla/sapi
-mkdir -p $PHP_SRC/php-src/sapi
-cd $PHP_SRC/php-src
-cp -Rf ../../$FPM_DIR sapi/fpm
+PHP_SRC="43fa2d06781b784bb2025b57a2230267" # echo "php-src" | md5
+mkdir -p "$PHP_SRC/php-src-vanilla/sapi"
+mkdir -p "$PHP_SRC/php-src/sapi"
+cd "$PHP_SRC/php-src"
+cp -RfL "../../$FPM_DIR" sapi/fpm
 cd sapi/fpm
 
 # Remove non-project files
@@ -42,6 +43,7 @@ rm -rf $STANDALONE_FILES
 # rm -rf file1 file2 file3...
 
 cd "$START_DIR/$PHP_SRC"
-diff -Naur php-src-vanilla php-src | filterdiff --remove-timestamps >> fpm.patch
+# diff -Naur php-src-vanilla php-src | filterdiff --remove-timestamps >> fpm.patch
+diff -Naur php-src-vanilla php-src >> fpm.patch
 cp fpm.patch ../ && cd ../
 rm -Rf $PHP_SRC
