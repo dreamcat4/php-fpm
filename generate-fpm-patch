@@ -3,7 +3,9 @@
 # 
 
 START_DIR=`pwd`
-CONFIGURE_AC="php-fpm/configure.ac"
+if [ "$1" ] ; then FPM_DIR="$1"; else FPM_DIR="php-fpm"
+
+CONFIGURE_AC="$FPM_DIR/configure.ac"
 if [ ! -f "$CONFIGURE_AC" ]; then
 	echo This command must be executed one directory ABOVE the
 	echo php-fpm source tree, with `php-fpm/generate-fpm-patch`
@@ -23,7 +25,7 @@ PHP_SRC=43fa2d06781b784bb2025b57a2230267 # echo "php-src" | md5
 mkdir -p $PHP_SRC/php-src-vanilla/sapi
 mkdir -p $PHP_SRC/php-src/sapi
 cd $PHP_SRC/php-src
-cp -Rf ../../php-fpm sapi/fpm
+cp -Rf ../../$FPM_DIR sapi/fpm
 cd sapi/fpm
 
 # Remove non-project files

@@ -11,14 +11,15 @@ Choose one of 2 ways to compile fpm. Either `integrated` or `seperate`. Unless y
 Download fpm and generate the patch file
 
 	export PHP_VER=5.3.0
-	wget http://launchpad.net/php-fpm/trunk/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz
-	php-fpm-0.6-$PHP_VER/generate-fpm-patch
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
+	"php-fpm-0.6-$PHP_VER/generate-fpm-patch" "php-fpm-0.6-$PHP_VER"
 
 The PHP source code. Download it, unpack it.
 
-	wget http://us.php.net/get/php-$PHP_VER.tar.gz/from/us.php.net/mirror
-	tar xvfz php-$PHP_VER.tar.gz
-	cd php-$PHP_VER
+	wget "http://us.php.net/get/php-$PHP_VER.tar.gz/from/us.php.net/mirror"
+	tar xvfz "php-$PHP_VER.tar.gz"
+	cd "php-$PHP_VER"
 
 Apply the patch and compile
 
@@ -35,21 +36,21 @@ There are (2) Dependencies. If you haven't built php before, you'll need to inst
 The PHP source code. Download it, unpack it, compile it.
 
 	export PHP_VER=5.3.0
-	wget http://us.php.net/get/php-$PHP_VER.tar.gz/from/us.php.net/mirror
-	tar xvfz php-$PHP_VER.tar.gz
-	cd php-$PHP_VER
+	wget "http://us.php.net/get/php-$PHP_VER.tar.gz/from/us.php.net/mirror"
+	tar xvfz "php-$PHP_VER.tar.gz"
+	cd "php-$PHP_VER"
 	mkdir php-build && cd php-build
 	../configure && make
 
 Now you can download, Configure and compile the FPM frontend
 
-	wget http://launchpad.net/php-fpm/trunk/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz
-	tar -zxvf php-fpm-0.6-$PHP_VER.tar.gz
-	cd php-fpm-0.6-$PHP_VER
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
+	cd "php-fpm-0.6-$PHP_VER"
 	mkdir fpm-build && cd fpm-build
 	../configure --srcdir=../ \
-	 --with-php-src=../../php-$PHP_VER \
-	 --with-php-build=../../php-$PHP_VER/php-build \
+	 --with-php-src="../../php-$PHP_VER" \
+	 --with-php-build="../../php-$PHP_VER/php-build" \
 	&& make
 
 ## Configure flags
