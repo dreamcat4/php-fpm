@@ -6,6 +6,22 @@ PHP-FPM is a Fast-CGI frontend for php, and an enhancement of php-cgi. The proje
 
 Choose one of 2 ways to compile fpm. Either `integrated` or `seperate`. Unless you are a developer or systems administrator, we recommend the `integrated` compilation approach. For more information see the file `readme.markdown`.
 
+## Install Dependencies
+
+There are (2) Dependencies. If you haven't built php before, you'll need to install libxml dev package. FPM also requires the Libevent library so install libevent-dev too. The command for debian / ubuntu is:
+
+	sudo aptitude install -y libxml2-dev libevent-dev
+
+Libevent 1.4.12-stable or higher is recommended, and at least libevent 1.4.3-stable is required. If no suitable version available, download and compile it from the [Libevent website](http://www.monkey.org/~provos/libevent/).
+
+	LE_VER=1.4.12-stable
+	wget "http://www.monkey.org/~provos/libevent-$LE_VER.tar.gz"
+	tar -zxvf "libevent-$LE_VER.tar.gz"
+	cd "libevent-$LE_VER"
+	./configure && make
+	DESTDIR=$PWD make install
+	export LIBEVENT_SEARCH_PATH="$PWD/usr/local"
+
 ## Integrated compilation
 
 Download fpm and generate the patch file
@@ -13,7 +29,7 @@ Download fpm and generate the patch file
 	export PHP_VER=5.3.0
 	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
 	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
-	"php-fpm-0.6-$PHP_VER/generate-fpm-patch" "php-fpm-0.6-$PHP_VER"
+	"php-fpm-0.6-$PHP_VER/generate-fpm-patch"
 
 The PHP source code. Download it, unpack it.
 
@@ -26,9 +42,11 @@ Apply the patch and compile
 	patch -p1 < ../fpm.patch
 	./buildconf --force
 	mkdir fpm-build && cd fpm-build
-	../configure --with-fpm && make
+	../configure --with-fpm \
+	--with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
 ## Seperate compilation
+
 There are (2) Dependencies. If you haven't built php before, you'll need to install libxml dev package. FPM also requires the Libevent library. So install libevent-dev too. The command for debian / ubuntu is:
 
 	sudo aptitude install -y libxml2-dev libevent-dev
@@ -51,7 +69,7 @@ Now you can download, Configure and compile the FPM frontend
 	../configure --srcdir=../ \
 	 --with-php-src="../../php-$PHP_VER" \
 	 --with-php-build="../../php-$PHP_VER/php-build" \
-	&& make
+	 --with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
 ## Configure flags
 
