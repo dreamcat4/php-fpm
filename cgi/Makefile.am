@@ -15,5 +15,6 @@ libsapi_la_CFLAGS = -DFPM_AUTOCONFIG_H
 
 libsapi_la_SOURCES = \
 	cgi_main.c \
-	fastcgi.c
+	fastcgi.c \
+    getopt.c
 

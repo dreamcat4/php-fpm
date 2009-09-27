@@ -8,7 +8,7 @@ AC_DEFUN([AC_FPM_BUILD_SAPI],
 	
 	mkdir -p sapi/fpm/cgi
 	PHP_FPM_SAPI_FILES=`cd $abs_srcdir/sapi/fpm && find cgi/ \( -name *.c \) -exec printf "{} " \;`
-	# PHP_FPM_SAPI_FILES="cgi/cgi_main.c cgi/fastcgi.c"
+	# PHP_FPM_SAPI_FILES="cgi/cgi_main.c cgi/fastcgi.c cgi/getopt.c"
 
 	mkdir -p sapi/fpm/fpm
 	PHP_FPM_CORE_FILES=`cd $abs_srcdir/sapi/fpm && find fpm/ \( -name *.c -not -name fpm_trace*.c \) -exec printf "{} " \;`
