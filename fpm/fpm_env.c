@@ -87,7 +87,7 @@ void unsetenv(const char *name)
             if (nvmatch(name, environ[ct])  != 0) del=ct;
                 { ct++; }
         }
-    // isn't needed free here??
+    /* isn't needed free here?? */
     environ[del]=environ[ct-1];
     environ[ct-1]=NULL;
     }
