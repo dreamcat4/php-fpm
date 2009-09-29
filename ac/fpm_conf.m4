@@ -29,6 +29,12 @@ AC_DEFUN([AC_FPM_VARS],
 	fpm_prefix=$ac_default_prefix
 	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
 		fpm_prefix=$prefix
+	else
+		prefix=$fpm_prefix
+	fi
+
+	if test $exec_prefix = "NONE" -o $exec_prefix = "" -o $exec_prefix = "no" ; then
+		exec_prefix=$fpm_prefix
 	fi
 
 	fpm_bin_prefix=$fpm_prefix/bin

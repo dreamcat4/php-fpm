@@ -400,8 +400,14 @@ AC_DEFUN([AC_FPM_PATHS],
 		AC_HELP_STRING([--with-fpm-group=@<:@GRP@:>@], [Set the group for php-fpm to run as @<:@nobody@:>@]))
 
 	fpm_prefix=$ac_default_prefix
-	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then 
+	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
 		fpm_prefix=$prefix
+	else
+		prefix=$fpm_prefix
+	fi
+
+	if test $exec_prefix = "NONE" -o $exec_prefix = "" -o $exec_prefix = "no" ; then
+		exec_prefix=$fpm_prefix
 	fi
 
 	fpm_bin_prefix=$fpm_prefix/bin
@@ -409,10 +415,10 @@ AC_DEFUN([AC_FPM_PATHS],
 		fpm_bin_prefix=$bindir
 	fi
 
-	if test -z "$with_fpm_bin" -o "$with_fpm_bin" = "yes" -o "$with_fpm_bin" = "no"; then
+	if test -z "$PHP_FPM_BIN" -o "$PHP_FPM_BIN" = "yes" -o "$PHP_FPM_BIN" = "no"; then
 		php_fpm_bin_path="$fpm_bin_prefix/php-fpm"
 	else
-		php_fpm_bin_path="$with_fpm_bin"
+		php_fpm_bin_path="$PHP_FPM_BIN"
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
 	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
