@@ -111,9 +111,9 @@ static char *fpm_conf_set_rlimit_core(void **conf, char *name, void *vv, intptr_
 
 		error = xml_conf_set_slot_integer(&subconf, name, vv, 0);
 
-		if (error) return error;
+		if (error) { return error; }
 
-		if (int_value < 0) return "invalid value for 'rlimit_core'";
+		if (int_value < 0) { return "invalid value for 'rlimit_core'"; }
 
 		c->rlimit_core = int_value;
 	}
@@ -130,7 +130,7 @@ static char *fpm_conf_set_catch_workers_output(void **conf, char *name, void *vv
 
 	error = xml_conf_set_slot_boolean(&subconf, name, vv, 0);
 
-	if (error) return error;
+	if (error) { return error; }
 
 	c->catch_workers_output = int_value;
 
@@ -265,15 +265,15 @@ static void *fpm_worker_pool_config_alloc()
 
 	wp = fpm_worker_pool_alloc();
 
-	if (!wp) return 0;
+	if (!wp) { return 0; }
 
 	wp->config = malloc(sizeof(struct fpm_worker_pool_config_s));
 
-	if (!wp->config) return 0;
+	if (!wp->config) { return 0; }
 
 	memset(wp->config, 0, sizeof(struct fpm_worker_pool_config_s));
 
-	if (current_wp) current_wp->next = wp;
+	if (current_wp) { current_wp->next = wp; }
 
 	current_wp = wp;
 
@@ -354,7 +354,7 @@ static int fpm_evaluate_full_path(char **path)
 
 		full_path = malloc(sizeof(PHP_PREFIX) + strlen(*path) + 1);
 
-		if (!full_path) return -1;
+		if (!full_path) { return -1; }
 
 		sprintf(full_path, "%s/%s", PHP_PREFIX, *path);
 

@@ -26,9 +26,9 @@ int     clobber;
     char   *cp;
 
     if (clobber == 0 && getenv(name) != 0)
-        return (0);
+        { return (0); }
     if ((cp = malloc(strlen(name) + strlen(value) + 2)) == 0)
-            return (1);
+        { return (1); }
     sprintf(cp, "%s=%s", name, value);
     return (putenv(cp));
 }
@@ -65,7 +65,7 @@ void clearenv()
 
 		s = strdup(*envp);
 
-		if (eq) s[eq - *envp] = '\0';
+		if (eq) { s[eq - *envp] = '\0'; }
 
 		unsetenv(s);
 		free(s);
@@ -85,7 +85,7 @@ void unsetenv(const char *name)
         while(environ[ct] != NULL)
         {
             if (nvmatch(name, environ[ct])  != 0) del=ct;
-            ct++;
+                { ct++; }
         }
     // isn't needed free here??
     environ[del]=environ[ct-1];
@@ -96,10 +96,12 @@ static char * nvmatch(s1, s2)
 register char *s1, *s2;
 {
     while(*s1 == *s2++)
-	if(*s1++ == '=')
-	    return(s2);
+	{
+		if(*s1++ == '=')
+		    { return(s2); }
+	}
     if(*s1 == '\0' && *(s2-1) == '=')
-	return(s2);
+	    { return(s2); }
     return(NULL);
 }
 #endif
@@ -135,7 +137,7 @@ static int fpm_env_conf_wp(struct fpm_worker_pool_s *wp)
 		if (*kv->value == '$') {
 			char *value = getenv(kv->value + 1);
 
-			if (!value) value = "";
+			if (!value) { value = ""; }
 
 			free(kv->value);
 			kv->value = strdup(value);

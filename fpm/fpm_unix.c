@@ -36,7 +36,7 @@ int fpm_unix_resolve_socket_premissions(struct fpm_worker_pool_s *wp)
 	wp->socket_gid = -1;
 	wp->socket_mode = 0666;
 
-	if (!lo) return 0;
+	if (!lo) { return 0; }
 
 	if (lo->owner && *lo->owner) {
 		struct passwd *pwd;

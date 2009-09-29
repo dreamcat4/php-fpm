@@ -173,7 +173,7 @@ static void fpm_pctl_kill_all(int signo)
 				fpm_signal_names[signo] ? fpm_signal_names[signo] : "",
 				(int) child->pid, child->wp->config->name);
 
-			if (res == 0) ++alive_children;
+			if (res == 0) { ++alive_children; }
 		}
 	}
 
@@ -186,7 +186,7 @@ static void fpm_pctl_action_next()
 {
 	int sig, timeout;
 
-	if (!fpm_globals.running_children) fpm_pctl_action_last();
+	if (!fpm_globals.running_children) { fpm_pctl_action_last(); }
 
 	if (fpm_signal_sent == 0) {
 		if (fpm_state == FPM_PCTL_STATE_TERMINATING) {
@@ -234,12 +234,12 @@ void fpm_pctl(int new_state, int action)
 				case FPM_PCTL_STATE_RELOADING :
 
 					/* 'reloading' can be overridden by 'finishing' */
-					if (new_state == FPM_PCTL_STATE_FINISHING) break;
+					if (new_state == FPM_PCTL_STATE_FINISHING) { break; }
 
 				case FPM_PCTL_STATE_FINISHING :
 
 					/* 'reloading' and 'finishing' can be overridden by 'terminating' */
-					if (new_state == FPM_PCTL_STATE_TERMINATING) break;
+					if (new_state == FPM_PCTL_STATE_TERMINATING) { break; }
 
 				case FPM_PCTL_STATE_TERMINATING :
 
@@ -279,7 +279,7 @@ int fpm_pctl_can_spawn_children()
 
 int fpm_pctl_child_exited()
 {
-	if (fpm_state == FPM_PCTL_STATE_NORMAL) return 0;
+	if (fpm_state == FPM_PCTL_STATE_NORMAL) { return 0; }
 
 	if (!fpm_globals.running_children) {
 		fpm_pctl(FPM_PCTL_STATE_UNSPECIFIED, FPM_PCTL_ACTION_LAST_CHILD_EXITED);

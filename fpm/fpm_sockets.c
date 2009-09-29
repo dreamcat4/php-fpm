@@ -253,7 +253,7 @@ static int fpm_sockets_get_listening_socket(struct fpm_worker_pool_s *wp, struct
 
 	sock = fpm_sockets_hash_op(0, sa, 0, wp->listen_address_domain, FPM_GET_USE_SOCKET);
 
-	if (sock >= 0) return sock;
+	if (sock >= 0) { return sock; }
 
 	sock = fpm_sockets_new_listening_socket(wp, sa, socklen);
 
@@ -264,9 +264,9 @@ static int fpm_sockets_get_listening_socket(struct fpm_worker_pool_s *wp, struct
 
 enum fpm_address_domain fpm_sockets_domain_from_address(char *address)
 {
-	if (strchr(address, ':')) return FPM_AF_INET;
+	if (strchr(address, ':')) { return FPM_AF_INET; }
 
-	if (strlen(address) == strspn(address, "0123456789")) return FPM_AF_INET;
+	if (strlen(address) == strspn(address, "0123456789")) { return FPM_AF_INET; }
 
 	return FPM_AF_UNIX;
 }
@@ -350,7 +350,7 @@ int fpm_sockets_init_main()
 		int type, fd_no;
 		char *eq;
 
-		if (comma) *comma = '\0';
+		if (comma) { *comma = '\0'; }
 
 		eq = strchr(inherited, '=');
 
@@ -366,8 +366,8 @@ int fpm_sockets_init_main()
 			fpm_sockets_hash_op(fd_no, 0, inherited, type, FPM_STORE_SOCKET);
 		}
 
-		if (comma) inherited = comma + 1;
-		else inherited = 0;
+		if (comma) { inherited = comma + 1; }
+		else { inherited = 0; }
 	}
 
 	/* create all required sockets */

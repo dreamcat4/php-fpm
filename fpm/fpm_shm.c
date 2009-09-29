@@ -86,7 +86,7 @@ void *fpm_shm_alloc_chunk(struct fpm_shm_s **head, size_t sz, void **mem)
 		}
 
 		shm->next = *head;
-		if (shm->next) shm->next->prev = shm;
+		if (shm->next) { shm->next->prev = shm; }
 		shm->prev = 0;
 		*head = shm;
 	}

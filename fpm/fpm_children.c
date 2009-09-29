@@ -45,7 +45,7 @@ static struct fpm_child_s *fpm_child_alloc()
 
 	ret = malloc(sizeof(struct fpm_child_s));
 
-	if (!ret) return 0;
+	if (!ret) { return 0; }
 
 	memset(ret, 0, sizeof(*ret));
 
@@ -88,7 +88,7 @@ static void fpm_child_link(struct fpm_child_s *child)
 	++fpm_globals.running_children;
 
 	child->next = wp->children;
-	if (child->next) child->next->prev = child;
+	if (child->next) { child->next->prev = child; }
 	child->prev = 0;
 	wp->children = child;
 }
@@ -98,9 +98,9 @@ static void fpm_child_unlink(struct fpm_child_s *child)
 	--child->wp->running_children;
 	--fpm_globals.running_children;
 
-	if (child->prev) child->prev->next = child->next;
-	else child->wp->children = child->next;
-	if (child->next) child->next->prev = child->prev;
+	if (child->prev) { child->prev->next = child->next; }
+	else { child->wp->children = child->next; }
+	if (child->next) { child->next->prev = child->prev; }
 
 }
 
@@ -117,7 +117,9 @@ static struct fpm_child_s *fpm_child_find(pid_t pid)
 			}
 		}
 
-		if (child) break;
+		if (child) {
+			break;
+		}
 	}
 
 	if (!child) {

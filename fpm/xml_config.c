@@ -45,7 +45,7 @@ char *xml_conf_set_slot_string(void **conf, char *name, void *vv, intptr_t offse
 	char *value = vv;
 	char *v = strdup(value);
 
-	if (!v) return "xml_conf_set_slot_string(): strdup() failed";
+	if (!v) { return "xml_conf_set_slot_string(): strdup() failed"; }
 
 #ifdef XML_CONF_DEBUG
 	fprintf(stderr, "setting string '%s' => '%s'\n", name, v);
@@ -77,7 +77,7 @@ char *xml_conf_set_slot_time(void **conf, char *name, void *vv, intptr_t offset)
 	char suffix;
 	int seconds;
 
-	if (!len) return "xml_conf_set_slot_timeval(): invalid timeval value";
+	if (!len) { return "xml_conf_set_slot_timeval(): invalid timeval value"; }
 
 	suffix = value[len-1];
 
@@ -148,8 +148,8 @@ char *xml_conf_parse_section(void **conf, struct xml_conf_section *section, void
 					}
 
 					xmlFree(name);
-					if (ret) return ret;
-					else continue;
+					if (ret) { return ret; }
+					else { continue; }
 				}
 
 				fprintf(stderr, "Warning, unknown setting '%s' in section '%s'\n", (char *) name, section->path);
@@ -196,7 +196,7 @@ static char *xml_conf_parse_file(xmlNode *element)
 				if (section) { /* found a registered section */
 					void *conf = section->conf();
 					ret = xml_conf_parse_section(&conf, section, element->children);
-					if (ret) break;
+					if (ret) { break; }
 				}
 
 			}
@@ -204,7 +204,7 @@ static char *xml_conf_parse_file(xmlNode *element)
 
 		if (element->children) {
 			ret = xml_conf_parse_file(element->children);
-			if (ret) break;
+			if (ret) { break; }
 		}
 	}
 

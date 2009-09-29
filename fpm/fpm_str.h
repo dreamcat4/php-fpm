@@ -9,7 +9,7 @@ static inline char *cpystrn(char *dst, const char *src, size_t dst_size)
 {
 	char *d, *end;
 	
-	if (!dst_size) return dst;
+	if (!dst_size) { return dst; }
 	
 	d = dst;
 	end = dst + dst_size - 1;
