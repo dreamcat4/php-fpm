@@ -20549,11 +20549,6 @@ if test "${with_fpm_group+set}" = set; then
 
 fi;
 
-	echo ""
-	echo "\$exec_prefix=$exec_prefix"
-	echo "\$prefix=$prefix"
-
-
 	fpm_prefix=$ac_default_prefix
 	if test $prefix != "NONE" -a $prefix != "" -a $prefix != "no" ; then
 		fpm_prefix=$prefix
@@ -20567,7 +20562,6 @@ fi;
 
 	fpm_bin_prefix=$fpm_prefix/bin
 	if test $bindir != "NONE" -a $bindir != "" -a $bindir != "no" ; then
-		echo "\$bindir=$bindir"
 		fpm_bin_prefix=$bindir
 	fi
 
@@ -20578,11 +20572,6 @@ fi;
 	fi
 	php_fpm_bin=`basename $php_fpm_bin_path`
 	php_fpm_bin_dir=`dirname $php_fpm_bin_path`
-	echo "\$php_fpm_bin=$php_fpm_bin"
-	echo "\$php_fpm_bin_dir=$php_fpm_bin_dir"
-	echo "\$php_fpm_bin_path=$php_fpm_bin_path"
-	echo "\$exec_prefix=$exec_prefix"
-	echo "\$prefix=$prefix"
 
 	if test -z "$with_fpm_port" -o "$with_fpm_port" = "yes" -o "$with_fpm_port" = "no"; then
 		php_fpm_port="9000"
