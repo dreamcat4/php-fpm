@@ -37,6 +37,10 @@ AC_DEFUN([AC_FPM_VARS],
 		exec_prefix=$fpm_prefix
 	fi
 
+	if test `echo "$bindir" | grep "exec_prefix"` ; then
+		bindir=$exec_prefix/bin
+	fi
+
 	fpm_bin_prefix=$fpm_prefix/bin
 	if test $bindir != "NONE" -a $bindir != "" -a $bindir != "no" ; then
 		fpm_bin_prefix=$bindir
