@@ -115,4 +115,4 @@ Fpm подмешивается в php при линковке (link-level). Ан
 
 - [highload-php-ru](http://groups.google.com/group/highload-php-ru) (русская)
 
-Перевод Анатолия Пашина
+Translated by Anatoly Pashin
