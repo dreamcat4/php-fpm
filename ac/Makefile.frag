@@ -17,16 +17,19 @@ install-fpm: $(SAPI_FPM_PATH)
 	@echo "Installing PHP FPM man page:      $(INSTALL_ROOT)$(mandir)/man1/$(php_fpm_bin)$(program_suffix).1"
 	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
 	@$(INSTALL_DATA) sapi/fpm/$(php_fpm_bin).1 $(INSTALL_ROOT)$(mandir)/man1/$(php_fpm_bin)$(program_suffix).1
-	@echo "Installing PHP FPM init.d script: $(INSTALL_ROOT)/etc/init.d/$(php_fpm_bin)"
-	@$(mkinstalldirs) $(INSTALL_ROOT)/etc/init.d
-	@$(INSTALL) -m 0755 sapi/fpm/init.d.$(php_fpm_bin) $(INSTALL_ROOT)/etc/init.d/$(php_fpm_bin)
+ifneq ($(strip $(php_fpm_init)),)
+	@echo "Installing PHP FPM init script:   $(INSTALL_ROOT)$(php_fpm_init_path)"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_init_dir)
+	@$(INSTALL) -m 0755 sapi/fpm/init.d.$(php_fpm_init) $(INSTALL_ROOT)$(php_fpm_init_path)
+@ENDIF@
 	@echo ""
 	@echo "*** FPM Installation complete. ***"
 	@echo ""
+ifneq ($(strip $(php_fpm_init)),)
 	@echo "run:"
-	@echo "\`update-rc.d $(php_fpm_bin) defaults; invoke-rc.d $(php_fpm_bin) start\`"
+	@echo "\`update-rc.d $(php_fpm_init) defaults; invoke-rc.d $(php_fpm_init) start\`"
 	@echo ""
-	@echo "or system equivalent to start the $(php_fpm_bin) service."
+	@echo "or system equivalent to start the $(php_fpm_init) service."
 	@echo ""
-
+@ENDIF@
 

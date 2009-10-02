@@ -387,6 +387,9 @@ AC_DEFUN([AC_FPM_PATHS],
 	AC_ARG_WITH([fpm-conf],
 		AC_HELP_STRING([--with-fpm-conf=@<:@PATH@:>@], [Set the path for php-fpm configuration file @<:@/etc/php-fpm.conf@:>@]))
 
+	AC_ARG_WITH([fpm-init],
+		AC_HELP_STRING([--with-fpm-init=@<:@PATH@:>@], [Set the path for php-fpm init file @<:@/etc/init.d/php-fpm@:>@]))
+
 	AC_ARG_WITH([fpm-log],
 		AC_HELP_STRING([--with-fpm-log=@<:@PATH@:>@], [Set the path for php-fpm log file @<:@/var/log/php-fpm.log@:>@]))
 
@@ -440,6 +443,20 @@ AC_DEFUN([AC_FPM_PATHS],
 	fi
 	php_fpm_conf=`basename $php_fpm_conf_path`
 	php_fpm_conf_dir=`dirname $php_fpm_conf_path`
+
+	if test -z "$with_fpm_init" -o "$with_fpm_init" = "yes"; then
+		php_fpm_init_path="/etc/init.d/php-fpm"
+		php_fpm_init=`basename $php_fpm_init_path`
+		php_fpm_init_dir=`dirname $php_fpm_init_path`
+	elif test "$with_fpm_init" = "no"; then
+		php_fpm_init_path=""
+		php_fpm_init=""
+		php_fpm_init_dir=""
+	else
+		php_fpm_init_path="$with_fpm_init"
+		php_fpm_init=`basename $php_fpm_init_path`
+		php_fpm_init_dir=`dirname $php_fpm_init_path`
+	fi
 
 	if test -z "$with_fpm_log" -o "$with_fpm_log" = "yes" -o "$with_fpm_log" = "no"; then
 		php_fpm_log_path="/var/log/php-fpm.log"

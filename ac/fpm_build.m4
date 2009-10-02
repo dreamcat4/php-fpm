@@ -40,6 +40,8 @@ AC_DEFUN([AC_FPM_BUILD_SAPI],
       ;;
     esac
 
+	ENDIF=endif
+	PHP_SUBST(ENDIF)
     PHP_SUBST(BUILD_FPM)
 
 ])

@@ -31,6 +31,9 @@ AC_CHECK_HEADERS([arpa/inet.h netinet/in.h])
 php_fpm_ADD_CFLAGS="$LIBEVENT_CFLAGS $LIBXML_CFLAGS"
 php_fpm_ADD_LIBS="$LIBEVENT_LIBS $LIBXML_LIBS $PHP_EXTRA_LIBS"
 
+ENDIF=endif
+AC_SUBST(ENDIF)
+
 AC_SUBST(AM_CFLAGS)
 AC_SUBST(LIBS)
 
@@ -45,6 +48,9 @@ AC_SUBST(php_fpm_port)
 AC_SUBST(php_fpm_conf)
 AC_SUBST(php_fpm_conf_dir)
 AC_SUBST(php_fpm_conf_path)
+AC_SUBST(php_fpm_init)
+AC_SUBST(php_fpm_init_dir)
+AC_SUBST(php_fpm_init_path)
 AC_SUBST(php_fpm_log_dir)
 AC_SUBST(php_fpm_log_path)
 AC_SUBST(php_fpm_pid_dir)
@@ -60,6 +66,9 @@ AC_DEFINE_UNQUOTED(PHP_FPM_PORT, "$php_fpm_port", [tcp port])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF, "$php_fpm_conf", [fpm conf file])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF_DIR, "$php_fpm_conf_dir", [fpm conf dir])
 AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
+AC_DEFINE_UNQUOTED(PHP_FPM_INIT, "$php_fpm_init", [fpm init file])
+AC_DEFINE_UNQUOTED(PHP_FPM_INIT_DIR, "$php_fpm_init_dir", [fpm init dir])
+AC_DEFINE_UNQUOTED(PHP_FPM_INIT_PATH, "$php_fpm_init_path", [fpm init file path])
 AC_DEFINE_UNQUOTED(PHP_FPM_LOG_DIR, "$php_fpm_log_dir", [fpm log dir])
 AC_DEFINE_UNQUOTED(PHP_FPM_LOG_PATH, "$php_fpm_log_path", [fpm log file path])
 AC_DEFINE_UNQUOTED(PHP_FPM_PID_DIR, "$php_fpm_pid_dir", [fpm pid dir])
@@ -73,7 +82,7 @@ AC_CONFIG_FILES([Makefile cgi/Makefile fpm/Makefile])
 
 AC_OUTPUT( \
 	$php_fpm_conf:conf/php-fpm.conf.in \
-	init.d.$php_fpm_bin:conf/init.d.php-fpm.in \
+	init.d.$php_fpm_init:conf/init.d.php-fpm.in \
 	nginx-site-conf.sample:conf/nginx-site-conf.sample.in \
 	$php_fpm_bin.1:man/php-fpm.1.in \
 )

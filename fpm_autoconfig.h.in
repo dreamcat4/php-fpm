@@ -123,6 +123,15 @@
 /* fpm group name */
 #undef PHP_FPM_GROUP
 
+/* fpm init file */
+#undef PHP_FPM_INIT
+
+/* fpm init dir */
+#undef PHP_FPM_INIT_DIR
+
+/* fpm init file path */
+#undef PHP_FPM_INIT_PATH
+
 /* fpm log dir */
 #undef PHP_FPM_LOG_DIR
 

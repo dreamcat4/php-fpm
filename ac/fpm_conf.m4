@@ -10,6 +10,9 @@ AC_DEFUN([AC_FPM_ARGS],
 	PHP_ARG_WITH(fpm-conf,,
 	[  --with-fpm-conf[=PATH]  Set the path for php-fpm configuration file [/etc/php-fpm.conf]], yes, no)
 
+	PHP_ARG_WITH(fpm-init,,
+	[  --with-fpm-init[=PATH]  Set the path for php-fpm init file [/etc/init.d/php-fpm]], yes, no)
+
 	PHP_ARG_WITH(fpm-log,,
 	[  --with-fpm-log[=PATH]   Set the path for php-fpm log file [/var/log/php-fpm.log]], yes, no)
 
@@ -68,6 +71,20 @@ AC_DEFUN([AC_FPM_VARS],
 	php_fpm_conf=`basename $php_fpm_conf_path`
 	php_fpm_conf_dir=`dirname $php_fpm_conf_path`
 
+	if test -z "$PHP_FPM_INIT" -o "$PHP_FPM_INIT" = "yes"; then
+		php_fpm_init_path="/etc/init.d/php-fpm"
+		php_fpm_init=`basename $php_fpm_init_path`
+		php_fpm_init_dir=`dirname $php_fpm_init_path`
+	elif test "$PHP_FPM_INIT" = "no"; then
+		php_fpm_init_path=""
+		php_fpm_init=""
+		php_fpm_init_dir=""
+	else
+		php_fpm_init_path="$PHP_FPM_INIT"
+		php_fpm_init=`basename $php_fpm_init_path`
+		php_fpm_init_dir=`dirname $php_fpm_init_path`
+	fi
+
 	if test -z "$PHP_FPM_LOG" -o "$PHP_FPM_LOG" = "yes" -o "$PHP_FPM_LOG" = "no"; then
 		php_fpm_log_path="/var/log/php-fpm.log"
 	else
@@ -103,6 +120,9 @@ AC_DEFUN([AC_FPM_VARS],
 	PHP_SUBST_OLD(php_fpm_conf)
 	PHP_SUBST_OLD(php_fpm_conf_dir)
 	PHP_SUBST_OLD(php_fpm_conf_path)
+	PHP_SUBST_OLD(php_fpm_init)
+	PHP_SUBST_OLD(php_fpm_init_dir)
+	PHP_SUBST_OLD(php_fpm_init_path)
 	PHP_SUBST_OLD(php_fpm_log_dir)
 	PHP_SUBST_OLD(php_fpm_log_path)
 	PHP_SUBST_OLD(php_fpm_pid_dir)
@@ -119,6 +139,9 @@ AC_DEFUN([AC_FPM_VARS],
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF, "$php_fpm_conf", [fpm conf file])
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF_DIR, "$php_fpm_conf_dir", [fpm conf dir])
 	AC_DEFINE_UNQUOTED(PHP_FPM_CONF_PATH, "$php_fpm_conf_path", [fpm conf file path])
+	AC_DEFINE_UNQUOTED(PHP_FPM_INIT, "$php_fpm_init", [fpm init file])
+	AC_DEFINE_UNQUOTED(PHP_FPM_INIT_DIR, "$php_fpm_init_dir", [fpm init dir])
+	AC_DEFINE_UNQUOTED(PHP_FPM_INIT_PATH, "$php_fpm_init_path", [fpm init file path])
 	AC_DEFINE_UNQUOTED(PHP_FPM_LOG_DIR, "$php_fpm_log_dir", [fpm log dir])
 	AC_DEFINE_UNQUOTED(PHP_FPM_LOG_PATH, "$php_fpm_log_path", [fpm log file path])
 	AC_DEFINE_UNQUOTED(PHP_FPM_PID_DIR, "$php_fpm_pid_dir", [fpm pid dir])
@@ -132,7 +155,7 @@ AC_DEFUN([AC_FPM_VARS],
 AC_DEFUN([AC_FPM_OUTPUT],
 [
 	PHP_OUTPUT(sapi/fpm/$php_fpm_conf:sapi/fpm/conf/php-fpm.conf.in)
-	PHP_OUTPUT(sapi/fpm/init.d.$php_fpm_bin:sapi/fpm/conf/init.d.php-fpm.in)
+	PHP_OUTPUT(sapi/fpm/init.d.$php_fpm_init:sapi/fpm/conf/init.d.php-fpm.in)
 	PHP_OUTPUT(sapi/fpm/nginx-site-conf.sample:sapi/fpm/conf/nginx-site-conf.sample.in)
 	PHP_OUTPUT(sapi/fpm/$php_fpm_bin.1:sapi/fpm/man/php-fpm.1.in)
 ])

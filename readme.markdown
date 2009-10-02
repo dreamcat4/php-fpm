@@ -73,15 +73,16 @@ Now you can download, Configure and compile the FPM frontend
 
 ## Configure flags
 
-	--with-libevent[=PATH]  Path to the libevent, for fpm SAPI [/usr/local]
-	--with-fpm-bin[=PATH]   Set the path for the php-fpm binary [/usr/local/bin/php-fpm]
-	--with-fpm-port[=PORT]  Set the tcp port number to listen for cgi requests [9000]
-	--with-fpm-conf[=PATH]  Set the path for the php-fpm configuration file [/etc/php-fpm.conf]
-	--with-fpm-log[=PATH]   Set the path for the php-fpm log file [/var/log/php-fpm.log]
-	--with-fpm-pid[=PATH]   Set the path for the php-fpm pid file [/var/run/php-fpm.pid]
-	--with-fpm-user[=USER]  Set the user for the php-fpm to run as [nobody]
-	--with-fpm-group[=GRP]  Set the group for php-fpm to run as. For a system user,
-		                  	this should be set to match the fpm username [nobody]
+	--with-libevent[=PATH]       Path to the libevent, for fpm SAPI [/usr/local]
+	--with-fpm-bin[=PATH]        Set the path for the php-fpm binary [/usr/local/bin/php-fpm]
+	--with-fpm-port[=PORT]       Set the tcp port number to listen for cgi requests [9000]
+	--with-fpm-conf[=PATH]       Set the path for the php-fpm configuration file [/etc/php-fpm.conf]
+	--with[out]-fpm-init[=PATH]  Set the path for the php-fpm init file [/etc/init.d/php-fpm]
+	--with-fpm-log[=PATH]        Set the path for the php-fpm log file [/var/log/php-fpm.log]
+	--with-fpm-pid[=PATH]        Set the path for the php-fpm pid file [/var/run/php-fpm.pid]
+	--with-fpm-user[=USER]       Set the user for the php-fpm to run as [nobody]
+	--with-fpm-group[=GRP]       Set the group for php-fpm to run as. For a system user,
+		                         this should be set to match the fpm username [nobody]
 
 ## Installation
 

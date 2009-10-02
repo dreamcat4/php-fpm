@@ -68,15 +68,16 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 
 ## Флаги конфигурирования
 
-	--with-libevent[=PATH]  Путь до libevent, для fpm SAPI [/usr/local]
-	--with-fpm-bin[=PATH]   Путь для откомпилированного php-fpm [/usr/local/bin/php-fpm]
-	--with-fpm-port[=PORT]  TCP порт для cgi запросов [9000]
-	--with-fpm-conf[=PATH]  Путь до файла конфигурации php-fpm [/etc/php-fpm.conf]
-	--with-fpm-log[=PATH]   Путь до лог-файла php-fpm [/var/log/php-fpm.log]
-	--with-fpm-pid[=PATH]   Путь до pid-файла php-fpm [/var/run/php-fpm.pid]
-	--with-fpm-user[=USER]  Пользователь, под которым запускать php-fpm [nobody]
-	--with-fpm-group[=GRP]  Группа, под которой запускать php-fpm. Для системных 
-		                  	пользователей задайте имя пользователя [nobody]
+	--with-libevent[=PATH]       Путь до libevent, для fpm SAPI [/usr/local]
+	--with-fpm-bin[=PATH]        Путь для откомпилированного php-fpm [/usr/local/bin/php-fpm]
+	--with-fpm-port[=PORT]       TCP порт для cgi запросов [9000]
+	--with-fpm-conf[=PATH]       Путь до файла конфигурации php-fpm [/etc/php-fpm.conf]
+	--with[out]-fpm-init[=PATH]  Путь до init-файла php-fpm [/etc/init.d/php-fpm]
+	--with-fpm-log[=PATH]        Путь до лог-файла php-fpm [/var/log/php-fpm.log]
+	--with-fpm-pid[=PATH]        Путь до pid-файла php-fpm [/var/run/php-fpm.pid]
+	--with-fpm-user[=USER]       Пользователь, под которым запускать php-fpm [nobody]
+	--with-fpm-group[=GRP]       Группа, под которой запускать php-fpm. Для системных 
+		                  	     пользователей задайте имя пользователя [nobody]
 
 ## Установка
 
