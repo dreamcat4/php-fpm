@@ -22,6 +22,8 @@ Libevent 1.4.12-stable or higher is recommended, and at least libevent 1.4.3-sta
 	DESTDIR=$PWD make install
 	export LIBEVENT_SEARCH_PATH="$PWD/usr/local"
 
+In the above example we have installed libevent into its own directory (by prefixing DESTDIR=$PWD). If that didn't work for you, then use just plain `make install` to install system-wide.
+
 ## Integrated compilation
 
 Download fpm and generate the patch file

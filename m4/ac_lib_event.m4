@@ -185,7 +185,10 @@ AC_DEFUN([AC_LIB_EVENT],
 				  AC_MSG_RESULT(no)
 	              LIBEVENT_LIBS=""
 				  ac_have_libevent=no
-	              AC_MSG_ERROR([Libevent minimum version >= $LIBEVENT_MIN_VERSION could not be found.])
+	              AC_MSG_WARN([Syntax:])
+	              AC_MSG_WARN([--with-libevent@<:@=yes|path@:>@ - link to libevent.a (static library)])
+	              AC_MSG_WARN([--with-libevent=shared@<:@,path@:>@ - link to libevent.so (shared library)])
+	              AC_MSG_ERROR([Libevent minimum version >= $LIBEVENT_MIN_VERSION could not be found. Stop.])
 	            fi
         	fi
 
@@ -201,6 +204,11 @@ AC_DEFUN([AC_LIB_EVENT],
 					if test -f "$ac_libevent_path/lib/$libevent_a" ; then
 						LIBEVENT_LIBS="$ac_libevent_path/lib/$libevent_a"
 					fi
+					if test -z "$LIBEVENT_LIBS"; then
+						AC_MSG_RESULT(no)
+						AC_MSG_WARN([libevent.a could not be found. We looked in:])
+						AC_MSG_WARN([\"$ac_libevent_path\"])
+					fi
 				else
 					for search_path in $sys_lib_search_path_spec ; do
 						if test -f "$search_path$libevent_a" ; then
@@ -208,9 +216,18 @@ AC_DEFUN([AC_LIB_EVENT],
 							break;
 						fi
 					done
+					if test -z "$LIBEVENT_LIBS"; then
+						AC_MSG_RESULT(no)
+						AC_MSG_WARN([libevent.a could not be found. We looked in:])
+						AC_MSG_WARN([\"$sys_lib_search_path_spec\"])
+					fi
 				fi
 				if test -z "$LIBEVENT_LIBS"; then
-					AC_MSG_ERROR([libevent.a could not be found. Use --with-libevent=shared])
+					AC_MSG_WARN([Install libevent system-wide (make install)])
+					AC_MSG_WARN([Syntax:])
+					AC_MSG_WARN([--with-libevent@<:@=yes|path@:>@ - link to libevent.a (static library)])
+					AC_MSG_WARN([--with-libevent=shared@<:@,path@:>@ - link to libevent.so (shared library)])
+					AC_MSG_ERROR([libevent.a could not be found. Stop.])
 				fi
 			fi
 
@@ -228,7 +245,7 @@ AC_DEFUN([AC_LIB_EVENT],
 		    AC_SUBST(LIBEVENT_LIBS)
 
           else
-			AC_MSG_ERROR([FPM Requires Libevent. You can build this target --with-libevent=yes])
+			AC_MSG_ERROR([FPM Requires Libevent. You must build this target --with-libevent. Stop.])
           fi
 
           ])
