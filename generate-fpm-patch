@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # generate-fpm-patch - Generate a patch file from fpm sources
 # 
 
