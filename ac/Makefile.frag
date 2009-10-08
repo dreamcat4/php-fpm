@@ -21,7 +21,7 @@ ifneq ($(strip $(php_fpm_init)),)
 	@echo "Installing PHP FPM init script:   $(INSTALL_ROOT)$(php_fpm_init_path)"
 	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_init_dir)
 	@$(INSTALL) -m 0755 sapi/fpm/init.d.$(php_fpm_init) $(INSTALL_ROOT)$(php_fpm_init_path)
-@ENDIF@
+endif
 	@echo ""
 	@echo "*** FPM Installation complete. ***"
 	@echo ""
@@ -31,5 +31,5 @@ ifneq ($(strip $(php_fpm_init)),)
 	@echo ""
 	@echo "or system equivalent to start the $(php_fpm_init) service."
 	@echo ""
-@ENDIF@
+endif
 
