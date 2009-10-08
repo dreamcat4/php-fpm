@@ -14,7 +14,7 @@ There are (2) Dependencies. If you haven't built php before, you'll need to inst
 
 Libevent 1.4.12-stable or higher is recommended, and at least libevent 1.4.3-stable is required. If no suitable version available, download and compile it from the [Libevent website](http://www.monkey.org/~provos/libevent/).
 
-	LE_VER=1.4.12-stable
+	export LE_VER=1.4.12-stable
 	wget "http://www.monkey.org/~provos/libevent-$LE_VER.tar.gz"
 	tar -zxvf "libevent-$LE_VER.tar.gz"
 	cd "libevent-$LE_VER"

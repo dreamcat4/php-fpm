@@ -13,7 +13,7 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 
 Рекомендуется использовать libevent 1.4.12-stable или позднее, но необходим, как минимум, libevent 1.4.3-stable. Если нет подходящей версии, скайте и скомпилируйте с [сайта Libevent](http://www.monkey.org/~provos/libevent/).
 
-	LE_VER=1.4.12-stable
+	export LE_VER=1.4.12-stable
 	wget "http://www.monkey.org/~provos/libevent-$LE_VER.tar.gz"
 	tar -zxvf "libevent-$LE_VER.tar.gz"
 	cd "libevent-$LE_VER"
