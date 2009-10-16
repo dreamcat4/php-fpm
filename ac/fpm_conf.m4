@@ -63,26 +63,44 @@ AC_DEFUN([AC_FPM_VARS],
 		php_fpm_port="$PHP_FPM_PORT"
 	fi
 
-	if test -z "$PHP_FPM_CONF" -o "$PHP_FPM_CONF" = "yes" -o "$PHP_FPM_CONF" = "no"; then
-		php_fpm_conf_path="/etc/php-fpm.conf"
+	if test -z "$PHP_FPM_CONF" -o "$PHP_FPM_CONF" = "yes"; then
+		case $host_os in
+			freebsd*|dragonfly*)  php_fpm_conf_path="/usr/local/etc/php-fpm.conf" ;;
+			*)                    php_fpm_conf_path="/etc/php-fpm.conf" ;;
+		esac
+	elif test "$PHP_FPM_CONF" = "no"; then
+		php_fpm_conf_path=""
 	else
 		php_fpm_conf_path="$PHP_FPM_CONF"
 	fi
-	php_fpm_conf=`basename $php_fpm_conf_path`
-	php_fpm_conf_dir=`dirname $php_fpm_conf_path`
+	if test -z "$with_fpm_conf_path"; then
+		php_fpm_conf=""
+		php_fpm_conf_dir=""
+	else
+		php_fpm_conf=`basename $php_fpm_conf_path`
+		php_fpm_conf_dir=`dirname $php_fpm_conf_path`		
+	fi
 
 	if test -z "$PHP_FPM_INIT" -o "$PHP_FPM_INIT" = "yes"; then
-		php_fpm_init_path="/etc/init.d/php-fpm"
-		php_fpm_init=`basename $php_fpm_init_path`
-		php_fpm_init_dir=`dirname $php_fpm_init_path`
+		case $host_os in
+			openbsd*)          php_fpm_init_path="" ;;
+			netbsd*)           php_fpm_init_path="/etc/rc.d/php-fpm" ;;
+			*bsd*|dragonfly*)  php_fpm_init_path="/usr/local/etc/rc.d/php-fpm" ;;
+			*)                 php_fpm_init_path="/etc/init.d/php-fpm" ;;
+		esac
+		test -f /etc/arch-release && php_fpm_init_path="/etc/rc.d/php-fpm" # arch linux
+
 	elif test "$PHP_FPM_INIT" = "no"; then
 		php_fpm_init_path=""
+	else
+		php_fpm_init_path="$PHP_FPM_INIT"
+	fi
+	if test -z "$with_fpm_init_path"; then
 		php_fpm_init=""
 		php_fpm_init_dir=""
 	else
-		php_fpm_init_path="$PHP_FPM_INIT"
 		php_fpm_init=`basename $php_fpm_init_path`
-		php_fpm_init_dir=`dirname $php_fpm_init_path`
+		php_fpm_init_dir=`dirname $php_fpm_init_path`		
 	fi
 
 	if test -z "$PHP_FPM_LOG" -o "$PHP_FPM_LOG" = "yes" -o "$PHP_FPM_LOG" = "no"; then

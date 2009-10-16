@@ -78,7 +78,7 @@ Now you can download, Configure and compile the FPM frontend
 	--with-libevent[=PATH]       Path to the libevent, for fpm SAPI [/usr/local]
 	--with-fpm-bin[=PATH]        Set the path for the php-fpm binary [/usr/local/bin/php-fpm]
 	--with-fpm-port[=PORT]       Set the tcp port number to listen for cgi requests [9000]
-	--with-fpm-conf[=PATH]       Set the path for the php-fpm configuration file [/etc/php-fpm.conf]
+	--with[out]-fpm-conf[=PATH]  Set the path for the php-fpm configuration file [/etc/php-fpm.conf]
 	--with[out]-fpm-init[=PATH]  Set the path for the php-fpm init file [/etc/init.d/php-fpm]
 	--with-fpm-log[=PATH]        Set the path for the php-fpm log file [/var/log/php-fpm.log]
 	--with-fpm-pid[=PATH]        Set the path for the php-fpm pid file [/var/run/php-fpm.pid]
@@ -98,6 +98,14 @@ If compiled `integrated`, then you will get a full php install, including the co
 
 	# Install into '/opt'
 	sudo INSTALL_ROOT=/opt make install
+
+Notes:
+
+* (Upgrade) When overwriting existing FPM installation files: A previous configuration file `php-fpm.conf` will be moved to `php-fpm.conf.old`. Then a newer (default) configuration file will be installed in it's place. If you have any custom XML settings which you wish to keep, its recommended to copy these back over manually.
+
+* (BSD) the default init.d path is `/usr/local/etc/rc.d/php-fpm` or disable: `--without-fpm-init`
+
+* (Nginx) An example nginx configuration file is generated. The file `nginx-site-conf.sample` may be installed into your nginx configuration directory, if exists: `/etc/nginx/`, `/usr/local/etc/nginx/`, or `/usr/local/nginx/conf`
 
 ## More about the PHP-FPM Build process
 

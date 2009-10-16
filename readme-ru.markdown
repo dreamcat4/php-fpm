@@ -71,7 +71,7 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 	--with-libevent[=PATH]       Путь до libevent, для fpm SAPI [/usr/local]
 	--with-fpm-bin[=PATH]        Путь для откомпилированного php-fpm [/usr/local/bin/php-fpm]
 	--with-fpm-port[=PORT]       TCP порт для cgi запросов [9000]
-	--with-fpm-conf[=PATH]       Путь до файла конфигурации php-fpm [/etc/php-fpm.conf]
+	--with[out]-fpm-conf[=PATH]  Путь до файла конфигурации php-fpm [/etc/php-fpm.conf]
 	--with[out]-fpm-init[=PATH]  Путь до init-файла php-fpm [/etc/init.d/php-fpm]
 	--with-fpm-log[=PATH]        Путь до лог-файла php-fpm [/var/log/php-fpm.log]
 	--with-fpm-pid[=PATH]        Путь до pid-файла php-fpm [/var/run/php-fpm.pid]
@@ -91,6 +91,14 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 
 	# Установить в '/opt'
 	sudo INSTALL_ROOT=/opt make install
+
+Notes:
+
+* (Upgrade) When overwriting existing FPM installation files: A previous configuration file `php-fpm.conf` will be moved to `php-fpm.conf.old`. Then a newer (default) configuration file will be installed in it's place. If you have any custom XML settings which you wish to keep, its recommended to copy these back over manually.
+
+* (BSD) the default init.d path is `/usr/local/etc/rc.d/php-fpm` or disable: `--without-fpm-init`
+
+* (Nginx) An example nginx configuration file is generated. The file `nginx-site-conf.sample` may be installed into your nginx configuration directory, if exists: `/etc/nginx/`, `/usr/local/etc/nginx/`, or `/usr/local/nginx/conf`
 
 ## Больше о процессе сборки PHP-FPM
 
