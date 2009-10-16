@@ -3,21 +3,22 @@
 # nginx-site-conf.sample:
 # Php Site configuration for nginx webserver
 # 
-# 1. set $site_root /path/to/your/website;
+# 1. set server root /path/to/your/website;
 # 2. Rename this file. Copy it to /etc/nginx/sites-available, /etc/nginx/sites-enabled
+#    or otherwise ensure that this file is included by the nginx.conf
 # 3. Restart nginx webserver, and @php_fpm_bin@ service.
 # 
 
 server {
 
-	set $site_root  /var/www/nginx-site;
+	root  /var/www/nginx-site;
+
 	server_name     localhost;
 	listen          80;
 
 	access_log  /var/log/nginx/localhost.access.log;
 
 	location / {
-		root   $site_root;
 		index  index.html index.htm;
 	}
 
@@ -34,7 +35,6 @@ server {
 	#
 	location ~ \.php$ {
 
-		root $site_root;
 		fastcgi_pass   127.0.0.1:@php_fpm_port@;
 		fastcgi_index  index.php;
 
