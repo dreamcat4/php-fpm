@@ -13,7 +13,7 @@ install-fpm: all
 	@$(INSTALL) -m 0755 $(php_fpm_bin) $(INSTALL_ROOT)$(php_fpm_bin_path)$(program_suffix)$(EXEEXT)
 
 	@test "$(php_fpm_conf)" && \
-	@echo "Installing PHP FPM config:        $(INSTALL_ROOT)$(php_fpm_conf_path)" && \
+	echo "Installing PHP FPM config:        $(INSTALL_ROOT)$(php_fpm_conf_path)" && \
 	$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_conf_dir) || :
 
 	@test "$(php_fpm_conf)" && \
