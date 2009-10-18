@@ -3,7 +3,7 @@
 
 
 
-install: $(php_fpm_bin) install-fpm
+install: install-fpm
 
 install-fpm: all
 	@echo "Installing PHP FPM binary:        $(INSTALL_ROOT)$(php_fpm_bin_path)"
