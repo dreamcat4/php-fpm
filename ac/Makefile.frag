@@ -3,9 +3,9 @@ fpm: $(SAPI_FPM_PATH)
 $(SAPI_FPM_PATH): $(PHP_GLOBAL_OBJS) $(PHP_SAPI_OBJS) $(SAPI_EXTRA_DEPS)
 	$(BUILD_FPM)
 
-install: $(php_fpm_bin) install-fpm
+install: install-fpm
 
-install-fpm: $(SAPI_FPM_PATH)
+install-fpm: all
 	@echo "Installing PHP FPM binary:        $(INSTALL_ROOT)$(php_fpm_bin_path)"
 	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_bin_dir)
 	@$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_pid_dir)
@@ -35,15 +35,18 @@ install-fpm: $(SAPI_FPM_PATH)
 
 	@test -d /etc/nginx/ && \
 	echo "Installing NGINX sample config:   /etc/nginx/nginx-site-conf.sample" && \
-	@$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /etc/nginx/nginx-site-conf.sample
+	$(mkinstalldirs) $(INSTALL_ROOT)/etc/nginx && \
+	$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /etc/nginx/nginx-site-conf.sample || :
 
 	@test -d /usr/local/etc/nginx/ && \
 	echo "Installing NGINX sample config:   /usr/local/etc/nginx/nginx-site-conf.sample" && \
-	@$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /usr/local/etc/nginx/nginx-site-conf.sample || :
+	$(mkinstalldirs) $(INSTALL_ROOT)/usr/local/etc/nginx && \
+	$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /usr/local/etc/nginx/nginx-site-conf.sample || :
 
 	@test -d /usr/local/nginx/conf/ && \
 	echo "Installing NGINX sample config:   /usr/local/nginx/conf/nginx-site-conf.sample" && \
-	@$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /usr/local/nginx/conf/nginx-site-conf.sample || :
+	$(mkinstalldirs) $(INSTALL_ROOT)/usr/local/nginx/conf && \
+	$(INSTALL_DATA) -b sapi/fpm/nginx-site-conf.sample /usr/local/nginx/conf/nginx-site-conf.sample || :
 
 	@echo ""
 	@echo "*** FPM Installation complete. ***"
