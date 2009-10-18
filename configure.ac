@@ -81,8 +81,8 @@ AC_CONFIG_FILES([Makefile cgi/Makefile fpm/Makefile])
 
 
 AC_OUTPUT( \
-	$php_fpm_conf:conf/php-fpm.conf.in \
-	init.d.$php_fpm_init:conf/init.d.php-fpm.in \
+	php_fpm.conf:conf/php-fpm.conf.in \
+	init.d.php_fpm:conf/init.d.php-fpm.in \
 	nginx-site-conf.sample:conf/nginx-site-conf.sample.in \
 	$php_fpm_bin.1:man/php-fpm.1.in \
 )

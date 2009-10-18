@@ -21,7 +21,7 @@ install-fpm: $(php_fpm_bin)
 	$(INSTALL_DATA) $(INSTALL_ROOT)$(php_fpm_conf_path) $(INSTALL_ROOT)$(php_fpm_conf_path).old
 
 	@test "$(php_fpm_conf)" && \
-	$(INSTALL_DATA) $(php_fpm_conf) $(INSTALL_ROOT)$(php_fpm_conf_path).default && \
+	$(INSTALL_DATA) php_fpm.conf $(INSTALL_ROOT)$(php_fpm_conf_path).default && \
 	ln -sf $(INSTALL_ROOT)$(php_fpm_conf_path).default $(INSTALL_ROOT)$(php_fpm_conf_path)
 
 	@echo "Installing PHP FPM man page:      $(INSTALL_ROOT)$(mandir)/man1/$(php_fpm_bin)$(program_suffix).1"
@@ -31,7 +31,7 @@ install-fpm: $(php_fpm_bin)
 	@test "$(php_fpm_init)" && \
 	echo "Installing PHP FPM init script:   $(INSTALL_ROOT)$(php_fpm_init_path)" && \
 	$(mkinstalldirs) $(INSTALL_ROOT)$(php_fpm_init_dir) && \
-	$(INSTALL) -m 0755 init.d.$(php_fpm_init) $(INSTALL_ROOT)$(php_fpm_init_path)
+	$(INSTALL) -m 0755 init.d.php_fpm $(INSTALL_ROOT)$(php_fpm_init_path)
 
 	@test -d /etc/nginx/ && \
 	echo "Installing NGINX sample config:   /etc/nginx/nginx-site-conf.sample" && \

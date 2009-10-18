@@ -23313,7 +23313,7 @@ _ACEOF
 
 
 
-                                        ac_config_files="$ac_config_files $php_fpm_conf:conf/php-fpm.conf.in init.d.$php_fpm_init:conf/init.d.php-fpm.in nginx-site-conf.sample:conf/nginx-site-conf.sample.in $php_fpm_bin.1:man/php-fpm.1.in"
+                                        ac_config_files="$ac_config_files php_fpm.conf:conf/php-fpm.conf.in init.d.php_fpm:conf/init.d.php-fpm.in nginx-site-conf.sample:conf/nginx-site-conf.sample.in $php_fpm_bin.1:man/php-fpm.1.in"
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -23901,8 +23901,8 @@ do
   "Makefile" ) CONFIG_FILES="$CONFIG_FILES Makefile" ;;
   "cgi/Makefile" ) CONFIG_FILES="$CONFIG_FILES cgi/Makefile" ;;
   "fpm/Makefile" ) CONFIG_FILES="$CONFIG_FILES fpm/Makefile" ;;
-  "$php_fpm_conf" ) CONFIG_FILES="$CONFIG_FILES $php_fpm_conf:conf/php-fpm.conf.in" ;;
-  "init.d.$php_fpm_init" ) CONFIG_FILES="$CONFIG_FILES init.d.$php_fpm_init:conf/init.d.php-fpm.in" ;;
+  "php_fpm.conf" ) CONFIG_FILES="$CONFIG_FILES php_fpm.conf:conf/php-fpm.conf.in" ;;
+  "init.d.php_fpm" ) CONFIG_FILES="$CONFIG_FILES init.d.php_fpm:conf/init.d.php-fpm.in" ;;
   "nginx-site-conf.sample" ) CONFIG_FILES="$CONFIG_FILES nginx-site-conf.sample:conf/nginx-site-conf.sample.in" ;;
   "$php_fpm_bin.1" ) CONFIG_FILES="$CONFIG_FILES $php_fpm_bin.1:man/php-fpm.1.in" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;

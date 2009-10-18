@@ -172,8 +172,8 @@ AC_DEFUN([AC_FPM_VARS],
 
 AC_DEFUN([AC_FPM_OUTPUT],
 [
-	PHP_OUTPUT(sapi/fpm/$php_fpm_conf:sapi/fpm/conf/php-fpm.conf.in)
-	PHP_OUTPUT(sapi/fpm/init.d.$php_fpm_init:sapi/fpm/conf/init.d.php-fpm.in)
+	PHP_OUTPUT(sapi/fpm/php_fpm.conf:sapi/fpm/conf/php-fpm.conf.in)
+	PHP_OUTPUT(sapi/fpm/init.d.php_fpm:sapi/fpm/conf/init.d.php-fpm.in)
 	PHP_OUTPUT(sapi/fpm/nginx-site-conf.sample:sapi/fpm/conf/nginx-site-conf.sample.in)
 	PHP_OUTPUT(sapi/fpm/$php_fpm_bin.1:sapi/fpm/man/php-fpm.1.in)
 ])
