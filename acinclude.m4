@@ -446,7 +446,7 @@ AC_DEFUN([AC_FPM_PATHS],
 	else
 		php_fpm_conf_path="$with_fpm_conf"
 	fi
-	if test -z "$with_fpm_conf_path"; then
+	if test -z "$php_fpm_conf_path"; then
 		php_fpm_conf=""
 		php_fpm_conf_dir=""
 	else
@@ -468,7 +468,7 @@ AC_DEFUN([AC_FPM_PATHS],
 	else
 		php_fpm_init_path="$with_fpm_init"
 	fi
-	if test -z "$with_fpm_init_path"; then
+	if test -z "$php_fpm_init_path"; then
 		php_fpm_init=""
 		php_fpm_init_dir=""
 	else
