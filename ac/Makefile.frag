@@ -18,7 +18,7 @@ install-fpm: all
 
 	@test "$(php_fpm_conf)" && \
 	test -f "$(INSTALL_ROOT)$(php_fpm_conf_path)" && \
-	$(INSTALL_DATA) $(INSTALL_ROOT)$(php_fpm_conf_path) $(INSTALL_ROOT)$(php_fpm_conf_path).old || :
+	$(INSTALL_DATA) --backup=numbered $(INSTALL_ROOT)$(php_fpm_conf_path) $(INSTALL_ROOT)$(php_fpm_conf_path).old || :
 
 	@test "$(php_fpm_conf)" && \
 	$(INSTALL_DATA) sapi/fpm/php_fpm.conf $(INSTALL_ROOT)$(php_fpm_conf_path).default && \
