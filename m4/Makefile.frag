@@ -36,17 +36,17 @@ install-fpm: all
 	@test -d /etc/nginx/ && \
 	echo "Installing NGINX sample config:   /etc/nginx/nginx-site-conf.sample" && \
 	$(mkinstalldirs) $(INSTALL_ROOT)/etc/nginx && \
-	$(INSTALL_DATA) -b nginx-site-conf.sample /etc/nginx/nginx-site-conf.sample || :
+	$(INSTALL_DATA) -b nginx-site-conf.sample $(INSTALL_ROOT)/etc/nginx/nginx-site-conf.sample || :
 
 	@test -d /usr/local/etc/nginx/ && \
 	echo "Installing NGINX sample config:   /usr/local/etc/nginx/nginx-site-conf.sample" && \
 	$(mkinstalldirs) $(INSTALL_ROOT)/usr/local/etc/nginx && \
-	$(INSTALL_DATA) -b nginx-site-conf.sample /usr/local/etc/nginx/nginx-site-conf.sample || :
+	$(INSTALL_DATA) -b nginx-site-conf.sample $(INSTALL_ROOT)/usr/local/etc/nginx/nginx-site-conf.sample || :
 
 	@test -d /usr/local/nginx/conf/ && \
 	echo "Installing NGINX sample config:   /usr/local/nginx/conf/nginx-site-conf.sample" && \
 	$(mkinstalldirs) $(INSTALL_ROOT)/usr/local/nginx/conf && \
-	$(INSTALL_DATA) -b nginx-site-conf.sample /usr/local/nginx/conf/nginx-site-conf.sample || :
+	$(INSTALL_DATA) -b nginx-site-conf.sample $(INSTALL_ROOT)/usr/local/nginx/conf/nginx-site-conf.sample || :
 
 	@echo ""
 	@echo "*** FPM Installation complete. ***"
