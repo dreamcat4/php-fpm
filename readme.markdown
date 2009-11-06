@@ -4,7 +4,7 @@ PHP-FPM is a Fast-CGI frontend for php, and an enhancement of php-cgi. The proje
 
 ## Quick start:
 
-Choose one of 2 ways to compile fpm. Either `integrated` or `seperate`. Unless you are a developer or systems administrator, we recommend the `integrated` compilation approach. For more information see the file `readme.markdown`.
+Choose one of 2 ways to compile fpm. Either `integrated` or `separate`. Unless you are a developer or systems administrator, we recommend the `integrated` compilation approach. For more information see the file `readme.markdown`.
 
 ## Install Dependencies
 
@@ -47,7 +47,7 @@ Apply the patch and compile
 	../configure --with-fpm \
 	--with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
-## Seperate compilation
+## Separate compilation
 
 There are (2) Dependencies. If you haven't built php before, you'll need to install libxml dev package. FPM also requires the Libevent library. So install libevent-dev too. The command for debian / ubuntu is:
 
@@ -73,7 +73,21 @@ Now you can download, Configure and compile the FPM frontend
 	 --with-php-build="../../php-$PHP_VER/php-build" \
 	 --with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
-## Configure flags
+## Php Configure flags
+
+	--with-fpm                   			Build the fpm SAPI (and not php-cgi)
+	--with-config-file-path=[PATH]			Where to look for php.ini
+	--with-config-file-scan-dir[=PATH]		Search path for extension .ini files
+
+There are also many other php build flags. Please consult the official php documentation.
+
+* Note:
+  The following build flags are not used anymore. They are simply ignored by the configure script.
+
+		--enable-fastcgi
+		--enable-force-cgi-redirect
+
+## FPM Configure flags
 
 	--with-libevent[=PATH]       Path to the libevent, for fpm SAPI [/usr/local]
 	--with-fpm-bin[=PATH]        Set the path for the php-fpm binary [/usr/local/bin/php-fpm]

@@ -66,7 +66,21 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 	 --with-php-build="../../php-$PHP_VER/php-build" \
 	 --with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
-## Флаги конфигурирования
+## Php Configure flags
+
+	--with-fpm                   			Build the fpm SAPI (and not php-cgi)
+	--with-config-file-path=[PATH]			Where to look for php.ini
+	--with-config-file-scan-dir[=PATH]		Search path for extension .ini files
+
+There are also many other php build flags. Please consult the official php documentation.
+
+* Note:
+  The following build flags are not used anymore. They are simply ignored by the configure script.
+
+		--enable-fastcgi
+		--enable-force-cgi-redirect
+
+## FPM Флаги конфигурирования
 
 	--with-libevent[=PATH]       Путь до libevent, для fpm SAPI [/usr/local]
 	--with-fpm-bin[=PATH]        Путь для откомпилированного php-fpm [/usr/local/bin/php-fpm]
