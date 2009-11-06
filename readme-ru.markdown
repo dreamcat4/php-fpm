@@ -26,9 +26,9 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 Скачайте fpm и сгенерируйте патч
 
 	export PHP_VER=5.3.0
-	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
-	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
-	"php-fpm-0.6-$PHP_VER/generate-fpm-patch"
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
+	"php-fpm-0.6~$PHP_VER/generate-fpm-patch"
 
 Скачайте и распакуйте исходный код PHP
 
@@ -57,9 +57,9 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 
 Теперь можете скачать, конфигурировать и компилировать FPM фронтэнд
 
-	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
-	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
-	cd "php-fpm-0.6-$PHP_VER"
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
+	cd "php-fpm-0.6~$PHP_VER"
 	mkdir fpm-build && cd fpm-build
 	../configure --srcdir=../ \
 	 --with-php-src="../../php-$PHP_VER" \
@@ -72,7 +72,7 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 	--with-config-file-path=[PATH]			Where to look for php.ini
 	--with-config-file-scan-dir[=PATH]		Search path for extension .ini files
 
-There are also many other php build flags. Please consult the official php documentation.
+There are many possible php build flags. Please consult the official php documentation.
 
 * Note:
   The following build flags are not used anymore. They are simply ignored by the configure script.

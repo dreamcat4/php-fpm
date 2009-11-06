@@ -29,9 +29,9 @@ In the above example we have installed libevent into its own directory (by prefi
 Download fpm and generate the patch file
 
 	export PHP_VER=5.3.0
-	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
-	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
-	"php-fpm-0.6-$PHP_VER/generate-fpm-patch"
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
+	"php-fpm-0.6~$PHP_VER/generate-fpm-patch"
 
 The PHP source code. Download it, unpack it.
 
@@ -64,9 +64,9 @@ The PHP source code. Download it, unpack it, compile it.
 
 Now you can download, Configure and compile the FPM frontend
 
-	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6-$PHP_VER.tar.gz"
-	tar -zxvf "php-fpm-0.6-$PHP_VER.tar.gz"
-	cd "php-fpm-0.6-$PHP_VER"
+	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
+	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
+	cd "php-fpm-0.6~$PHP_VER"
 	mkdir fpm-build && cd fpm-build
 	../configure --srcdir=../ \
 	 --with-php-src="../../php-$PHP_VER" \
@@ -79,7 +79,7 @@ Now you can download, Configure and compile the FPM frontend
 	--with-config-file-path=[PATH]			Where to look for php.ini
 	--with-config-file-scan-dir[=PATH]		Search path for extension .ini files
 
-There are also many other php build flags. Please consult the official php documentation.
+There are many possible php build flags. Please consult the official php documentation.
 
 * Note:
   The following build flags are not used anymore. They are simply ignored by the configure script.
