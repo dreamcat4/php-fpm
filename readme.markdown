@@ -31,7 +31,7 @@ Download fpm and generate the patch file
 	export PHP_VER=5.3.0
 	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
 	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
-	"php-fpm-0.6~$PHP_VER/generate-fpm-patch"
+	"php-fpm-0.6-$PHP_VER/generate-fpm-patch"
 
 The PHP source code. Download it, unpack it.
 
@@ -66,7 +66,7 @@ Now you can download, Configure and compile the FPM frontend
 
 	wget "http://launchpad.net/php-fpm/master/0.6/+download/php-fpm-0.6~$PHP_VER.tar.gz"
 	tar -zxvf "php-fpm-0.6~$PHP_VER.tar.gz"
-	cd "php-fpm-0.6~$PHP_VER"
+	cd "php-fpm-0.6-$PHP_VER"
 	mkdir fpm-build && cd fpm-build
 	../configure --srcdir=../ \
 	 --with-php-src="../../php-$PHP_VER" \
