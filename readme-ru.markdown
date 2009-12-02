@@ -7,11 +7,11 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 Выберите один из 2 путей сборки fpm: Или `встроенный`, или `отдельный`. Если вы не разработчик или не системный администратор, то мы рекомендуем `встроенный` вариант компиляции. Для дополнительной информации смотрите файл `readme.markdown`.
 
 ## Зависимости
-Если вы до этого не устанавливали php, то вам придётся установить пакет `libxml2-dev`. FPM также необходим `libevent-dev`. Debian / ubuntu:
+Если вы до этого не устанавливали php, то вам придётся установить пакет `libxml2-dev`, а также `libevent-dev`. Пример для debian / ubuntu:
 
 	sudo aptitude install -y libxml2-dev libevent-dev
 
-Рекомендуется использовать libevent 1.4.12-stable или позднее, но необходим, как минимум, libevent 1.4.3-stable. Если нет подходящей версии, скайте и скомпилируйте с [сайта Libevent](http://www.monkey.org/~provos/libevent/).
+Рекомендуется использовать libevent 1.4.12-stable или новее, но необходим, как минимум, libevent 1.4.3-stable. Если нет подходящей версии, можете скачать с [сайта Libevent](http://www.monkey.org/~provos/libevent/).
 
 	export LE_VER=1.4.12-stable
 	wget "http://www.monkey.org/~provos/libevent-$LE_VER.tar.gz"
@@ -66,21 +66,21 @@ PHP-FPM это Fast-CGI фронтэнд для php и расширение php-
 	 --with-php-build="../../php-$PHP_VER/php-build" \
 	 --with-libevent="$LIBEVENT_SEARCH_PATH" && make
 
-## Php Configure flags
+## Флаги конфигурирования PHP
 
-	--with-fpm                   			Build the fpm SAPI (and not php-cgi)
-	--with-config-file-path=[PATH]			Where to look for php.ini
-	--with-config-file-scan-dir[=PATH]		Search path for extension .ini files
+	--with-fpm                   			Собирать fpm SAPI (но не php-cgi)
+	--with-config-file-path=[PATH]			Где искать php.ini
+	--with-config-file-scan-dir[=PATH]		Где искать дополнительные .ini файлы
 
-There are many possible php build flags. Please consult the official php documentation.
+Для конфигурирования PHP есть множество флагов, смотрите оффициальную документацию PHP.
 
-* Note:
-  The following build flags are not used anymore. They are simply ignored by the configure script.
+* Замечание:
+  Следующие флаги более не используются и попросту игнорируются конфигуратором:
 
 		--enable-fastcgi
 		--enable-force-cgi-redirect
 
-## FPM Флаги конфигурирования
+## Флаги конфигурирования FPM
 
 	--with-libevent[=PATH]       Путь до libevent, для fpm SAPI [/usr/local]
 	--with-fpm-bin[=PATH]        Путь для откомпилированного php-fpm [/usr/local/bin/php-fpm]
@@ -95,7 +95,7 @@ There are many possible php build flags. Please consult the official php documen
 
 ## Установка
 
-Если вы делали `встроенную` сборку, то вы получите полный php, включая исполнитель коммандной строки `php-cli` и библиотеку PEAR. `Отдельная` или `независимая` сборка установит только демон `php-fpm` и минимум файлов, необходимых для его запуска.
+Если вы делали `встроенную` сборку, то вы получите полноценный php, включая исполнитель коммандной строки `php-cli` и библиотеки PEAR. `Отдельная` или `независимая` сборка установит только демон `php-fpm` и минимум файлов, необходимых для его запуска.
 
 	# Посмотреть, какие файлы будут установлены
 	make install --dry-run
@@ -106,13 +106,13 @@ There are many possible php build flags. Please consult the official php documen
 	# Установить в '/opt'
 	sudo INSTALL_ROOT=/opt make install
 
-Notes:
+Замечания:
 
-* (Upgrade) When overwriting existing FPM installation files: A previous configuration file `php-fpm.conf` will be moved to `php-fpm.conf.old`. Then a newer (default) configuration file will be installed in it's place. If you have any custom XML settings which you wish to keep, its recommended to copy these back over manually.
+* (Upgrade) Если перезаписываются файлы fpm (установка идёт не в первый раз, "обновление") файл конфигурации `php-fpm.conf` будет переименован в `php-fpm.conf.old`, затем создастся новый файл `php-fpm.conf` со стандартной конфигурацией. Если вы хотите сохранить конфигурационный файл, рекомендуется его скопировать вручную предварительно.
 
-* (BSD) the default init.d path is `/usr/local/etc/rc.d/php-fpm` or disable: `--without-fpm-init`
+* (BSD) по умолчанию путь для init.d скрипта `/usr/local/etc/rc.d/php-fpm`, чтобы не создавать файл используйте флаг: `--without-fpm-init`
 
-* (Nginx) An example nginx configuration file is generated. The file `nginx-site-conf.sample` may be installed into your nginx configuration directory, if exists: `/etc/nginx/`, `/usr/local/etc/nginx/`, or `/usr/local/nginx/conf`
+* (Nginx) Генерируется пример конфигурационного файла nginx. Файл `nginx-site-conf.sample` может быть установлен в директорию конфигурации nginx, если она существует: `/etc/nginx/`, `/usr/local/etc/nginx/` или `/usr/local/nginx/conf`
 
 ## Больше о процессе сборки PHP-FPM
 
